@@ -1,0 +1,138 @@
+Networking:
+- socket (sys/socket.h) : int socket(int domain, int type, int protocol);
+		crea nuevos sockets y devuelve un fd. El domminio selecciona el protocolo que se va
+		a usar para la comunicación.
+
+- socketpair (sys/socket.h) :  int socketpair(int domain, int type, int protocol, int sv[2]);
+		crrea un par de sockets conectados en el dominio y con el protocolo especificados
+		Los dos sockets son indistinguibles.
+
+- setsockopt (sys/socket.h) : int setsockopt(int socket, int level, int option_name,
+								const void *option_value, socklen_t option_len);
+		modifica el comportamiento del socket para reusarlo a cambiar las opciones.
+
+- getsockname (sys/socket.h) : int getsockname(int sockfd, struct sockaddr *restrict addr,
+								socklen_t *restrict addrlen);
+		devuelve la dirección que corresponda al socket.
+
+- accept (sys/socket.h) :  int accept(int sockfd, struct sockaddr *_Nullable restrict addr,
+							socklen_t *_Nullable restrict addrlen);
+		acepta las conexiones hacia el socket. Extrae la primera conexion de las conexiones
+		pendientes, creando un nuevo socket conectado y devolviendo su fd. Si el socket es
+		no bloqueante las va acceptando una a una. Si hay una conexion usas accept para crear
+		un socket para esa conexión. 
+
+- recv (sys/socket.h) : ssize_t recv(int sockfd, void buf[.size], size_t size,
+						int flags);
+		para leer y recibir datos de un socket. Devuelve el tamaño del mensaje tras la finalizacion
+		correcta. 
+
+- send (sys/socket.h) : ssize_t send(int sockfd, const void buf[.size], size_t size, int flags);
+		escribe datos en un socket. 
+
+- bind (sys/socket.h) : int bind(int sockfd, const struct sockaddr *addr,
+						socklen_t addrlen);
+		asigna un puerto al socket. Hacerr antes de accept. 
+
+- listen (sys/socket.h) : int listen(int sockfd, int backlog);
+		marca un socket como passivo pata escuchar para las conexiones entrantes.
+
+- connect (sys/socket.h) : int connect(int sockfd, const struct sockaddr *addr,
+							socklen_t addrlen);
+		conecta a un servidor remoto a traves de un fd
+
+- getaddrinfo, freeaddrinfo (netdb.h) :
+		resuelve el nombre de los hosts en direcciones de y 
+		resolves hostnames to IP addresses and manages address info. resolve domain names
+
+- getprotobyname (netdb.h) : struct protoent *getprotobyname(const char *name);
+		devuelve la entrada a la base de datos que corresponda a protocolo dado.
+
+- htons (arpa/inet.h) :  uint16_t htons(uint16_t hostshort);
+		devuelve el valor del argumento desde local a bytes de red para bind.
+
+- htonl (arpa/inet.h) : uint32_t htonl(uint32_t hostlong);
+		devuelve el valor del argumento desde bytes de red a local para bind.
+
+- ntohs (arpa/inet.h) : uint16_t ntohs(uint16_t netshort);
+		convierte el puerto del cliente de bytes de network a bytes de local.
+		convert client port from network byte order to host byte order
+
+- ntohl (arpa/inet.h) : uint32_t ntohl(uint32_t netlong);
+		convierte la ip del cliente de bytes de local a network a bytes.
+
+
+Process management
+- fork: 
+		solo para ejecutar scripts CGI
+
+- execve: 
+		corre un script CGI externo (como PHP)
+
+- waitpid: 
+		espera a que el proceso del CGI termine
+
+- kill (signal.h) : 
+		manda una señal al proceso CGI para forzarlo a parar
+
+- signal (signal.h) : 
+		manejador de señales
+
+- pipe, chdir : 
+		cambia el directorio para el CGI
+
+- File handling
+- open (fcntl.h, unistd.h /// std::ifstream, std::ofstream) : 
+		abre archivos de registro, sirve archivos estáticos
+
+- read (fcntl.h, unistd.h /// std::ifstream, std::ofstream) : 
+		lee la información de la petición de los sockets del cliente
+
+- write (fcntl.h, unistd.h /// std::ifstream, std::ofstream) : 
+		manda las respuestas http a los clientes
+
+- close (fcntl.h, unistd.h /// std::ifstream, std::ofstream) : 
+		cierra fdds, sockets y registros
+
+- opendir (dirent.h) : 
+		abre y devuelve un puntero a un directorio para empezar a leer archivos
+
+- readdir (dirent.h) : 
+		lee la siguiente entrada de un directorio, devuelve el puntero al nombre del archivo
+
+- closedir (dirent.h) : 
+		cierra y libera el flujo del directorio
+
+- stat (sys/stat.h) : 
+		devuelve la existencia, el archivo o los datos y el tiempo. (la última modificación)
+
+- access (unistd.h /// std::ifstream::is_open()) : 
+		existencia de un archivo y permisos
+
+- fcntl (fcntl.h) : 
+		manipula los fds y sockets en un modo no bloqueante
+
+- dup, dup2 (unistd.h) : 
+		duplica los fds para los scripts de los CGI
+
+
+
+Input/Output (I/O) Multiplexing: add 1 poll() only, listen included
+
+- poll, epoll (epoll_create, epoll_ctl, epoll_wait), select, kqueue (kqueue, kevent): 
+		maneja múltiples clientes al mismo tiempo, tiene que comprobar que la lectura y
+		escritura al mismo tiempo. poll() con read/recv y write/send SIEMPRE
+
+
+
+Error Handling
+- strerror (string.h /// std::string + stterror) : 
+		devuelve una string con el numero de error
+
+- errno (errno.h) : 
+		prohibido chequearlo después de read/write. Variable global con el último codigo
+		de error.
+
+- gai_strerror (netdb.h) : 
+		devuelve una string co el error en getaddrinfo()
+
