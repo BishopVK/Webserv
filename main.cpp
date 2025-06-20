@@ -6,15 +6,11 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:44:17 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/20 12:53:39 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/20 13:20:21 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <cstdlib>
+#include "server.hpp"
 
 int main(int argc, char** argv)
 {
@@ -43,6 +39,14 @@ int main(int argc, char** argv)
 	std::cout << "---------------------------------------- " << std::endl;
 
 	// Aquí más adelante vendrá el parser
+
+	int port = 8080; // lo obtendremos del parser cuando lo hagamos
+	Server server(port);
+	server.start();
+	while (true) // Mantener el servidor corriendo
+		;
+
+	// Hacer "telnet localhost 8080" en otra terminal para comprobar que el servidor está escuchando en el puerto 8080
 
 	return EXIT_SUCCESS;
 }
