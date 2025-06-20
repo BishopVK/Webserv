@@ -1,0 +1,87 @@
+Webserv
+
+Chapter II
+
+General rules
+
+• No crash 
+• C++ 98 standard and the flag -std=c++98.
+• C++ features. allowed C functions, but use C++ versions.
+• Any external library and Boost libraries are forbidden.
+
+
+Mandatory part
+
+- Program name webserv
+- Arguments [A configuration file]  Your executable: ./webserv [configuration file]
+- Description An HTTP server in C++ 98
+- Use poll(), select(), kqueue(), or epoll().
+- Please read the RFC and perform tests with telnet and NGINX before starting this project.
+	You are not required to implement the entire RFC, reading it helps develop the features.
+
+Requirements
+
+• Your program must take a configuration file as an argument, or use a default path.
+• You cannot execve another web server.
+• Your server must remain non-blocking at all times and properly handle client 
+	disconnections when necessary.
+• It must be non-blocking and use only 1 poll() (or equivalent) for all the I/O
+	operations between the client and the server (listen included).
+• poll() (or equivalent) must monitor both reading and writing simultaneously.
+• You must never do a read or a write operation without going through poll() (or equivalent).
+• Checking the value of errno is strictly forbidden after performing a read or write operation.
+• You are not required to use poll() (or equivalent) before reading your configuration file.
+• if you read/recv or write/send on any fds without poll() (or equivalent), it's a 0.
+• You can use every macro and define like FD_SET, FD_CLR, FD_ISSET and, FD_ZERO (useful).
+• A request to your server should never hang indefinitely.
+• Your server must be compatible with standard web browsers of your choice.
+• We will consider that NGINX is HTTP 1.1 compliant and may be used to compare headers and
+	answer behaviors.
+• Your HTTP response status codes must be accurate.
+• Your server must have default error pages if none are provided.
+• You can’t use fork for anything other than CGI (like PHP, or Python, and so forth).
+• You must be able to serve a fully static website.
+• Clients must be able to upload files.
+• You need at least the GET, POST, and DELETE methods.
+• Stress test your server to ensure it remains available at all times.
+• Your server must be able to listen to multiple ports (see Configuration file).
+
+However, you are allowed to use fcntl() only on: F_SETFL, O_NONBLOCK and, FD_CLOEXEC.
+
+Configuration file
+You can take inspiration from the ’server’ section of the NGINX configuration file.
+In the configuration file, you should be able to:
+• Choose the port and host of each ’server’.
+• Set up the server_names or not.
+• The first server for a host:port will be the default for this host:port (meaning it
+	will respond to all requests that do not belong to another server).
+• Set up default error pages.
+• Set the maximum allowed size for client request bodies.
+• Set up routes with one or multiple of the following rules/configurations (routes
+	won’t be using regexp):
+◦ Define a list of accepted HTTP methods for the route.
+◦ Define an HTTP redirect.
+◦ Define a directory or file where the requested file should be located (e.g.,
+	if url /kapouet is rooted to /tmp/www, url /kapouet/pouic/toto/pouet is
+	/tmp/www/pouic/toto/pouet).
+◦ Enable or disable directory listing.
+◦ Set a default file to serve when the request is for a directory.
+◦ Execute CGI based on certain file extension (for example .php).
+◦ Make it work with POST and GET methods.
+◦ Allow the route to accept uploaded files and configure where they should be saved.
+
+∗ Because you won’t call the CGI directly, use the full path as PATH_INFO.
+∗ For chunked requests, your server needs to unchunk them, the CGI will expect EOF as
+	the end of the body.
+∗ The same applies to the output of the CGI. If no content_length is returned from the
+	CGI, EOF will mark the end of the returned data.
+∗ Your program should call the CGI with the file requested as the first argument.
+∗ The CGI should be run in the correct directory for relative path file access.
+∗ Your server should support at least one CGI (php-CGI, Python, and so forth).
+
+You must provide configuration files and default files to test and demonstrate that
+every feature works during the evaluation. If you have a question about a behavior,
+	compare your program’s behavior with NGINX’s. For example, server_name.
+
+Resilience is key. Your server must remain operational at all times. Do not test with only
+	one program. Write your tests in Python or Golang, C or C++.
