@@ -6,7 +6,7 @@
 #    By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/20 12:20:33 by danjimen,is       #+#    #+#              #
-#    Updated: 2025/06/20 12:24:01 by danjimen,is      ###   ########.fr        #
+#    Updated: 2025/06/20 13:14:13 by danjimen,is      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME		=	webserv
 CXX			=	c++
 CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
 
-SRC			=	main.cpp
+SRC			=	main.cpp \
+				server.cpp
 
 OBJ			=	$(SRC:.cpp=.o)
 
