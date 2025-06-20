@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 13:10:56 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/20 13:12:54 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/20 13:25:11 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 class Server
 {
 	private:
-		int port;
-		int server_fd;
+		int	_port;
+		int	_server_fd;
 
 	public:
 		Server(int port);
