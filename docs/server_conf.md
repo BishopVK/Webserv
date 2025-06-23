@@ -1,0 +1,13 @@
+| Opción de Configuración | ¿Obligatoria? | ¿Se puede definir en `server`? | ¿Se puede definir en `location`? | ¿Cuál prevalece si se define en ambas? | Valor por Defecto (si no se define) según el enunciado/lógica |
+| :---------------------- | :------------ | :----------------------------- | :------------------------------- | :------------------------------------- | :----------------------------------------------------------- |
+| **`listen` (host:port)** | [cite_start]Sí  | [cite_start]Sí (para cada servidor)  | No aplica (define la escucha del servidor, no de la ruta) | N/A | [cite_start]No especificado, el programa debe tomar un archivo de configuración o usar una ruta por defecto. Se asume que no hay puertos de escucha por defecto si no se configuran. |
+| **`server_name`** | [cite_start]Sí (se puede no configurar)  | [cite_start]Sí  | No aplica (es para la identificación del servidor) | N/A | [cite_start]El primer servidor para un host:puerto será el predeterminado. |
+| **`root` (directorio raíz)** | [cite_start]Sí (implícito para servir contenido estático)  | Sí | [cite_start]Sí  | [cite_start]La de `location`  | No especificado. Implícitamente, si no se define, el servidor no puede servir archivos estáticos. |
+| **`index` (archivo por defecto)** | [cite_start]Sí (implícito para directorios)  | Sí | [cite_start]Sí  | [cite_start]La de `location`  | No especificado. Si no se define, al solicitar un directorio, se buscaría el `autoindex`. |
+| **`error_page`** | [cite_start]Sí (debe tener por defecto)  | [cite_start]Sí  | Sí | La de `location` (no explícito, pero es el comportamiento común) | [cite_start]El servidor debe tener páginas de error predeterminadas si no se proporcionan. |
+| **`client_max_body_size`** | [cite_start]Sí  | [cite_start]Sí  | Sí | La de `location` | No especificado. Implícitamente, no hay un límite si no se configura. |
+| **`autoindex`** | [cite_start]Sí  | Sí | [cite_start]Sí  | [cite_start]La de `location`  | No especificado. Implícitamente, deshabilitado si no se configura. |
+| **Métodos HTTP (GET, POST, DELETE)** | [cite_start]Sí (GET, POST, DELETE obligatorios)  | No (se define a nivel de ruta) | [cite_start]Sí  | N/A | No especificado. Por lógica, ningún método estaría permitido si no se configura. |
+| **Redirección HTTP** | [cite_start]Sí  | No (es una acción de ruta) | [cite_start]Sí  | N/A | No aplica. |
+| **Ejecución de CGI** | [cite_start]Sí  | No (es una acción de ruta) | [cite_start]Sí  | N/A | No aplica. |
+| **Subida de archivos** | [cite_start]Sí  | No (es una acción de ruta) | [cite_start]Sí  | N/A | No aplica. |
