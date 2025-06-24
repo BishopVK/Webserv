@@ -1,6 +1,6 @@
-#include "server.hpp"
+#include "Server.hpp"
 
-Server::Server(int port) : _port(port), _server_fd(-1) {}
+/* Server::Server(int port) : _port(port), _server_fd(-1) {}
 
 Server::~Server()
 {
@@ -44,4 +44,4 @@ void Server::start()
 	}
 
 	std::cout << "Servidor escuchando en el puerto " << _port << std::endl;
-}
+} */

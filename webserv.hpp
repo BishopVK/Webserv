@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.hpp                                         :+:      :+:    :+:   */
+/*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/20 13:10:56 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/20 13:25:11 by danjimen,is      ###   ########.fr       */
+/*   Created: 2025/06/24 17:52:11 by danjimen,is       #+#    #+#             */
+/*   Updated: 2025/06/24 17:52:21 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SERVER_HPP
-#define SERVER_HPP
+#pragma once
 
 #include <iostream>
+#include <vector>
+#include <map>
 #include <cstring>      // memset
 #include <cstdlib>      // exit
 #include <unistd.h>     // close
@@ -23,18 +24,3 @@
 #include <sstream>
 #include <string>
 #include <cstdlib>
-
-class Server
-{
-	private:
-		int	_port;
-		int	_server_fd;
-
-	public:
-		Server(int port);
-		~Server();
-
-		void start();
-};
-
-#endif
