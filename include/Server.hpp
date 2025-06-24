@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 13:10:56 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/24 17:51:25 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/24 18:28:52 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ class Server : public Config
 		std::string						_server_name;
 		//int								_server_fd;
 		std::vector<int>				_sockets;
-		static int						_servers_count; /* Number of servers created */
-		std::map<std::string, Location>	_locations; /* List of the server locations */
+		static int						_servers_count; // Number of servers created
+		std::map<std::string, Location>	_locations; // List of the server locations
+		bool							_is_running; // Flag to know if the server is running
 
 	public:
 		Server(int port);
 		~Server();
 
 		void start();
+		void stop();
 };
