@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 17:52:11 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/24 17:52:21 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/24 23:04:20 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,3 +24,4 @@
 #include <sstream>
 #include <string>
 #include <cstdlib>
+#include <algorithm>

@@ -1,5 +1,92 @@
 #include "Server.hpp"
 
+Server::Server() : Config(), _is_running(false), _ip(IP_DEFAULT)
+{
+	//Set the name to the server
+	std::stringstream	ss;
+	ss << ++Server::_servers_count;
+	_server_name = "Server " + ss.str();
+
+	_ports.push_back(-1);
+	_sockets.clear();
+	_locations.clear();
+}
+
+Server::~Server()
+{
+	_is_running = false;
+	_locations.clear();
+}
+
+/* GETERS and SETERS */
+// ip
+std::string	Server::getIp() const { return _ip; }
+void		Server::setIp(const std::string &ip) {_ip = ip; }
+
+// ports
+std::vector<int>	Server::getPorts() const { return _ports; }
+void				Server::addPort(int port)
+{
+	if (_ports.size() == 1 && _ports.at(0) == -1)
+		_ports.clear();
+	if (!hasPort(port))
+		_ports.push_back(port);
+}
+bool				Server::hasPort(int port) const
+{
+	return std::find(_ports.begin(), _ports.end(), port) != _ports.end();
+}
+
+// server_name
+std::string	Server::getServerName() const { return _server_name; }
+void		Server::setServerName(const std::string &server_name) { _server_name = server_name; }
+
+// sockets
+std::vector<int>	Server::getSockets() const { return _sockets; }
+bool				Server::hasSocket(int socket) const
+{
+	return std::find(_sockets.begin(), _sockets.end(), socket) != _sockets.end();
+}
+
+// locations
+std::map<std::string, Location>		Server::getLocations() const { return _locations; }
+const Location*	Server::getLocation(std::string route) const
+{
+	std::map<std::string, Location>::const_iterator it;
+	int index;
+
+	while (true)
+	{
+		it = _locations.find(route);
+		if (it != _locations.end())
+			return &(it->second); // Se encontró coincidencia exacta. Devolvemos el puntero
+
+		index = route.rfind("/");
+		std::string last = route.substr(0, index);
+		if (last.empty())
+			last = "/";
+		if (last == route)
+			break;
+		route = last;
+	}
+
+	return NULL; // No se encontró ninguna coincidencia
+}
+
+void	Server::addLocation(const std::string &route, Location location)
+{
+	if (_locations.find(route) == _locations.end())
+	{
+		// HABRÁ QUE HEREDAR DEL SERVER LOS CAMPOS NECESARIOS (_root, _error_pages, _index_pages)
+		_locations.insert(std::pair<std::string, Location>(route, location));
+	}
+}
+
+// is_running
+bool	Server::isRunning() const { return _is_running; }
+
+
+// TESTING
 /* Server::Server(int port) : _port(port), _server_fd(-1) {}
 
 Server::~Server()
