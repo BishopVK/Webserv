@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:09:45 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/26 23:53:25 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/27 00:47:35 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 Server::Server() : Config(), _ip(IP_DEFAULT), _is_running(false)
 {
 	//Set the name to the server
-	_servers_count = 0;
-	std::stringstream	ss;
+	//_servers_count = 0;
+	/* std::stringstream	ss;
 	ss << ++_servers_count;
-	_server_name = "Server " + ss.str();
+	_server_name = "Server " + ss.str(); */
+	_server_name = "server_name";
 
 	_server_fd = -1;
 	//_port = -1;
@@ -30,10 +31,11 @@ Server::Server() : Config(), _ip(IP_DEFAULT), _is_running(false)
 Server::Server(int port) : Config(), _ip(IP_DEFAULT), _is_running(false)
 {
 	//Set the name to the server
-	_servers_count = 0;
-	std::stringstream	ss;
+	//_servers_count = 0;
+	/* std::stringstream	ss;
 	ss << ++_servers_count;
-	_server_name = "Server " + ss.str();
+	_server_name = "Server " + ss.str(); */
+	_server_name = "server_name";
 
 	_server_fd = -1;
 	//_port = port;
@@ -208,28 +210,47 @@ void	Server::print() const
 			std::cout << "\t- " << it->first << " => " << it->second << std::endl;
 	}
 
-	// cgi
-	if (!getCgis().empty())
-	{
-		std::cout << "cgi:" << std::endl;
-		std::map<std::string, std::string>::iterator it;
-		for (it = getCgis().begin(); it != getCgis().end(); ++it)
-			std::cout << "\t- " << it->first << " => " << it->second << std::endl;
-	}
+	// ip
+	std::cout << "ip = " << getIp() << std::endl;
 
-	// return_data
-	if (_return_data.code != -1)
+	// ports
+	if (!getPorts().empty())
 	{
-		std::cout << "return_data:" << std::endl;
-		std::cout << "\t- " << getReturnData().code << " => " << getReturnData().text << std::endl;
-	}
-
-	// methods
-	if (!getMethods().empty())
-	{
-		std::cout << "methods:" << std::endl;
-		std::vector<std::string>::iterator it;
-		for (it = getMethods().begin(); it != getMethods().end(); ++it)
+		std::cout << "ports:" << std::endl;
+		std::vector<int>::iterator it;
+		for (it = getPorts().begin(); it != getPorts().end(); ++it)
 			std::cout << "\t- " << *it << std::endl;
+	}
+
+	// server_name
+	std::cout << "server_name = " << getServerName() << std::endl;
+
+	// server_fd
+	if (_server_fd != -1)
+		std::cout << "server_fd = " << _server_fd << std::endl;
+
+	// sockets
+	if (!getSockets().empty())
+	{
+		std::cout << "sockets:" << std::endl;
+		std::vector<int>::iterator it;
+		for (it = getSockets().begin(); it != getSockets().end(); ++it)
+			std::cout << "\t- " << *it << std::endl;
+	}
+
+	// is_running
+	std::cout << "is_running = " << (isRunning() ? std::string("true") : std::string("false")) << std::endl;
+
+	// locations
+	if (!getLocations().empty())
+	{
+		std::cout << "locations:" << std::endl;
+		std::map<std::string, Location>::iterator it;
+		for (it = getLocations().begin(); it != getLocations().end(); ++it)
+		{
+			std::cout << "--------------------" << std::endl;
+			it->second.print();
+			std::cout << "--------------------" << std::endl;
+		}
 	}
 }
