@@ -11,7 +11,7 @@
 | `root`                   | ✅            | ✅               | ✅ (al menos en uno) | Requerida para servir archivos; `location` tiene prioridad |
 | `index`                  | ✅            | ✅               | ❌               | Archivos predeterminados a servir |
 | `autoindex`              | ✅            | ✅               | ❌               | Si no hay `index`, muestra el listado si está activado |
-| `limit_except`           | ✅            | ✅               | ❌               | Restringe métodos HTTP permitidos |
+| `limit_except`           | ❌            | ✅               | ❌               | Restringe métodos HTTP permitidos |
 | `methods` (`GET`, etc.)  | ❌            | ✅               | ❌               | Alternativa a `limit_except` en Webserv |
 | `upload_store`           | ❌            | ✅               | ✅ (si hay upload) | Ruta donde se guardan los archivos subidos |
 | `upload_enable`          | ❌            | ✅               | ✅ (si hay upload) | Flag para habilitar subidas |
