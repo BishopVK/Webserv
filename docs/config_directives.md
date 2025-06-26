@@ -2,22 +2,22 @@
 
 ## 📌 ¿Dónde puede definirse cada directiva?
 
-| Directiva                | ¿En `server`? | ¿En `location`? | Comentario |
-|--------------------------|:-------------:|:----------------:|------------|
-| `listen`                 | ✅            | ❌               | Obligatoria en `server`, define IP:puerto |
-| `server_name`            | ✅            | ❌               | Para virtual hosting (`Host:`) |
-| `error_page`             | ✅            | ✅               | Puede declararse global y sobreescribirse por ruta |
-| `client_max_body_size`   | ✅            | ✅               | Puede sobreescribirse por `location` |
-| `root`                   | ✅            | ✅               | `location` tiene prioridad sobre `server` |
-| `index`                  | ✅            | ✅               | Se puede definir por defecto global y luego por ruta |
-| `autoindex`              | ✅            | ✅               | Igual que `index`, puede definirse globalmente |
-| `limit_except`           | ✅            | ✅               | Permite restringir métodos en ambos niveles |
-| `methods` (`GET`, etc.)  | ❌            | ✅               | En NGINX se usa `limit_except`, no `methods` |
-| `upload_store`           | ❌            | ✅               | Específico de cada ruta |
-| `upload_enable`          | ❌            | ✅               | Flag por ruta |
-| `return 301 ...`         | ❌            | ✅               | Redirecciones HTTP por ubicación |
-| `cgi_pass`               | ❌            | ✅               | Ruta al ejecutable CGI para esa ubicación |
-| `cgi_extension`          | ❌            | ✅               | Extensión de archivo que activa el CGI |
+| Directiva                | ¿En `server`? | ¿En `location`? | ¿Es obligatoria? | Comentario |
+|--------------------------|:-------------:|:----------------:|:----------------:|------------|
+| `listen`                 | ✅            | ❌               | ✅               | Obligatoria en `server`, define IP:puerto |
+| `server_name`            | ✅            | ❌               | ❌               | Para virtual hosting (`Host:`) |
+| `error_page`             | ✅            | ✅               | ❌               | Se puede definir por tipo de error, heredable |
+| `client_max_body_size`   | ✅            | ✅               | ❌               | Define el tamaño máximo de la petición, heredable |
+| `root`                   | ✅            | ✅               | ✅ (al menos en uno) | Requerida para servir archivos; `location` tiene prioridad |
+| `index`                  | ✅            | ✅               | ❌               | Archivos predeterminados a servir |
+| `autoindex`              | ✅            | ✅               | ❌               | Si no hay `index`, muestra el listado si está activado |
+| `limit_except`           | ✅            | ✅               | ❌               | Restringe métodos HTTP permitidos |
+| `methods` (`GET`, etc.)  | ❌            | ✅               | ❌               | Alternativa a `limit_except` en Webserv |
+| `upload_store`           | ❌            | ✅               | ✅ (si hay upload) | Ruta donde se guardan los archivos subidos |
+| `upload_enable`          | ❌            | ✅               | ✅ (si hay upload) | Flag para habilitar subidas |
+| `return 301 ...`         | ❌            | ✅               | ❌               | Redirecciones HTTP por ruta |
+| `cgi_pass`               | ❌            | ✅               | ✅ (si se usa CGI) | Ruta al ejecutable CGI |
+| `cgi_extension`          | ❌            | ✅               | ✅ (si se usa CGI) | Extensión de archivo que activa el CGI |
 
 ---
 
