@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:09:45 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/26 22:23:16 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/26 23:48:59 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ Server::Server() : Config(), _ip(IP_DEFAULT), _is_running(false)
 	ss << ++_servers_count;
 	_server_name = "Server " + ss.str();
 
-	_port = -1;
 	_server_fd = -1;
-	//_ports.push_back(-1);
+	//_port = -1;
+	_ports.push_back(-1);
 	_sockets.clear();
 	_locations.clear();
 }
@@ -35,9 +35,9 @@ Server::Server(int port) : Config(), _ip(IP_DEFAULT), _is_running(false)
 	ss << ++_servers_count;
 	_server_name = "Server " + ss.str();
 
-	_port = port;
 	_server_fd = -1;
-	//_ports.push_back(-1);
+	//_port = port;
+	_ports.push_back(port);
 	_sockets.clear();
 	_locations.clear();
 }
@@ -54,21 +54,21 @@ std::string	Server::getIp() const { return _ip; }
 void		Server::setIp(const std::string &ip) {_ip = ip; }
 
 // ports
-//std::vector<int>	Server::getPorts() const { return _ports; }
-/* void				Server::addPort(int port)
+std::vector<int>	Server::getPorts() const { return _ports; }
+void				Server::addPort(int port)
 {
 	if (_ports.size() == 1 && _ports.at(0) == -1)
 		_ports.clear();
-	if (!hasPort(port))
+	if (!hasPort(port) && port > 0 && port < 65535)
 		_ports.push_back(port);
-} */
-/* bool				Server::hasPort(int port) const
+}
+bool				Server::hasPort(int port) const
 {
 	return std::find(_ports.begin(), _ports.end(), port) != _ports.end();
-} */
+}
 
 // port
-int	Server::getPorts() const { return _port; }
+/* int	Server::getPort() const { return _port; }
 void				Server::addPort(int port)
 {
 	if (_port == -1)
@@ -77,7 +77,7 @@ void				Server::addPort(int port)
 bool				Server::hasPort(int port) const
 {
 	return _port == port;
-}
+} */
 
 // server_name
 std::string	Server::getServerName() const { return _server_name; }
@@ -159,7 +159,7 @@ void Server::start()
 	std::memset(&address, 0, sizeof(address));
 	address.sin_family = AF_INET;
 	address.sin_addr.s_addr = INADDR_ANY;
-	address.sin_port = htons(_port);
+	address.sin_port = htons(_ports.at(0));
 
 	if (bind(_server_fd, (struct sockaddr*)&address, sizeof(address)) < 0)
 	{
@@ -173,5 +173,61 @@ void Server::start()
 		exit(EXIT_FAILURE);
 	}
 
-	std::cout << "Servidor escuchando en el puerto " << _port << std::endl;
+	std::cout << "Servidor escuchando en el puerto " << _ports.at(0) << std::endl;
+}
+
+/* TOOLS */
+void	Server::print() const
+{
+	// root
+	std::cout << "root = " << getRoot() << std::endl;
+
+	// index_files
+	if (!getIndexFiles().empty())
+	{
+		std::cout << "index_files:" << std::endl;
+		std::vector<std::string>::iterator it;
+		for (it = getIndexFiles().begin(); it != getIndexFiles().end(); ++it)
+			std::cout << "\t- " << *it << std::endl;
+	}
+
+	// autoindex
+	std::cout << "autoindex = " << (getAutoindex() ? std::string("true") : std::string("false")) << std::endl;
+
+	// client_max_body_size
+	std::cout << "client_max_body_size = " << getClientMaxBodySize() << std::endl;
+
+	// error_pages
+	if (!getErrorPages().empty())
+	{
+		std::cout << "error_pages:" << std::endl;
+		std::map<int, std::string>::iterator it;
+		for (it = getErrorPages().begin(); it != getErrorPages().end(); ++it)
+			std::cout << "\t- " << it->first << " => " << it->second << std::endl;
+	}
+
+	// cgi
+	if (!getCgis().empty())
+	{
+		std::cout << "cgi:" << std::endl;
+		std::map<std::string, std::string>::iterator it;
+		for (it = getCgis().begin(); it != getCgis().end(); ++it)
+			std::cout << "\t- " << it->first << " => " << it->second << std::endl;
+	}
+
+	// return_data
+	if (_return_data.code != -1)
+	{
+		std::cout << "return_data:" << std::endl;
+		std::cout << "\t- " << getReturnData().code << " => " << getReturnData().text << std::endl;
+	}
+
+	// methods
+	if (!getMethods().empty())
+	{
+		std::cout << "methods:" << std::endl;
+		std::vector<std::string>::iterator it;
+		for (it = getMethods().begin(); it != getMethods().end(); ++it)
+			std::cout << "\t- " << *it << std::endl;
+	}
 }

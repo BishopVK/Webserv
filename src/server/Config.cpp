@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 18:08:18 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/26 12:13:18 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/26 23:37:35 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 Config::Config() : _root(ROOT_DEFAULT), _autoindex(AUTOINDEX_DEFAULT), _client_max_body_size(CLIENT_MAX_BODY_SIZE_DEFAULT)
 {
 	// Empty STLs
+	_index_files.clear();
 	_error_pages.clear();
 	_cgi.clear();
 	_methods.clear();
