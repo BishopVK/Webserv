@@ -7,7 +7,8 @@ Server::Server() : Config(), _is_running(false), _ip(IP_DEFAULT)
 	ss << ++Server::_servers_count;
 	_server_name = "Server " + ss.str();
 
-	_ports.push_back(-1);
+	_port = -1;
+	//_ports.push_back(-1);
 	_sockets.clear();
 	_locations.clear();
 }
@@ -24,17 +25,29 @@ std::string	Server::getIp() const { return _ip; }
 void		Server::setIp(const std::string &ip) {_ip = ip; }
 
 // ports
-std::vector<int>	Server::getPorts() const { return _ports; }
-void				Server::addPort(int port)
+//std::vector<int>	Server::getPorts() const { return _ports; }
+/* void				Server::addPort(int port)
 {
 	if (_ports.size() == 1 && _ports.at(0) == -1)
 		_ports.clear();
 	if (!hasPort(port))
 		_ports.push_back(port);
+} */
+/* bool				Server::hasPort(int port) const
+{
+	return std::find(_ports.begin(), _ports.end(), port) != _ports.end();
+} */
+
+// port
+int	Server::getPorts() const { return _port; }
+void				Server::addPort(int port)
+{
+	if (_port == -1)
+		_port = port;
 }
 bool				Server::hasPort(int port) const
 {
-	return std::find(_ports.begin(), _ports.end(), port) != _ports.end();
+	return _port != -1;
 }
 
 // server_name
