@@ -6,6 +6,8 @@ RM	=	rm -rf
 
 SRCS	=	./src/main.cpp \
 			./src/server/HttpServer.cpp \
+			./src/io/SocketUtils.cpp \
+			./src/io/Multiplexer.cpp \
 			./src/http/HttpRequest.cpp \
 			./src/http/HttpResponse.cpp \
 			./src/http/HttpRequestHandler.cpp \

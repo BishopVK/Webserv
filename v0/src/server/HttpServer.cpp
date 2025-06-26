@@ -1,150 +1,202 @@
 #include "HttpServer.hpp"
-#include "../http/HttpRequestHandler.hpp"
 #include "../http/HttpRequest.hpp"
+#include "../http/HttpRequestHandler.hpp"
 #include "../http/HttpResponse.hpp"
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <fcntl.h>
+#include "../io/Multiplexer.hpp"
+#include "../io/SocketUtils.hpp"
+#include <errno.h>
 #include <iostream>
-#include <netdb.h>
+#include <map>
 #include <sys/socket.h>
-#include <sys/types.h>
 #include <unistd.h>
 
-HttpServer::HttpServer(const std::string& port) : _port(port), _server_fd(-1), _res(NULL)
+HttpServer::HttpServer(const std::string& port)
 {
+    _ports.push_back(port);
+}
+
+HttpServer::HttpServer(const std::vector<std::string>& ports)
+{
+    _ports = ports;
 }
 
 HttpServer::~HttpServer()
 {
-    cleanup();
 }
 
-HttpServer::HttpServer(const HttpServer& other) : _port(other._port), _server_fd(-1), _res(NULL)
+HttpServer::HttpServer(const HttpServer& other)
 {
+    _ports = other._ports;
 }
 
 HttpServer& HttpServer::operator=(const HttpServer& other)
 {
     if (this != &other)
     {
-        cleanup();
-        _port = other._port;
-        _server_fd = -1;
-        _res = NULL;
+        _ports = other._ports;
     }
     return *this;
 }
 
-bool HttpServer::setupSocket()
-{
-    struct addrinfo hints;
-    int             yes = 1;
-    int             rv;
-
-    memset(&hints, 0, sizeof(hints));
-    hints.ai_family = AF_INET;
-    hints.ai_socktype = SOCK_STREAM;
-    hints.ai_flags = AI_PASSIVE;
-
-    if ((rv = getaddrinfo(NULL, _port.c_str(), &hints, &_res)) != 0)
-    {
-        std::cerr << "getaddrinfo: " << gai_strerror(rv) << std::endl;
-        return false;
-    }
-
-    struct addrinfo* p;
-    for (p = _res; p != NULL; p = p->ai_next)
-    {
-        _server_fd = socket(p->ai_family, p->ai_socktype, p->ai_protocol);
-        if (_server_fd == -1)
-            continue;
-
-        if (setsockopt(_server_fd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1)
-        {
-            std::cerr << "Failed to set socket options for port " << _port << std::endl;
-            close(_server_fd);
-            continue;
-        }
-
-        if (bind(_server_fd, p->ai_addr, p->ai_addrlen) == -1)
-        {
-            close(_server_fd);
-            continue;
-        }
-
-        break;
-    }
-
-    if (p == NULL)
-    {
-        std::cerr << "Failed to bind to port " << _port << std::endl;
-        freeaddrinfo(_res);
-        _res = NULL;
-        return false;
-    }
-
-    if (listen(_server_fd, 10) == -1)
-    {
-        std::cerr << "Failed to listen on port " << _port << std::endl;
-        close(_server_fd);
-        _server_fd = -1;
-        freeaddrinfo(_res);
-        _res = NULL;
-        return false;
-    }
-
-    std::cout << "Listening on port " << _port << "..." << std::endl;
-    return true;
-}
-
 void HttpServer::run()
 {
-    if (!setupSocket())
-        return;
+    Multiplexer                     multiplexer;
+    std::map<int, ClientConnection> clients;
+    std::vector<int>                server_fds;
 
-    while (1)
+    for (std::vector<std::string>::iterator it = _ports.begin(); it != _ports.end(); ++it)
     {
-        handleClient();
+        const std::string& port = *it;
+        std::cout << "Starting server on port: " << port << std::endl;
+
+        int server_fd = SocketUtils::createServerSocket(port.c_str());
+        if (server_fd == -1)
+        {
+            std::cerr << "Failed to create server socket on port " << port << std::endl;
+            continue;
+        }
+
+        SocketUtils::setNonBlocking(server_fd);
+        SocketUtils::setReuseAddr(server_fd);
+        multiplexer.addFd(server_fd, Multiplexer::READ);
+        server_fds.push_back(server_fd);
     }
+
+    if (server_fds.empty())
+    {
+        std::cerr << "No server sockets available. Exiting." << std::endl;
+        return;
+    }
+
+    while (true)
+    {
+        int ready_count = multiplexer.poll(1000);
+
+        if (ready_count == -1)
+        {
+            std::cerr << "Poll failed" << std::endl;
+            break;
+        }
+
+        if (ready_count == 0)
+            continue;
+
+        for (size_t i = 0; i < server_fds.size(); ++i)
+        {
+            int server_fd = server_fds[i];
+            if (multiplexer.isReadReady(server_fd))
+            {
+                int client_fd = accept(server_fd, NULL, NULL);
+                if (client_fd != -1)
+                {
+                    SocketUtils::setNonBlocking(client_fd);
+                    multiplexer.addFd(client_fd, Multiplexer::READ);
+                    clients[client_fd] = ClientConnection();
+                    std::cout << "New client connected: " << client_fd << std::endl;
+                }
+            }
+        }
+
+        std::vector<int> ready_fds = multiplexer.getReadyFds();
+        for (std::vector<int>::iterator it = ready_fds.begin(); it != ready_fds.end(); ++it)
+        {
+            int  fd = *it;
+            bool is_server_fd = false;
+            for (size_t j = 0; j < server_fds.size(); ++j)
+            {
+                if (server_fds[j] == fd)
+                {
+                    is_server_fd = true;
+                    break;
+                }
+            }
+            if (is_server_fd)
+                continue;
+
+            if (multiplexer.hasError(fd) || multiplexer.hasHangup(fd))
+            {
+                std::cout << "Client disconnected: " << fd << std::endl;
+                multiplexer.removeFd(fd);
+                clients.erase(fd);
+                SocketUtils::closeSocket(fd);
+                continue;
+            }
+
+            if (multiplexer.isReadReady(fd))
+                handleClientRead(fd, clients[fd], multiplexer);
+
+            if (multiplexer.isWriteReady(fd))
+                handleClientWrite(fd, clients[fd], multiplexer);
+        }
+    }
+
+    for (size_t i = 0; i < server_fds.size(); ++i)
+        SocketUtils::closeSocket(server_fds[i]);
 }
 
-void HttpServer::handleClient()
+bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multiplexer& multiplexer)
 {
-    int client_fd = accept(_server_fd, NULL, NULL);
-    if (client_fd == -1)
+    char    buffer[4096];
+    ssize_t bytes_read = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
+
+    if (bytes_read <= 0)
     {
-        perror("accept");
-        return;
+        if (bytes_read == 0 || (bytes_read == -1 && errno != EAGAIN && errno != EWOULDBLOCK))
+        {
+            multiplexer.removeFd(client_fd);
+            SocketUtils::closeSocket(client_fd);
+            return false;
+        }
+        return true;
     }
 
-    char buf[1024];
-    int  n = read(client_fd, buf, sizeof(buf) - 1);
-    if (n > 0)
-    {
-        buf[n] = '\0';
+    buffer[bytes_read] = '\0';
+    client.read_buffer += buffer;
 
-        HttpRequest        request(buf);
+    // Verificar si tenemos una petición HTTP completa
+    if (client.read_buffer.find("\r\n\r\n") != std::string::npos)
+    {
+        client.request_complete = true;
+
+        // Procesar petición
+        HttpRequest        request(client.read_buffer.c_str());
         HttpRequestHandler handler;
         HttpResponse       response = handler.handle(request);
 
-        std::string respStr = response.toString();
-        write(client_fd, respStr.c_str(), respStr.size());
+        client.write_buffer = response.toString();
+
+        multiplexer.modifyFd(client_fd, Multiplexer::WRITE);
     }
-    close(client_fd);
+
+    return true;
 }
 
-void HttpServer::cleanup()
+bool HttpServer::handleClientWrite(int client_fd, ClientConnection& client, Multiplexer& multiplexer)
 {
-    if (_server_fd != -1)
+    if (client.write_buffer.empty())
+        return true;
+
+    ssize_t bytes_sent = send(client_fd, client.write_buffer.c_str(), client.write_buffer.size(), 0);
+
+    if (bytes_sent == -1)
     {
-        close(_server_fd);
-        _server_fd = -1;
+        if (errno != EAGAIN && errno != EWOULDBLOCK)
+        {
+            multiplexer.removeFd(client_fd);
+            SocketUtils::closeSocket(client_fd);
+            return false;
+        }
+        return true;
     }
-    if (_res)
+
+    client.write_buffer.erase(0, bytes_sent);
+
+    if (client.write_buffer.empty())
     {
-        freeaddrinfo(_res);
-        _res = NULL;
+        multiplexer.removeFd(client_fd);
+        SocketUtils::closeSocket(client_fd);
+        return false;
     }
+
+    return true;
 }

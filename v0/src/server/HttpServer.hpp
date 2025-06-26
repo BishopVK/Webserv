@@ -1,6 +1,7 @@
 #ifndef HTTPSERVER_HPP
 #define HTTPSERVER_HPP
 
+#include "../io/Multiplexer.hpp"
 #include <netdb.h>
 #include <string>
 
@@ -8,17 +9,28 @@ class HttpRequestHandler;
 
 class HttpServer
 {
-  private:
-    std::string      _port;
-    int              _server_fd;
-    struct addrinfo* _res;
+  public:
+    struct ClientConnection
+    {
+        std::string read_buffer;
+        std::string write_buffer;
+        bool        request_complete;
+        bool        response_sent;
 
-    bool setupSocket();
-    void handleClient();
-    void cleanup();
+        ClientConnection() : request_complete(false), response_sent(false)
+        {
+        }
+    };
+
+  private:
+    std::vector<std::string> _ports;
+
+    bool handleClientRead(int client_fd, ClientConnection& client, Multiplexer& multiplexer);
+    bool handleClientWrite(int client_fd, ClientConnection& client, Multiplexer& multiplexer);
 
   public:
     HttpServer(const std::string& port);
+    HttpServer(const std::vector<std::string>& ports);
     HttpServer(const HttpServer& other);
     ~HttpServer();
     HttpServer& operator=(const HttpServer& other);
