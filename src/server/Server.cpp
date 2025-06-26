@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:09:45 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/26 14:01:04 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/26 22:23:16 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ Server::Server() : Config(), _ip(IP_DEFAULT), _is_running(false)
 	_server_name = "Server " + ss.str();
 
 	_port = -1;
+	_server_fd = -1;
 	//_ports.push_back(-1);
 	_sockets.clear();
 	_locations.clear();
@@ -35,6 +36,7 @@ Server::Server(int port) : Config(), _ip(IP_DEFAULT), _is_running(false)
 	_server_name = "Server " + ss.str();
 
 	_port = port;
+	_server_fd = -1;
 	//_ports.push_back(-1);
 	_sockets.clear();
 	_locations.clear();

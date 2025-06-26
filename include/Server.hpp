@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 13:10:56 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/26 14:00:53 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/26 22:21:45 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ class Server : public Config
 		int								_port;
 		//std::vector<int>				_ports;
 		std::string						_server_name;
-		//int								_server_fd;
+		int								_server_fd;
 		std::vector<int>				_sockets;
 		int								_servers_count; // Number of servers created
 		std::map<std::string, Location>	_locations; // List of the server locations
