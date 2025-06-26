@@ -6,11 +6,12 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:44:17 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/20 13:20:21 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/26 14:01:48 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "server.hpp"
+#include "include/Config.hpp"
+#include "include/Server.hpp"
 
 int main(int argc, char** argv)
 {

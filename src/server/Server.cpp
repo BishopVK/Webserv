@@ -1,13 +1,40 @@
-#include "Server.hpp"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Server.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/26 12:09:45 by danjimen,is       #+#    #+#             */
+/*   Updated: 2025/06/26 14:01:04 by danjimen,is      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-Server::Server() : Config(), _is_running(false), _ip(IP_DEFAULT)
+#include "../../include/Server.hpp"
+
+Server::Server() : Config(), _ip(IP_DEFAULT), _is_running(false)
 {
 	//Set the name to the server
+	_servers_count = 0;
 	std::stringstream	ss;
-	ss << ++Server::_servers_count;
+	ss << ++_servers_count;
 	_server_name = "Server " + ss.str();
 
 	_port = -1;
+	//_ports.push_back(-1);
+	_sockets.clear();
+	_locations.clear();
+}
+
+Server::Server(int port) : Config(), _ip(IP_DEFAULT), _is_running(false)
+{
+	//Set the name to the server
+	_servers_count = 0;
+	std::stringstream	ss;
+	ss << ++_servers_count;
+	_server_name = "Server " + ss.str();
+
+	_port = port;
 	//_ports.push_back(-1);
 	_sockets.clear();
 	_locations.clear();
@@ -47,7 +74,7 @@ void				Server::addPort(int port)
 }
 bool				Server::hasPort(int port) const
 {
-	return _port != -1;
+	return _port == port;
 }
 
 // server_name
@@ -106,13 +133,14 @@ Server::~Server()
 {
 	if (_server_fd != -1)
 		close(_server_fd);
-}
+} */
 
 void Server::start()
 {
 	struct sockaddr_in address;
 
-	_server_fd = socket(AF_INET, SOCK_STREAM, 0);
+	//_server_fd = socket(AF_INET, SOCK_STREAM, 0);
+	int _server_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (_server_fd == -1)
 	{
 		perror("socket");
@@ -144,4 +172,4 @@ void Server::start()
 	}
 
 	std::cout << "Servidor escuchando en el puerto " << _port << std::endl;
-} */
+}

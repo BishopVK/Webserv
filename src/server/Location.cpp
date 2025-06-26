@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:15:57 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/25 00:25:08 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/26 12:13:38 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,4 @@ void	Location::setRoute(const std::string &route) { _route = route; }
 std::string	Location::getAlias() const { return _alias; }
 void	Location::setAlias(const std::string &alias) { _alias = alias; }
 
-void Location::inherit(const Config &config) {} // FALTA POR DEFINIR
+//void Location::inherit(const Config &config) {} // FALTA POR DEFINIR

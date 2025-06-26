@@ -6,13 +6,13 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 18:08:18 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/25 00:13:19 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/26 12:13:18 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/Config.hpp"
 
-Config::Config() : _root(ROOT_DEFAULT), _client_max_body_size(CLIENT_MAX_BODY_SIZE_DEFAULT), _autoindex(AUTOINDEX_DEFAULT)
+Config::Config() : _root(ROOT_DEFAULT), _autoindex(AUTOINDEX_DEFAULT), _client_max_body_size(CLIENT_MAX_BODY_SIZE_DEFAULT)
 {
 	// Empty STLs
 	_error_pages.clear();

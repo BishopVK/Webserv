@@ -6,7 +6,7 @@
 #    By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/20 12:20:33 by danjimen,is       #+#    #+#              #
-#    Updated: 2025/06/20 13:14:13 by danjimen,is      ###   ########.fr        #
+#    Updated: 2025/06/26 12:12:40 by danjimen,is      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,9 @@ CXX			=	c++
 CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
 
 SRC			=	main.cpp \
-				server.cpp
+				src/server/Config.cpp \
+				src/server/Server.cpp \
+				src/server/Location.cpp
 
 OBJ			=	$(SRC:.cpp=.o)
 
