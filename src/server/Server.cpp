@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:09:45 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/26 23:48:59 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/26 23:53:25 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ Server::~Server()
 {
 	_is_running = false;
 	_locations.clear();
+	if (_server_fd != -1)
+		close(_server_fd);
 }
 
 /* GETERS and SETERS */
