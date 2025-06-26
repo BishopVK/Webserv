@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 13:10:56 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/26 22:21:45 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/26 23:47:45 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ class Server : public Config
 {
 	private:
 		std::string						_ip;
-		int								_port;
-		//std::vector<int>				_ports;
+		//int							_port;
+		std::vector<int>				_ports; // DEBEMOS TENER LA POSIBILIDAD DE ESCUCHAR VARIOS PUERTOS
 		std::string						_server_name;
 		int								_server_fd;
 		std::vector<int>				_sockets;
@@ -39,8 +39,8 @@ class Server : public Config
 		void		setIp(const std::string &ip);
 
 		// ports
-		//std::vector<int>	getPorts() const;
-		int					getPorts() const;
+		std::vector<int>	getPorts() const;
+		//int					getPort() const;
 		void				addPort(int port);
 		bool				hasPort(int port) const;
 
@@ -62,4 +62,7 @@ class Server : public Config
 
 		void start();
 		void stop();
+
+		/* TOOLS */
+		void	print() const;
 };
