@@ -12,6 +12,7 @@
 
 #include "include/Config.hpp"
 #include "include/Server.hpp"
+#include "include/valueObjects/Port.hpp"
 #include "src/http/HttpServer.hpp"
 #include <vector>
 
@@ -38,7 +39,7 @@ Server	create_server_for_testing()
 	location1.setReturnData(301, "http://example.com");
 	location1.addMethod("GET");
 	location1.addMethod("POST");
-	
+
 	server.addLocation("/testing/", location1);
 
 	Location location2;
@@ -51,7 +52,7 @@ Server	create_server_for_testing()
 	location2.addCgi(".py", "/usr/bin/python3");
 	location2.setReturnData(302, "http://python-example.com");
 	location2.addMethod("DELETE");
-	
+
 	server.addLocation("/location/", location2);
 
 	return server;
@@ -90,14 +91,16 @@ int main(int argc, char** argv)
 	Server server = create_server_for_testing(); // TESTING
 	std::vector<Server> servers;
 	servers.push_back(server);
-	
+
 	server.print();
 	// server.start();
 	// while (true) // Mantener el servidor corriendo
 	// 	;1
-	// 
-	
-	HttpServer httpServer( server.getPorts().at(0));
+	//
+
+	HttpServer httpServer(servers);
+
+	httpServer.run();
 
 	// Hacer "telnet localhost 8080" en otra terminal para comprobar que el servidor está escuchando en el puerto 8080
 

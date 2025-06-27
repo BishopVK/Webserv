@@ -29,6 +29,8 @@ SRC			=	main.cpp \
 				src/http/HttpServer.cpp \
 				src/io/Multiplexer.cpp \
 				src/io/SocketUtils.cpp \
+				src/valueObjects/IntValue.cpp \
+				src/valueObjects/Port.cpp \
 
 OBJ			=	$(SRC:.cpp=.o)
 
