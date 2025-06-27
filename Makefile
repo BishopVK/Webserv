@@ -17,8 +17,18 @@ CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
 
 SRC			=	main.cpp \
 				src/server/Config.cpp \
+				src/server/Location.cpp \
 				src/server/Server.cpp \
-				src/server/Location.cpp
+				src/controllers/ControllerRegistry.cpp \
+				src/controllers/TaskController.cpp \
+				src/controllers/UserController.cpp \
+				src/controllers/base/AController.cpp \
+				src/http/HttpRequest.cpp \
+				src/http/HttpRequestHandler.cpp \
+				src/http/HttpResponse.cpp \
+				src/http/HttpServer.cpp \
+				src/io/Multiplexer.cpp \
+				src/io/SocketUtils.cpp \
 
 OBJ			=	$(SRC:.cpp=.o)
 

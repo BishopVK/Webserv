@@ -12,6 +12,8 @@
 
 #include "include/Config.hpp"
 #include "include/Server.hpp"
+#include "src/http/HttpServer.hpp"
+#include <vector>
 
 Server	create_server_for_testing()
 {
@@ -86,10 +88,16 @@ int main(int argc, char** argv)
 	//int port = 8080; // lo obtendremos del parser cuando lo hagamos
 	//Server server(port);
 	Server server = create_server_for_testing(); // TESTING
+	std::vector<Server> servers;
+	servers.push_back(server);
+	
 	server.print();
-	server.start();
-	while (true) // Mantener el servidor corriendo
-		;
+	// server.start();
+	// while (true) // Mantener el servidor corriendo
+	// 	;1
+	// 
+	
+	HttpServer httpServer( server.getPorts().at(0));
 
 	// Hacer "telnet localhost 8080" en otra terminal para comprobar que el servidor está escuchando en el puerto 8080
 
