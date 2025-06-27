@@ -1,27 +1,17 @@
 #include "HttpServer.hpp"
+#include "../../include/Server.hpp"
+#include "../../include/valueObjects/Port.hpp"
 #include "../http/HttpRequest.hpp"
 #include "../http/HttpRequestHandler.hpp"
 #include "../http/HttpResponse.hpp"
 #include "../io/Multiplexer.hpp"
 #include "../io/SocketUtils.hpp"
-#include "../../include/Server.hpp"
-#include "../../include/valueObjects/Port.hpp"
 #include <errno.h>
 #include <iostream>
 #include <map>
 #include <sys/socket.h>
 #include <unistd.h>
 #include <vector>
-
-// HttpServer::HttpServer(const std::string& port)
-// {
-//     _ports.push_back(port);
-// }
-
-// HttpServer::HttpServer(const std::vector<std::string>& ports)
-// {
-//     _ports = ports;
-// }
 
 HttpServer::HttpServer(const std::vector<Server>& servers)
 {
@@ -34,7 +24,6 @@ HttpServer::~HttpServer()
 
 HttpServer::HttpServer(const HttpServer& other)
 {
-    // _ports = other._ports;
     _servers = other._servers;
 }
 
@@ -42,7 +31,6 @@ HttpServer& HttpServer::operator=(const HttpServer& other)
 {
     if (this != &other)
     {
-        // _ports = other._ports;
         _servers = other._servers;
     }
     return *this;
@@ -54,42 +42,39 @@ void HttpServer::run()
     std::map<int, ClientConnection> clients;
     std::vector<int>                server_fds;
 
-    // for (std::vector<std::string>::iterator it = _ports.begin(); it != _ports.end(); ++it)
     for (std::vector<Server>::iterator it = _servers.begin(); it != _servers.end(); ++it)
     {
-        // const std::string& port = Port(*it->getPorts()).toString();
-        
         std::vector<int> ports = it->getPorts();
-        
+
         if (ports.empty())
         {
-            std::cerr << "No ports defined for server. Skipping." << std::endl;
+            std::cerr << "No ports defined for server." << std::endl;
             continue;
         }
-        
-        std::vector<int>::iterator port_it = ports.begin();
-        
-        for (; port_it != ports.end(); ++port_it)
+
+        for (std::vector<int>::iterator port_it = ports.begin(); port_it != ports.end(); ++port_it)
         {
+            // TODO: Esto puede lanzar una excepción si el puerto es inválido!!
             std::string port = Port(*port_it).toString();
             if (port.empty())
             {
-                std::cerr << "Invalid port: " << *port_it << ". Skipping." << std::endl;
+                std::cerr << "Invalid port: " << *port_it << "." << std::endl;
                 continue;
             }
-            
+
             std::cout << "Starting server on port: " << port << std::endl;
-    
+
             int server_fd = SocketUtils::createServerSocket(port.c_str());
             if (server_fd == -1)
             {
                 std::cerr << "Failed to create server socket on port " << port << std::endl;
                 continue;
             }
-    
+
             SocketUtils::setNonBlocking(server_fd);
             SocketUtils::setReuseAddr(server_fd);
             multiplexer.addFd(server_fd, Multiplexer::READ);
+            // TODO: Esto deberia de estar en el servidor junto con el puerto
             server_fds.push_back(server_fd);
         }
     }
@@ -185,12 +170,10 @@ bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multi
     buffer[bytes_read] = '\0';
     client.read_buffer += buffer;
 
-    // Verificar si tenemos una petición HTTP completa
     if (client.read_buffer.find("\r\n\r\n") != std::string::npos)
     {
         client.request_complete = true;
 
-        // Procesar petición
         HttpRequest        request(client.read_buffer.c_str());
         HttpRequestHandler handler;
         HttpResponse       response = handler.handle(request);
