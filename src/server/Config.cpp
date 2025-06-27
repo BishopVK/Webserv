@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 18:08:18 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/27 09:49:13 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/28 00:26:50 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ Config::Config() : _root(ROOT_DEFAULT), _autoindex(AUTOINDEX_DEFAULT), _client_m
 	_error_pages.clear();
 	_cgi.clear();
 	_methods.clear();
+
+	// Initialize inherit bools
+	_inherit_initizalized.clear();
+	_inherit_initizalized.resize(_init_count_elements);
+	for (int i = 0; i < _init_count_elements; ++i)
+		_inherit_initizalized[i] = false;
 
 	// Init Return struct
 	_return_data.code = -1;
@@ -34,7 +40,11 @@ Config::~Config() {}
 // root
 std::string	Config::getRoot() const { return _root; }
 
-void	Config::setRoot(const std::string &root) { _root = root; }
+void	Config::setRoot(const std::string &root)
+{
+	_root = root;
+	_inherit_initizalized.at(_init_root) = true;
+}
 
 // index_files
 std::vector<std::string>	Config::getIndexFiles() const { return _index_files; }
@@ -42,18 +52,29 @@ std::vector<std::string>	Config::getIndexFiles() const { return _index_files; }
 void	Config::addIndexFile(const std::string &index_file)
 {
 	if (std::find(_index_files.begin(), _index_files.end(), index_file) == _index_files.end())
+	{
 		_index_files.push_back(index_file);
+		_inherit_initizalized.at(_init_index_files) = true;
+	}
 }
 
 // autoindex
 bool	Config::getAutoindex() const { return _autoindex; }
 
-void	Config::setAutoindex(bool autoindex) { _autoindex = autoindex; }
+void	Config::setAutoindex(bool autoindex)
+{
+	_autoindex = autoindex;
+	_inherit_initizalized.at(_init_autoindex) = true;
+}
 
 // client_max_body_size
 size_t	Config::getClientMaxBodySize() const { return _client_max_body_size; }
 
-void	Config::setClientMaxBodySize(size_t client_max_body_size) { _client_max_body_size = client_max_body_size; }
+void	Config::setClientMaxBodySize(size_t client_max_body_size)
+{
+	_client_max_body_size = client_max_body_size;
+	_inherit_initizalized.at(_init_client_max_body_size) = true;
+}
 
 // error_pages
 std::map<int, std::string>	Config::getErrorPages() const { return _error_pages; }
@@ -74,6 +95,7 @@ void	Config::addErrorPage(int status_code, const std::string &path)
 		_error_pages.insert(std::pair<int, std::string>(status_code, path));
 	else
 		it->second = path;
+	_inherit_initizalized.at(_init_error_pages) = true;
 }
 
 // cgi
