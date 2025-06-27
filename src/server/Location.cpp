@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:15:57 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/27 12:55:59 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/28 00:04:39 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,43 @@ void	Location::setRoute(const std::string &route) { _route = route; }
 //void	Location::setAlias(const std::string &alias) { _alias = alias; }
 
 // FALTA POR DEFINIR
-/* void Location::inherit(const Config &config)
+void Location::inherit(const Config &config)
 {
-	if (_root.empty())
+	// root
+	if (_inherit_initizalized.at(_init_root) == false)
+	{
 		_root = config.getRoot();
-	if (_index_files.empty())
+		_inherit_initizalized.at(_init_root) = true;
+	}
+
+	// index_files
+	if (_inherit_initizalized.at(_init_index_files) == false)
+	{
 		_index_files = config.getIndexFiles();
-	//if (_autoindex) // IMPOSIBLE COMPROBAR SIN UN FLAG
-	if (_error_pages.empty())
+		_inherit_initizalized.at(_init_index_files) = true;
+	}
+
+	// autoindex
+	if (_inherit_initizalized.at(_init_autoindex) == false)
+	{
+		_autoindex = config.getAutoindex();
+		_inherit_initizalized.at(_init_autoindex) = true;
+	}
+
+	// error_pages
+	if (_inherit_initizalized.at(_init_error_pages) == false)
+	{
 		_error_pages = config.getErrorPages();
-	// if (_client_max_body_size) // IMPOSIBLE COMPROBAR SIN UN FLAG
+		_inherit_initizalized.at(_init_error_pages) = true;
+	}
 	
-} */
+	// client_max_body_size
+	if (_inherit_initizalized.at(_init_client_max_body_size) == false)
+	{
+		_client_max_body_size = config.getClientMaxBodySize();
+		_inherit_initizalized.at(_init_client_max_body_size) = true;
+	}
+}
 
 /* TOOLS */
 void	Location::print() const
