@@ -6,15 +6,17 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:15:57 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/27 09:36:39 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/27 12:55:59 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/Location.hpp"
 
-Location::Location() : Config(), _route(""), _alias(ALIAS_DEFAULT) {}
+//Location::Location() : Config(), _route(""), _alias(ALIAS_DEFAULT) {}
+Location::Location() : Config(), _route("") {}
 
-Location::Location(const std::string &route) : Config(), _route(route), _alias(ALIAS_DEFAULT) {}
+//Location::Location(const std::string &route) : Config(), _route(route), _alias(ALIAS_DEFAULT) {}
+Location::Location(const std::string &route) : Config(), _route(route) {}
 
 Location::~Location() {}
 
@@ -24,10 +26,22 @@ std::string	Location::getRoute() const { return _route; }
 void	Location::setRoute(const std::string &route) { _route = route; }
 
 // alias
-std::string	Location::getAlias() const { return _alias; }
-void	Location::setAlias(const std::string &alias) { _alias = alias; }
+//std::string	Location::getAlias() const { return _alias; }
+//void	Location::setAlias(const std::string &alias) { _alias = alias; }
 
-//void Location::inherit(const Config &config) {} // FALTA POR DEFINIR
+// FALTA POR DEFINIR
+/* void Location::inherit(const Config &config)
+{
+	if (_root.empty())
+		_root = config.getRoot();
+	if (_index_files.empty())
+		_index_files = config.getIndexFiles();
+	//if (_autoindex) // IMPOSIBLE COMPROBAR SIN UN FLAG
+	if (_error_pages.empty())
+		_error_pages = config.getErrorPages();
+	// if (_client_max_body_size) // IMPOSIBLE COMPROBAR SIN UN FLAG
+	
+} */
 
 /* TOOLS */
 void	Location::print() const
@@ -36,7 +50,7 @@ void	Location::print() const
 	std::cout << "route = " << _route << std::endl;
 
 	// alias
-	std::cout << "alias = " << _alias << std::endl;
+	//std::cout << "alias = " << _alias << std::endl;
 
 	// root
 	std::cout << "root = " << _root << std::endl;

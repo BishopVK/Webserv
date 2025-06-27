@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 17:23:27 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/27 00:53:13 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/27 10:18:10 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ class Location : public Config
 {
 	private:
 		std::string	_route;	/* Route of the location */
-		std::string	_alias;	/* Alias of the route */ // NO OBLIGATORIO
+		//std::string	_alias;	/* Alias of the route */ // NO OBLIGATORIO
 
 	public:
 		Location();
@@ -31,8 +31,8 @@ class Location : public Config
 		void		setRoute(const std::string &route);
 
 		// alias
-		std::string	getAlias() const;
-		void		setAlias(const std::string &alias);
+		//std::string	getAlias() const;
+		//void		setAlias(const std::string &alias);
 
 		// Será necesario heredar de la configuración inicial del server
 		void inherit(const Config &config);
