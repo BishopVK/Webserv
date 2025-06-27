@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:58:17 by danjimen          #+#    #+#             */
-/*   Updated: 2025/06/27 09:52:17 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/27 23:51:56 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@ class  Config
 			int			code;
 			std::string	text;
 		};
+
+		typedef enum s_inherit_init
+		{
+			_init_root,
+			_init_index_files,
+			_init_autoindex,
+			_init_error_pages,
+			_init_client_max_body_size,
+			_init_count_elements
+		} t_inherit_init;
 		
 	protected:
 		std::string							_root;
@@ -33,6 +43,7 @@ class  Config
 		std::map<std::string, std::string>	_cgi; /* List of possible cgis <extension, path> */
 		ReturnData							_return_data;
 		std::vector<std::string>			_methods;
+		std::vector<bool>					_inherit_initizalized;
 
 	public:
 		Config();
