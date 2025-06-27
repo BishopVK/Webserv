@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:58:17 by danjimen          #+#    #+#             */
-/*   Updated: 2025/06/26 09:21:11 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/27 09:52:17 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ class  Config
 			int			code;
 			std::string	text;
 		};
-
+		
 	protected:
 		std::string							_root;
 		std::vector<std::string>			_index_files;
@@ -34,6 +34,7 @@ class  Config
 		ReturnData							_return_data;
 		std::vector<std::string>			_methods;
 
+	public:
 		Config();
 		virtual ~Config();
 
