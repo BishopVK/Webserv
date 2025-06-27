@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:44:17 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/27 13:02:16 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/28 00:29:52 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ Server	create_server_for_testing()
 	Location location1;
 	location1.setRoute("/var/www/html/location1Route");
 	location1.setRoot("/var/www/html/location1Root");
-	location1.addIndexFile("testing.html");
+	location1.addIndexFile("location1.html");
 	location1.setAutoindex(false);
 	location1.addErrorPage(505, "/errors/50x.html");
 	location1.setClientMaxBodySize(5);
@@ -40,12 +40,12 @@ Server	create_server_for_testing()
 	location1.addMethod("GET");
 	location1.addMethod("POST");
 
-	server.addLocation("/testing/", location1);
+	server.addLocation("/location1/", location1);
 
 	Location location2;
 	location2.setRoute("/var/www/html/location2Route");
 	location2.setRoot("/var/www/html/location2Root");
-	location2.addIndexFile("location.html");
+	location2.addIndexFile("location2.html");
 	location2.setAutoindex(true);
 	location2.addErrorPage(400, "/errors/40x.html");
 	location2.setClientMaxBodySize(20);
@@ -53,7 +53,18 @@ Server	create_server_for_testing()
 	location2.setReturnData(302, "http://python-example.com");
 	location2.addMethod("DELETE");
 
-	server.addLocation("/location/", location2);
+	server.addLocation("/location2/", location2);
+
+	Location location3;
+	location3.setRoute("/var/www/html/location3Route");
+	location3.addCgi(".py", "/usr/bin/python3");
+	location3.setReturnData(302, "http://python-example.com");
+	location3.addMethod("GET");
+	location3.addMethod("POST");
+	location3.addMethod("DELETE");
+	location3.inherit(server);
+
+	server.addLocation("/location3/", location3);
 
 	return server;
 }
