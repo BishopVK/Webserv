@@ -1,18 +1,19 @@
 #pragma once
 
 #include <string>
-class IntValue
+
+class Port
 {
   private:
     int  _value;
     bool _is_null;
 
   public:
-    IntValue();
-    ~IntValue();
-    IntValue(int value);
-    IntValue(const IntValue& other);
-    IntValue& operator=(const IntValue& other);
+    Port();
+    ~Port();
+    Port(int value);
+    Port(const Port& other);
+    Port& operator=(const Port& other);
 
     int  getValue() const;
     void setValue(int value);
