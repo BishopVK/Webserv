@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:09:45 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/27 00:47:35 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/27 09:59:46 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,41 +184,41 @@ void Server::start()
 void	Server::print() const
 {
 	// root
-	std::cout << "root = " << getRoot() << std::endl;
+	std::cout << "root = " << _root << std::endl;
 
 	// index_files
-	if (!getIndexFiles().empty())
+	if (!_index_files.empty())
 	{
 		std::cout << "index_files:" << std::endl;
-		std::vector<std::string>::iterator it;
-		for (it = getIndexFiles().begin(); it != getIndexFiles().end(); ++it)
+		std::vector<std::string>::const_iterator it;
+		for (it = _index_files.begin(); it != _index_files.end(); ++it)
 			std::cout << "\t- " << *it << std::endl;
 	}
 
 	// autoindex
-	std::cout << "autoindex = " << (getAutoindex() ? std::string("true") : std::string("false")) << std::endl;
+	std::cout << "autoindex = " << (_autoindex ? std::string("true") : std::string("false")) << std::endl;
 
 	// client_max_body_size
-	std::cout << "client_max_body_size = " << getClientMaxBodySize() << std::endl;
+	std::cout << "client_max_body_size = " << _client_max_body_size << "M" << std::endl;
 
 	// error_pages
-	if (!getErrorPages().empty())
+	if (!_error_pages.empty())
 	{
 		std::cout << "error_pages:" << std::endl;
-		std::map<int, std::string>::iterator it;
-		for (it = getErrorPages().begin(); it != getErrorPages().end(); ++it)
+		std::map<int, std::string>::const_iterator it;
+		for (it = _error_pages.begin(); it != _error_pages.end(); ++it)
 			std::cout << "\t- " << it->first << " => " << it->second << std::endl;
 	}
 
 	// ip
-	std::cout << "ip = " << getIp() << std::endl;
+	std::cout << "ip = " << _ip << std::endl;
 
 	// ports
-	if (!getPorts().empty())
+	if (!_ports.empty())
 	{
 		std::cout << "ports:" << std::endl;
-		std::vector<int>::iterator it;
-		for (it = getPorts().begin(); it != getPorts().end(); ++it)
+		std::vector<int>::const_iterator it;
+		for (it = _ports.begin(); it != _ports.end(); ++it)
 			std::cout << "\t- " << *it << std::endl;
 	}
 
@@ -230,23 +230,23 @@ void	Server::print() const
 		std::cout << "server_fd = " << _server_fd << std::endl;
 
 	// sockets
-	if (!getSockets().empty())
+	if (!_sockets.empty())
 	{
 		std::cout << "sockets:" << std::endl;
-		std::vector<int>::iterator it;
-		for (it = getSockets().begin(); it != getSockets().end(); ++it)
+		std::vector<int>::const_iterator it;
+		for (it = _sockets.begin(); it != _sockets.end(); ++it)
 			std::cout << "\t- " << *it << std::endl;
 	}
 
 	// is_running
-	std::cout << "is_running = " << (isRunning() ? std::string("true") : std::string("false")) << std::endl;
+	std::cout << "is_running = " << (_is_running ? std::string("true") : std::string("false")) << std::endl;
 
 	// locations
 	if (!getLocations().empty())
 	{
 		std::cout << "locations:" << std::endl;
-		std::map<std::string, Location>::iterator it;
-		for (it = getLocations().begin(); it != getLocations().end(); ++it)
+		std::map<std::string, Location>::const_iterator it;
+		for (it = _locations.begin(); it != _locations.end(); ++it)
 		{
 			std::cout << "--------------------" << std::endl;
 			it->second.print();

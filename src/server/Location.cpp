@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:15:57 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/27 00:56:36 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/27 09:36:39 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,44 +33,44 @@ void	Location::setAlias(const std::string &alias) { _alias = alias; }
 void	Location::print() const
 {
 	// route
-	std::cout << "route = " << getRoute() << std::endl;
+	std::cout << "route = " << _route << std::endl;
 
 	// alias
-	std::cout << "alias = " << getAlias() << std::endl;
+	std::cout << "alias = " << _alias << std::endl;
 
 	// root
-	std::cout << "root = " << getRoot() << std::endl;
+	std::cout << "root = " << _root << std::endl;
 
 	// index_files
-	if (!getIndexFiles().empty())
+	if (!_index_files.empty())
 	{
 		std::cout << "index_files:" << std::endl;
-		std::vector<std::string>::iterator it;
-		for (it = getIndexFiles().begin(); it != getIndexFiles().end(); ++it)
+		std::vector<std::string>::const_iterator it;
+		for (it = _index_files.begin(); it != _index_files.end(); ++it)
 			std::cout << "\t- " << *it << std::endl;
 	}
 
 	// autoindex
-	std::cout << "autoindex = " << (getAutoindex() ? std::string("true") : std::string("false")) << std::endl;
+	std::cout << "autoindex = " << (_autoindex ? std::string("true") : std::string("false")) << std::endl;
 
 	// client_max_body_size
-	std::cout << "client_max_body_size = " << getClientMaxBodySize() << std::endl;
+	std::cout << "client_max_body_size = " << _client_max_body_size << "M" << std::endl;
 
 	// error_pages
-	if (!getErrorPages().empty())
+	if (!_error_pages.empty())
 	{
 		std::cout << "error_pages:" << std::endl;
-		std::map<int, std::string>::iterator it;
-		for (it = getErrorPages().begin(); it != getErrorPages().end(); ++it)
+		std::map<int, std::string>::const_iterator it;
+		for (it = _error_pages.begin(); it != _error_pages.end(); ++it)
 			std::cout << "\t- " << it->first << " => " << it->second << std::endl;
 	}
 
 	// cgi
-	if (!getCgis().empty())
+	if (!_cgi.empty())
 	{
 		std::cout << "cgi:" << std::endl;
-		std::map<std::string, std::string>::iterator it;
-		for (it = getCgis().begin(); it != getCgis().end(); ++it)
+		std::map<std::string, std::string>::const_iterator it;
+		for (it = _cgi.begin(); it != _cgi.end(); ++it)
 			std::cout << "\t- " << it->first << " => " << it->second << std::endl;
 	}
 
@@ -78,15 +78,15 @@ void	Location::print() const
 	if (_return_data.code != -1)
 	{
 		std::cout << "return_data:" << std::endl;
-		std::cout << "\t- " << getReturnData().code << " => " << getReturnData().text << std::endl;
+		std::cout << "\t- " << _return_data.code << " => " << _return_data.text << std::endl;
 	}
 
 	// methods
-	if (!getMethods().empty())
+	if (!_methods.empty())
 	{
 		std::cout << "methods:" << std::endl;
-		std::vector<std::string>::iterator it;
-		for (it = getMethods().begin(); it != getMethods().end(); ++it)
+		std::vector<std::string>::const_iterator it;
+		for (it = _methods.begin(); it != _methods.end(); ++it)
 			std::cout << "\t- " << *it << std::endl;
 	}
 }
