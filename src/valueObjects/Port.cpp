@@ -12,7 +12,7 @@ Port::Port(int value) : IntValue(value)
 {
     if (value < 0 || value > 65535)
     {
-        throw InvalidPortException().what();
+        throw InvalidPortException();
     }
 }
 
