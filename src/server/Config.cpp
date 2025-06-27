@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 18:08:18 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/26 23:37:35 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/27 09:49:13 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ Config::Config() : _root(ROOT_DEFAULT), _autoindex(AUTOINDEX_DEFAULT), _client_m
 	_return_data.text = "";
 
 	// Append the GET method
-	_methods.push_back("GET");
+	//_methods.push_back("GET");
 }
 
 Config::~Config() {}
