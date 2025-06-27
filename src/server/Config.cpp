@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 18:08:18 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/28 00:26:50 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/28 00:43:34 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ Config::Config() : _root(ROOT_DEFAULT), _autoindex(AUTOINDEX_DEFAULT), _client_m
 
 	// Initialize inherit bools
 	_inherit_initizalized.clear();
-	_inherit_initizalized.resize(_init_count_elements);
-	for (int i = 0; i < _init_count_elements; ++i)
-		_inherit_initizalized[i] = false;
+	_inherit_initizalized.resize(_init_count_elements, false);
 
 	// Init Return struct
 	_return_data.code = -1;
