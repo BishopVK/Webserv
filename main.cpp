@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:44:17 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/27 10:00:10 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/27 13:02:16 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ Server	create_server_for_testing()
 	
 	server.addLocation("/location/", location2);
 
-	//server.print();
-
 	return server;
 }
 
@@ -78,10 +76,10 @@ int main(int argc, char** argv)
 	buffer << configFile.rdbuf(); // lee todo el contenido
 	std::string configContent = buffer.str();
 
-	std::cout << "Contenido del archivo de configuración:" << std::endl;
+	/* std::cout << "Contenido del archivo de configuración:" << std::endl;
 	std::cout << "----------------------------------------" << std::endl;
 	std::cout << configContent << std::endl;
-	std::cout << "---------------------------------------- " << std::endl;
+	std::cout << "---------------------------------------- " << std::endl; */
 
 	// Aquí más adelante vendrá el parser
 
