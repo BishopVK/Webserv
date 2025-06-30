@@ -6,10 +6,12 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:44:17 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/28 00:29:52 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/30 11:54:43 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "include/webserv.hpp"
+#include "include/prototypes.hpp"
 #include "include/Config.hpp"
 #include "include/Server.hpp"
 #include "include/valueObjects/Port.hpp"
@@ -86,11 +88,13 @@ int main(int argc, char** argv)
 		return EXIT_FAILURE;
 	}
 
-	std::stringstream buffer;
-	buffer << configFile.rdbuf(); // lee todo el contenido
-	std::string configContent = buffer.str();
+	parse(configFile);
 
-	/* std::cout << "Contenido del archivo de configuración:" << std::endl;
+	/* std::stringstream buffer;
+	buffer << configFile.rdbuf(); // lee todo el contenido
+	std::string configContent = buffer.str(); */
+
+	/* std::cout << "Contenido del archivo de configuración:" <<`std::endl;
 	std::cout << "----------------------------------------" << std::endl;
 	std::cout << configContent << std::endl;
 	std::cout << "---------------------------------------- " << std::endl; */

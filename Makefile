@@ -6,7 +6,7 @@
 #    By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/20 12:20:33 by danjimen,is       #+#    #+#              #
-#    Updated: 2025/06/30 11:37:59 by danjimen,is      ###   ########.fr        #
+#    Updated: 2025/06/30 11:43:26 by danjimen,is      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME		=	webserv
 CXX			=	c++
 CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
 
-VPATH		=	src src/server src/controllers src/controllers/base src/http src/io src/valueObjects .
+VPATH		=	src src/server src/controllers src/controllers/base src/http src/io src/valueObjects src/parse .
 
 SRC			=	main.cpp \
 				Config.cpp \
@@ -33,6 +33,7 @@ SRC			=	main.cpp \
 				SocketUtils.cpp \
 				IntValue.cpp \
 				Port.cpp \
+				parse_config.cpp \
 
 # .o folder
 OBJDIR		=	obj
