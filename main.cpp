@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:44:17 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/30 11:54:43 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/30 12:40:15 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,16 @@ int main(int argc, char** argv)
 		return EXIT_FAILURE;
 	}
 
+	// TODO TENDRÁ QUE IR DENTRO DE UN TRY CATCH
+	/* try
+	{
+		
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	} */
+	
 	parse(configFile);
 
 	/* std::stringstream buffer;

@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 10:00:39 by danjimen          #+#    #+#             */
-/*   Updated: 2025/06/24 18:12:21 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/30 12:34:14 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,3 +20,4 @@
 # define MAX_BODY_SIZE_BYTES			52428800 /* 50MB */
 # define SERVER_PROTOCOL				"HTML/1.1"
 # define ALIAS_DEFAULT					""
+# define DEFAULT_ERROR_PAGE				"100 /error.html" // INTERESANTE TENER UNA WEB DE ERROR POR DEFECTO EN CASO DE NO SER ESPECIFICADA
