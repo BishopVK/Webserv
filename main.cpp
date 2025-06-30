@@ -6,12 +6,13 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:44:17 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/30 12:40:15 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/30 23:32:21 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/webserv.hpp"
 #include "include/prototypes.hpp"
+#include "include/Parser.hpp"
 #include "include/Config.hpp"
 #include "include/Server.hpp"
 #include "include/valueObjects/Port.hpp"
@@ -81,24 +82,30 @@ int main(int argc, char** argv)
 
 	std::string configPath = argv[1];
 
-	std::ifstream configFile(configPath.c_str());
+	/* std::ifstream configFile(configPath.c_str());
 	if (!configFile.is_open())
 	{
 		std::cerr << "Error: The configuration file " << configPath << " could not be opened." << std::endl;
 		return EXIT_FAILURE;
-	}
+	} */
 
 	// TODO TENDRÁ QUE IR DENTRO DE UN TRY CATCH
-	/* try
+	try
 	{
-		
+		Parser parser(configPath);
+		Server server = create_server_for_testing(); // TESTING
+		std::vector<Server> servers;
+		servers.push_back(server);
+		server.print();
+		HttpServer httpServer(servers);
+		httpServer.run();
 	}
 	catch(const std::exception& e)
 	{
 		std::cerr << e.what() << '\n';
-	} */
+	}
 	
-	parse(configFile);
+	//parse(configFile);
 
 	/* std::stringstream buffer;
 	buffer << configFile.rdbuf(); // lee todo el contenido
@@ -113,19 +120,19 @@ int main(int argc, char** argv)
 
 	//int port = 8080; // lo obtendremos del parser cuando lo hagamos
 	//Server server(port);
-	Server server = create_server_for_testing(); // TESTING
-	std::vector<Server> servers;
-	servers.push_back(server);
+	// // Server server = create_server_for_testing(); // TESTING
+	// // std::vector<Server> servers;
+	// // servers.push_back(server);
 
-	server.print();
+	// // server.print();
 	// server.start();
 	// while (true) // Mantener el servidor corriendo
 	// 	;1
 	//
 
-	HttpServer httpServer(servers);
+	// // HttpServer httpServer(servers);
 
-	httpServer.run();
+	// // httpServer.run();
 
 	// Hacer "telnet localhost 8080" en otra terminal para comprobar que el servidor está escuchando en el puerto 8080
 

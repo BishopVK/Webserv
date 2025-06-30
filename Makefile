@@ -6,7 +6,7 @@
 #    By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/20 12:20:33 by danjimen,is       #+#    #+#              #
-#    Updated: 2025/06/30 11:43:26 by danjimen,is      ###   ########.fr        #
+#    Updated: 2025/06/30 23:40:22 by danjimen,is      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC			=	main.cpp \
 				SocketUtils.cpp \
 				IntValue.cpp \
 				Port.cpp \
+				Parser.cpp \
 				parse_config.cpp \
 
 # .o folder

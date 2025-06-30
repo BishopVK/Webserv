@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:51:33 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/30 20:01:26 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/30 23:39:42 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ std::string removeSpaces(const std::string& line)
 }
 
 //std::vector<Server>	parse(std::ifstream &configFile) // Tendrá que devolver un vector de Servers
-void	parse(std::ifstream &configFile)
+/* void	parse(std::ifstream &configFile)
 {
 	std::string	line;
 
@@ -88,4 +88,4 @@ void	parse(std::ifstream &configFile)
 			std::cout << "---- End of line ----" << std::endl;
 	}
 	configFile.close();
-}
+} */

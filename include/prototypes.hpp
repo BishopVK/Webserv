@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 11:52:47 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/30 11:54:46 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/30 23:39:21 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,5 @@
                                 __/ | |              
                                |___/|_|            */
 
-void	parse(std::ifstream &configFile);
+std::string	removeSpaces(const std::string& line);
+void		parse(std::ifstream &configFile);
