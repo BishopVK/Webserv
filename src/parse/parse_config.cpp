@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:51:33 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/30 13:36:55 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/06/30 20:01:26 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ std::string removeSpaces(const std::string& line)
 {
 	if (line.empty())
 		return ("");
+	// Remove isspace() at start and end
 	std::string result; // PROTEGER QUE PASA SI UN STRING FALLA AL RESERVAR MEMORIA
 	std::string::const_iterator line_begin = line.begin();
 	std::string::const_iterator line_end = line.end();
@@ -34,6 +35,7 @@ std::string removeSpaces(const std::string& line)
 	
 	result.assign(line_begin, line_end + 1);
 
+	// Remove isspace() between tokens leaving only one space
 	int	spaces = 0;
 	std::string final_result;
 	std::string::iterator result_begin;;
@@ -48,8 +50,11 @@ std::string removeSpaces(const std::string& line)
 		}
 		else
 		{
-			final_result += *result_begin;
 			spaces = 0;
+			// Ignore ';' at last postion
+			if ((result_begin + 1) == result_end && *result_begin == ';' && !std::isspace(static_cast<unsigned char>(*(result_begin - 1))))
+				continue ;
+			final_result += *result_begin;
 		}
 	}
 
