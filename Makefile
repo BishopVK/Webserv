@@ -6,7 +6,7 @@
 #    By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/20 12:20:33 by danjimen,is       #+#    #+#              #
-#    Updated: 2025/06/26 12:12:40 by danjimen,is      ###   ########.fr        #
+#    Updated: 2025/06/30 11:37:59 by danjimen,is      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,32 +15,49 @@ NAME		=	webserv
 CXX			=	c++
 CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
 
+VPATH		=	src src/server src/controllers src/controllers/base src/http src/io src/valueObjects .
+
 SRC			=	main.cpp \
-				src/server/Config.cpp \
-				src/server/Location.cpp \
-				src/server/Server.cpp \
-				src/controllers/ControllerRegistry.cpp \
-				src/controllers/TaskController.cpp \
-				src/controllers/UserController.cpp \
-				src/controllers/base/AController.cpp \
-				src/http/HttpRequest.cpp \
-				src/http/HttpRequestHandler.cpp \
-				src/http/HttpResponse.cpp \
-				src/http/HttpServer.cpp \
-				src/io/Multiplexer.cpp \
-				src/io/SocketUtils.cpp \
-				src/valueObjects/IntValue.cpp \
-				src/valueObjects/Port.cpp \
+				Config.cpp \
+				Location.cpp \
+				Server.cpp \
+				ControllerRegistry.cpp \
+				TaskController.cpp \
+				UserController.cpp \
+				AController.cpp \
+				HttpRequest.cpp \
+				HttpRequestHandler.cpp \
+				HttpResponse.cpp \
+				HttpServer.cpp \
+				Multiplexer.cpp \
+				SocketUtils.cpp \
+				IntValue.cpp \
+				Port.cpp \
 
+# .o folder
+OBJDIR		=	obj
+
+# objects files (whit obj/ prefix)
 OBJ			=	$(SRC:.cpp=.o)
+OBJ			:= $(addprefix $(OBJDIR)/, $(OBJ))
 
+# Main rule
 $(NAME):	$(OBJ)
 	$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
+
+# Rule to create obj/ if doesn't exist and compile every .cpp
+$(OBJDIR)/%.o: %.cpp | $(OBJDIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Create obj/ directory
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
 
 all: $(NAME)
 
 clean:
 	rm -f $(OBJ)
+	rm -rf $(OBJDIR)
 
 fclean:	clean
 	rm -f $(NAME)
