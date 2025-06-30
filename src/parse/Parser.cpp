@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:20:04 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/30 23:41:01 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/01 00:47:32 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,26 @@ void	Parser::parseFile()
 		std::istringstream ss(line);
 		std::string field;
 
+		// Create vector to save tokens
+		std::vector<std::string>	tokens;
+
 		// Read each field separated by space
 		while (std::getline(ss, field, ' '))
 		{
 			if (!field.empty())
-				std::cout << "Field: " << field << std::endl;
+			{
+				std::cout << "Field: " << field << std::endl; // DB
+				tokens.push_back(field);
+			}
 		}
 		if (!line.empty())
-			std::cout << "---- End of line ----" << std::endl;
+			std::cout << "---- End of line ----" << std::endl; //DB
+		
+		// Verify tokens
+		check_tokens(tokens);
+
+		// Clear vector
+		tokens.clear();
 	}
 	configFile.close();
 }

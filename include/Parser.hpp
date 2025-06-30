@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:53:50 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/30 23:31:07 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/01 01:09:08 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ class Parser
 		Parser();
 		Parser(const Parser &other);
 		Parser &operator=(const Parser &other);
+
+		std::string	removeSpaces(const std::string& line);
+		void		check_tokens(std::vector<std::string> tokens);
 
 	public:
 		Parser(const std::string &configFile);

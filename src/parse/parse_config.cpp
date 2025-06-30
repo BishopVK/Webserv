@@ -6,15 +6,16 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:51:33 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/30 23:39:42 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/01 01:20:07 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/webserv.hpp"
 #include "../../include/Server.hpp"
+#include "../../include/Parser.hpp"
 #include "../../include/definitions.hpp"
 
-std::string removeSpaces(const std::string& line)
+std::string Parser::removeSpaces(const std::string& line)
 {
 	if (line.empty())
 		return ("");
@@ -44,6 +45,21 @@ std::string removeSpaces(const std::string& line)
 	{
 		if (std::isspace(static_cast<unsigned char>(*result_begin)))
 		{
+			if (spaces < 1)
+				final_result += ' ';
+			spaces++;
+		}
+		else
+		{
+			spaces = 0;
+			final_result += *result_begin;
+		}
+	}
+
+	/* for (result_begin = result.begin(); result_begin != result_end; ++result_begin)
+	{
+		if (std::isspace(static_cast<unsigned char>(*result_begin)))
+		{
 			spaces++;
 			if (spaces <= 1)
 				final_result += ' ';
@@ -51,14 +67,57 @@ std::string removeSpaces(const std::string& line)
 		else
 		{
 			spaces = 0;
-			// Ignore ';' at last postion
-			if ((result_begin + 1) == result_end && *result_begin == ';' && !std::isspace(static_cast<unsigned char>(*(result_begin - 1))))
-				continue ;
+			// If line == 1 length
+			if (result.length() == 1)
+			{
+				if (*result_begin != '{' && *result_begin != '}')
+					throw Parser::ErrorException("Wrong line 1 '" + result + "'");
+				else if (*result_begin == '{' || *result_begin == '}')
+					return (result);
+			}
+			// check last line char
+			else if ((result_begin + 1) == result_end)
+			{
+				if (std::isspace(static_cast<unsigned char>(*(result_begin - 1))))
+				{
+					if (*result_begin != '{' && *result_begin != '}')
+						throw Parser::ErrorException("Wrong line 2 '" + result + "'");
+				}
+				else if (!std::isspace(static_cast<unsigned char>(*(result_begin - 1))))
+				{
+					// Ignore ';' at last postion
+					if (*result_begin == ';')
+						continue ;
+					else if (*result_begin == '{' || *result_begin == '}')
+						throw Parser::ErrorException("Wrong line 3 '" + result + "'");
+				}
+			}
 			final_result += *result_begin;
 		}
-	}
+	} */
 
 	return final_result;
+}
+
+void		Parser::check_tokens(std::vector<std::string> tokens)
+{
+	size_t	vector_size = tokens.size();
+
+	// Only 1 token
+	if (vector_size == 1)
+	{
+		/* if (tokens[0].length() != 1)
+			throw Parser::ErrorException("Wrong line '" + tokens[0] + "'"); */
+		if (tokens[0].length() == 1 && (tokens[0][0] != '{' && tokens[0][0] != '}'))
+			throw Parser::ErrorException("Wrong line '" + tokens[0] + "'");
+	}
+
+	// Create Server
+	if (vector_size == 1 && tokens[0] == "server" || vector_size == 2 && tokens[0] == "server" && tokens[1] == "{")
+	{
+		Server server;
+		_server_count++;
+	}
 }
 
 //std::vector<Server>	parse(std::ifstream &configFile) // Tendrá que devolver un vector de Servers
