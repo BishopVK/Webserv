@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:51:33 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/01 01:20:07 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/01 20:19:06 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,14 @@ std::string Parser::removeSpaces(const std::string& line)
 	
 	result.assign(line_begin, line_end + 1);
 
-	// Remove isspace() between tokens leaving only one space
 	int	spaces = 0;
 	std::string final_result;
-	std::string::iterator result_begin;;
+	std::string::iterator result_begin = result.begin();
 	std::string::iterator result_end = result.end();
+	// Ignore comments
+	if (*result_begin == '#')
+		return ("");
+	// Remove isspace() between tokens leaving only one space
 	for (result_begin = result.begin(); result_begin != result_end; ++result_begin)
 	{
 		if (std::isspace(static_cast<unsigned char>(*result_begin)))
@@ -52,6 +55,8 @@ std::string Parser::removeSpaces(const std::string& line)
 		else
 		{
 			spaces = 0;
+			if ((*result_begin == ';' || *result_begin == '{' || *result_begin == '}') && !std::isspace(static_cast<unsigned char>(*result_begin - 1)))
+				final_result += ' ';
 			final_result += *result_begin;
 		}
 	}
@@ -113,7 +118,7 @@ void		Parser::check_tokens(std::vector<std::string> tokens)
 	}
 
 	// Create Server
-	if (vector_size == 1 && tokens[0] == "server" || vector_size == 2 && tokens[0] == "server" && tokens[1] == "{")
+	if ((vector_size == 1 && tokens[0] == "server") || (vector_size == 2 && tokens[0] == "server" && tokens[1] == "{"))
 	{
 		Server server;
 		_server_count++;
