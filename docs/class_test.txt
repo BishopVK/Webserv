@@ -1,0 +1,25 @@
+class Server {
+    std::string listen;
+    std::string server_name;
+    std::string root;
+    std::vector<std::string> index;
+    std::map<int, std::string> error_pages;
+    size_t client_max_body_size;
+    bool autoindex;
+    std::vector<Location> locations;
+};
+
+class Location {
+    std::string path;
+    std::string root;
+    std::vector<std::string> index;
+    bool autoindex;
+    size_t client_max_body_size;
+    std::string cgi_extension;
+    std::string cgi_pass;
+    bool upload_enable;
+    std::string upload_store;
+    std::set<std::string> allowed_methods;
+    bool is_redirect;
+    std::string redirect_url;
+};
