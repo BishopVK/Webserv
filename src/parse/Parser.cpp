@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:20:04 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/01 23:23:52 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/01 23:28:27 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	Parser::tokenizeConfigFile()
 			std::cout << "---- End of line ----" << std::endl; //DB */
 		
 		// Verify tokens
-		check_tokens(tokens);
+		//check_tokens(tokens);
 
 		// Clear vector
 		//tokens.clear();
