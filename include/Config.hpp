@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:58:17 by danjimen          #+#    #+#             */
-/*   Updated: 2025/06/27 23:51:56 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/01 23:59:49 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,20 @@ class  Config
 		std::vector<std::string>	getMethods() const;
 		void						addMethod(const std::string &method);
 		bool						hasMethod(const std::string &Method) const;
+
+		// inherit_initizalized
+		std::vector<bool>			getInheritInitialized() const;
+		bool						getInheritInitialized(int index) const;
+
+		/* EXCEPTIONS */
+		class ErrorException : public std::exception
+		{
+			private:
+				std::string _message;
+			public:
+				ErrorException() : _message(RED "Error" RESET) {}
+				ErrorException(const std::string &message) : _message(RED "Error: " + message + RESET) {}
+				virtual ~ErrorException() throw() {}
+				virtual const char* what() const throw();
+		};
 };

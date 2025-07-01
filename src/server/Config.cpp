@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 18:08:18 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/28 00:43:34 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/02 00:04:21 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,4 +144,20 @@ void	Config::addMethod(const std::string &method)
 bool	Config::hasMethod(const std::string &Method) const
 {
 	return std::find(_methods.begin(), _methods.end(), Method) != _methods.end();
+}
+
+// inherit_initizalized
+std::vector<bool>	Config::getInheritInitialized() const { return _inherit_initizalized; }
+
+bool	Config::getInheritInitialized(int index) const
+{
+	if (index < 0 || index > (_inherit_initizalized.size() - 1))
+		throw ErrorException("Invalid acces to inherit_initialized vector position");
+	return _inherit_initizalized.at(index);
+}
+
+/* EXCEPTIONS */
+const char* Config::ErrorException::what() const throw()
+{
+	return (_message).c_str();
 }
