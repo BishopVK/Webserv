@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:20:04 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/01 23:12:28 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/01 23:23:52 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 Parser::Parser(const std::string &configFile) : _server_count(0), _config_file(configFile)
 {
  	_parsed_servers.clear();
-	parseFile();
+	tokenizeConfigFile();
 }
 
 Parser::~Parser() { _parsed_servers.clear(); }
@@ -44,7 +44,7 @@ void	Parser::setServer(Server server)
 	_parsed_servers.push_back(server);
 }
 
-void	Parser::parseFile()
+void	Parser::tokenizeConfigFile()
 {
 	std::ifstream configFile(_config_file.c_str());
 	if (!configFile.is_open())

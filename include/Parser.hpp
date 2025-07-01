@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:53:50 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/01 01:09:08 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/01 23:23:43 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ class Parser
 		void				setServer(Server server);
 
 		/* METHODS */
-		void	parseFile();
+		void	tokenizeConfigFile();
 
 		/* EXCEPTIONS */
 		class ErrorException : public std::exception
