@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 13:10:56 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 00:10:14 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/02 03:15:22 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,18 @@ class Server : public Config
 		std::vector<int>				_ports; // DEBEMOS TENER LA POSIBILIDAD DE ESCUCHAR VARIOS PUERTOS
 		std::string						_server_name;
 		//int								_server_fd; // DEBE SER UN VECTOR
-		std::vector<int>				_server_fds; // DEBE SER UN VECTOR
+		std::vector<int>				_server_fds;
 		std::vector<int>				_sockets;
 		//int								_servers_count; // Number of servers created
-		std::map<std::string, Location>	_locations; // List of the server locations
+		//std::map<std::string, Location>	_locations; // List of the server locations
+		std::vector<Location>			_locations;
 		bool							_is_running; // Flag to know if the server is running
 
-		Server(const Server &other);
-	public:
+		public:
 		Server();
-		Server &operator=(const Server &other);
 		Server(int port);
+		Server(const Server &other);
+		Server &operator=(const Server &other);
 		~Server();
 
 		/* GETERS and SETERS */
@@ -60,9 +61,12 @@ class Server : public Config
 		bool				hasSocket(int socket) const;
 
 		// locations
-		std::map<std::string, Location>	getLocations() const;
+		std::vector<Location>	getLocations() const;
+		const Location*			getLocation(std::string route) const;
+		void					addLocation(Location location);
+		/* std::map<std::string, Location>	getLocations() const;
 		const Location*					getLocation(std::string route) const;
-		void							addLocation(const std::string &route, Location location);
+		void							addLocation(const std::string &route, Location location); */
 
 		// is_running
 		bool	isRunning() const;

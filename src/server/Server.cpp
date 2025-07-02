@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:09:45 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 00:16:54 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/02 03:26:03 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,8 @@ Server::Server(int port) : Config(), _ip(IP_DEFAULT), _is_running(false)
 	_locations.clear();
 }
 
-Server &Server::operator=(const Server &other)
+Server::Server(const Server &other) : Config(other), _ip(other.getIp()), _is_running(other.isRunning())
 {
-	if (this == &other)
-		return (*this);
 	_root = other.getRoot();
 	_index_files = other.getIndexFiles();
 	_autoindex = other.getAutoindex();
@@ -59,13 +57,35 @@ Server &Server::operator=(const Server &other)
 	_return_data = other.getReturnData();
 	_methods = other.getMethods();
 	_inherit_initizalized = other.getInheritInitialized();
-	_ip = other.getIp();
 	_ports = other.getPorts();
 	_server_name = other.getServerName();
 	_server_fds = other.getServerFds();
 	_sockets = other.getSockets();
 	_locations = other.getLocations();
-	_is_running = other.isRunning();
+}
+
+Server &Server::operator=(const Server &other)
+{
+	if (this != &other)
+	{
+		_root = other.getRoot();
+		_index_files = other.getIndexFiles();
+		_autoindex = other.getAutoindex();
+		_client_max_body_size = other.getClientMaxBodySize();
+		_error_pages = other.getErrorPages();
+		_cgi = other.getCgis();
+		_return_data = other.getReturnData();
+		_methods = other.getMethods();
+		_inherit_initizalized = other.getInheritInitialized();
+		_ip = other.getIp();
+		_ports = other.getPorts();
+		_server_name = other.getServerName();
+		_server_fds = other.getServerFds();
+		_sockets = other.getSockets();
+		_locations = other.getLocations();
+		_is_running = other.isRunning();
+	}
+	return (*this);
 }
 
 Server::~Server()
@@ -137,7 +157,35 @@ void				Server::setServerFds(int fd)
 }
 
 // locations
-std::map<std::string, Location>		Server::getLocations() const { return _locations; }
+std::vector<Location>	Server::getLocations() const { return _locations; }
+
+const Location*	Server::getLocation(std::string route) const
+{
+	std::vector<Location>::const_iterator it;
+
+	for (it = _locations.begin(); it != _locations.end(); ++it)
+	{
+		if (route == (*it).getRoute())
+			return &(*it);
+	}
+	throw ErrorException("Location not found al getLocation()");
+}
+
+void	Server::addLocation(Location location)
+{
+	std::vector<Location>::iterator it;
+
+	for (it = _locations.begin(); it != _locations.end(); ++it)
+	{
+		if (location.getRoute() == (*it).getRoute())
+			throw ErrorException("Location already exists");
+	}
+	_locations.push_back(location);
+}
+
+
+
+/* std::map<std::string, Location>		Server::getLocations() const { return _locations; }
 const Location*	Server::getLocation(std::string route) const
 {
 	std::map<std::string, Location>::const_iterator it;
@@ -165,10 +213,10 @@ void	Server::addLocation(const std::string &route, Location location)
 {
 	if (_locations.find(route) == _locations.end())
 	{
-		// HABRÁ QUE HEREDAR DEL SERVER LOS CAMPOS NECESARIOS (_root, _error_pages, _index_pages)
+		location.inherit(*this);
 		_locations.insert(std::pair<std::string, Location>(route, location));
 	}
-}
+} */
 
 // is_running
 bool	Server::isRunning() const { return _is_running; }
@@ -268,8 +316,10 @@ void	Server::print() const
 	std::cout << "server_name = " << getServerName() << std::endl;
 
 	// server_fd
-	if (_server_fd != -1)
-		std::cout << "server_fd = " << _server_fd << std::endl;
+	std::cout << "server_fds:" << std::endl;
+	std::vector<int>::const_iterator it;
+	for (it = _server_fds.begin(); it != _server_fds.end(); ++it)
+		std::cout << "\t- " << *it << std::endl;
 
 	// sockets
 	if (!_sockets.empty())
@@ -287,11 +337,11 @@ void	Server::print() const
 	if (!getLocations().empty())
 	{
 		std::cout << "locations:" << std::endl;
-		std::map<std::string, Location>::const_iterator it;
+		std::vector<Location>::const_iterator it;
 		for (it = _locations.begin(); it != _locations.end(); ++it)
 		{
 			std::cout << "--------------------" << std::endl;
-			it->second.print();
+			it->print();
 			std::cout << "--------------------" << std::endl;
 		}
 	}
