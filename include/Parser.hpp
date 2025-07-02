@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:53:50 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/01 23:23:43 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/02 02:19:33 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,12 @@ class Parser
 		Parser(const Parser &other);
 		Parser &operator=(const Parser &other);
 
-		std::string	removeSpaces(const std::string& line);
-		void		check_tokens(std::vector<std::string> tokens);
+		std::string			removeSpaces(const std::string& line);
+		void				parseDirective(Server &server, const std::vector<std::string> &tokens, size_t &i);
+		Location			parseLocation(const std::vector<std::string> &tokens, size_t &i);
+		Server				parseServer(const std::vector<std::string> &tokens, size_t &i);
+		std::vector<Server>	parseConfig(const std::vector<std::string> &tokens);
+		//void		check_tokens(std::vector<std::string> tokens);
 
 	public:
 		Parser(const std::string &configFile);
