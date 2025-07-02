@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 23:44:02 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 10:38:24 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/02 14:22:40 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ Server	Parser::parseServer(const std::vector<std::string> &tokens, size_t &i)
 		if (tokens[i] == "location")
 		{
 			Location location = parseLocation(tokens, ++i); // Need Define parseLocation() and add copy assignment constructor to Location
+			location.inherit(server);
 			server.addLocation(location);
 		}
 		else
