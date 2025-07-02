@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 02:06:57 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 10:39:23 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/02 20:36:07 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ Location	Parser::parseLocation(const std::vector<std::string> &tokens, size_t &i
 	if (tokens[i++] != "{")
 		throw ErrorException("Expected '{' after location path");
 
+	// CGIs values
+	std::string cgiExtension;
+	std::string cgiPath;
 	while (tokens[i] != "}")
 	{
 		const std::string &key = tokens[i++];
-		std::string extension;
-		std::string path;
 
 		if (key == "limit_except")
 		{
@@ -101,14 +102,14 @@ Location	Parser::parseLocation(const std::vector<std::string> &tokens, size_t &i
 			}
 			else if (key == "cgi_extension" || key == "cgi_pass")
 			{
-				if (!extension.empty() && !path.empty())
+				if (!cgiExtension.empty() && !cgiPath.empty())
 					throw ErrorException("Multiple cgis in a single location not allowed");
 				if (key == "cgi_extension")
-					extension = tokens[i++];
+					cgiExtension = tokens[i++];
 				else if (key == "cgi_pass")
-					path = tokens[i++];
-				if (!extension.empty() && !path.empty())
-					location.addCgi(extension, path);
+					cgiPath = tokens[i++];
+				if (!cgiExtension.empty() && !cgiPath.empty())
+					location.addCgi(cgiExtension, cgiPath);
 			}
 			else
 				throw ErrorException("Unknown location directive: " + key);
