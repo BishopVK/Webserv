@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 18:08:18 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 00:04:21 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/02 03:24:40 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ std::vector<bool>	Config::getInheritInitialized() const { return _inherit_initiz
 
 bool	Config::getInheritInitialized(int index) const
 {
-	if (index < 0 || index > (_inherit_initizalized.size() - 1))
+	if (index < 0 || index > static_cast<int>(_inherit_initizalized.size() - 1))
 		throw ErrorException("Invalid acces to inherit_initialized vector position");
 	return _inherit_initizalized.at(index);
 }

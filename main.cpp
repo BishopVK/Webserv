@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:44:17 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/30 23:32:21 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/02 03:23:10 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ Server	create_server_for_testing()
 	location1.addMethod("GET");
 	location1.addMethod("POST");
 
-	server.addLocation("/location1/", location1);
+	server.addLocation(location1);
 
 	Location location2;
 	location2.setRoute("/var/www/html/location2Route");
@@ -56,7 +56,7 @@ Server	create_server_for_testing()
 	location2.setReturnData(302, "http://python-example.com");
 	location2.addMethod("DELETE");
 
-	server.addLocation("/location2/", location2);
+	server.addLocation(location2);
 
 	Location location3;
 	location3.setRoute("/var/www/html/location3Route");
@@ -67,7 +67,7 @@ Server	create_server_for_testing()
 	location3.addMethod("DELETE");
 	location3.inherit(server);
 
-	server.addLocation("/location3/", location3);
+	server.addLocation(location3);
 
 	return server;
 }
