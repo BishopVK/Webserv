@@ -3,3 +3,6 @@ ERROR: Estamos heredando mal en los locatins el client_max_body_size
 ERROR: Estamos heredando mal en los locatins el sd
 Necesario añadir en el print() de location: upload_enable y upload_store
 Necesario añadir en el print() de location: cgissd
+SERVER: No necesitamos guardar fds
+CGIs: cgi-extension ??
+Añadir excepciones en los geters/seters de las clases Config, Server, Location...
