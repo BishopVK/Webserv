@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:15:57 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/06/28 00:04:39 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/02 03:25:29 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,24 @@ Location::Location() : Config(), _route("") {}
 //Location::Location(const std::string &route) : Config(), _route(route), _alias(ALIAS_DEFAULT) {}
 Location::Location(const std::string &route) : Config(), _route(route) {}
 
+Location &Location::operator=(const Location &other)
+{
+	if (this != &other)
+	{
+		_root = other.getRoot();
+		_index_files = other.getIndexFiles();
+		_client_max_body_size = other.getClientMaxBodySize();
+		_autoindex = other.getAutoindex();
+		_error_pages = other.getErrorPages();
+		_upload_enable = other.getUploadEnable();
+		_upload_store = other.getUploadStore();
+		_return_data = other.getReturnData();
+		_methods = other.getMethods();
+		_cgi = other.getCgis();
+	}
+	return (*this);
+}
+
 Location::~Location() {}
 
 /* GETERS and SETERS */
@@ -28,6 +46,16 @@ void	Location::setRoute(const std::string &route) { _route = route; }
 // alias
 //std::string	Location::getAlias() const { return _alias; }
 //void	Location::setAlias(const std::string &alias) { _alias = alias; }
+
+// upload_enable
+bool	Location::getUploadEnable() const { return _upload_enable; }
+
+void	Location::setUploadEnable(bool value) { _upload_enable = value; }
+
+// upload_store
+std::string	Location::getUploadStore() const { return _upload_store; }
+
+void	Location::setUploadStore(const std::string &path) { _upload_store = path; }
 
 // FALTA POR DEFINIR
 void Location::inherit(const Config &config)
