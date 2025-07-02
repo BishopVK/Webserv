@@ -6,17 +6,17 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:15:57 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 03:25:29 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/02 20:50:36 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/Location.hpp"
 
 //Location::Location() : Config(), _route(""), _alias(ALIAS_DEFAULT) {}
-Location::Location() : Config(), _route("") {}
+Location::Location() : Config(), _route(""), _upload_enable(false), _upload_store("") {}
 
 //Location::Location(const std::string &route) : Config(), _route(route), _alias(ALIAS_DEFAULT) {}
-Location::Location(const std::string &route) : Config(), _route(route) {}
+Location::Location(const std::string &route) : Config(), _route(route), _upload_enable(false), _upload_store("") {}
 
 Location &Location::operator=(const Location &other)
 {
@@ -94,6 +94,14 @@ void Location::inherit(const Config &config)
 		_client_max_body_size = config.getClientMaxBodySize();
 		_inherit_initizalized.at(_init_client_max_body_size) = true;
 	}
+
+	// methods
+	if (_methods.empty())
+	{
+		addMethod("GET");
+		addMethod("POST");
+		addMethod("DELETE");
+	}
 }
 
 /* TOOLS */
@@ -118,7 +126,7 @@ void	Location::print() const
 	}
 
 	// autoindex
-	std::cout << "autoindex = " << (_autoindex ? std::string("true") : std::string("false")) << std::endl;
+	std::cout << "autoindex = " << (_autoindex ? std::string("on") : std::string("off")) << std::endl;
 
 	// client_max_body_size
 	std::cout << "client_max_body_size = " << _client_max_body_size << "M" << std::endl;
@@ -156,4 +164,13 @@ void	Location::print() const
 		for (it = _methods.begin(); it != _methods.end(); ++it)
 			std::cout << "\t- " << *it << std::endl;
 	}
+
+	// upload_enable
+	if (_upload_enable)
+		std::cout << "upload_enable = " << (_upload_enable ? std::string("on") : std::string("off")) << std::endl;
+
+	// upload_store
+	if (!_upload_store.empty())
+		std::cout << "upload_store = " << _upload_store << std::endl;
+	
 }
