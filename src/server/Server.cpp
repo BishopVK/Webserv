@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:09:45 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 03:26:03 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/02 20:56:31 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ Server::Server() : Config(), _ip(IP_DEFAULT), _is_running(false)
 	_server_name = "server_name";
 
 	//_server_fd = -1;
-	_server_fds.clear();
+	//_server_fds.clear();
 	//_port = -1;
 	_ports.push_back(-1);
 	_sockets.clear();
@@ -39,7 +39,7 @@ Server::Server(int port) : Config(), _ip(IP_DEFAULT), _is_running(false)
 	_server_name = "server_name";
 
 	//_server_fd = -1;
-	_server_fds.clear();
+	//_server_fds.clear();
 	//_port = port;
 	_ports.push_back(port);
 	_sockets.clear();
@@ -59,7 +59,7 @@ Server::Server(const Server &other) : Config(other), _ip(other.getIp()), _is_run
 	_inherit_initizalized = other.getInheritInitialized();
 	_ports = other.getPorts();
 	_server_name = other.getServerName();
-	_server_fds = other.getServerFds();
+	//_server_fds = other.getServerFds();
 	_sockets = other.getSockets();
 	_locations = other.getLocations();
 }
@@ -80,7 +80,7 @@ Server &Server::operator=(const Server &other)
 		_ip = other.getIp();
 		_ports = other.getPorts();
 		_server_name = other.getServerName();
-		_server_fds = other.getServerFds();
+		//_server_fds = other.getServerFds();
 		_sockets = other.getSockets();
 		_locations = other.getLocations();
 		_is_running = other.isRunning();
@@ -93,9 +93,9 @@ Server::~Server()
 	_is_running = false;
 	_locations.clear();
 
-	std::vector<int>::iterator it;
+	/* std::vector<int>::iterator it;
 	for (it = _server_fds.begin(); it != _server_fds.end(); ++it)
-		close(*it);
+		close(*it); */
 	/* if (_server_fd != -1)
 		close(_server_fd); */
 }
@@ -143,7 +143,7 @@ bool				Server::hasSocket(int socket) const
 }
 
 // server_fds
-std::vector<int>	Server::getServerFds() const { return _server_fds; }
+/* std::vector<int>	Server::getServerFds() const { return _server_fds; }
 
 void				Server::setServerFds(int fd)
 {
@@ -154,7 +154,7 @@ void				Server::setServerFds(int fd)
 			throw ErrorException("Trying to add repeated fd to _server_fds");
 	}
 	_server_fds.push_back(fd);
-}
+} */
 
 // locations
 std::vector<Location>	Server::getLocations() const { return _locations; }
@@ -316,10 +316,10 @@ void	Server::print() const
 	std::cout << "server_name = " << getServerName() << std::endl;
 
 	// server_fd
-	std::cout << "server_fds:" << std::endl;
+	/* std::cout << "server_fds:" << std::endl;
 	std::vector<int>::const_iterator it;
 	for (it = _server_fds.begin(); it != _server_fds.end(); ++it)
-		std::cout << "\t- " << *it << std::endl;
+		std::cout << "\t- " << *it << std::endl; */
 
 	// sockets
 	if (!_sockets.empty())

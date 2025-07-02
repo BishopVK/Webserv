@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 13:10:56 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 03:15:22 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/02 20:56:03 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ class Server : public Config
 		std::vector<int>				_ports; // DEBEMOS TENER LA POSIBILIDAD DE ESCUCHAR VARIOS PUERTOS
 		std::string						_server_name;
 		//int								_server_fd; // DEBE SER UN VECTOR
-		std::vector<int>				_server_fds;
+		//std::vector<int>				_server_fds;
 		std::vector<int>				_sockets;
 		//int								_servers_count; // Number of servers created
 		//std::map<std::string, Location>	_locations; // List of the server locations
@@ -53,8 +53,8 @@ class Server : public Config
 		void		setServerName(const std::string &server_name);
 
 		// server_fds
-		std::vector<int>	getServerFds() const;
-		void				setServerFds(int fd);
+		// std::vector<int>	getServerFds() const;
+		// void				setServerFds(int fd);
 
 		// sockets
 		std::vector<int>	getSockets() const;
