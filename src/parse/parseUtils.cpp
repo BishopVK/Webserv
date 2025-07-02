@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_config.cpp                                   :+:      :+:    :+:   */
+/*   parse_utils.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/30 10:51:33 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/01 23:28:12 by danjimen,is      ###   ########.fr       */
+/*   Created: 2025/07/01 23:41:41 by danjimen,is       #+#    #+#             */
+/*   Updated: 2025/07/01 23:41:50 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,26 +62,4 @@ std::string Parser::removeSpaces(const std::string& line)
 	}
 	
 	return final_result;
-}
-
-// DELETE METHOD -- NOT NECESARY
-void		Parser::check_tokens(std::vector<std::string> tokens)
-{
-	size_t	vector_size = tokens.size();
-
-	// Only 1 token
-	if (vector_size == 1)
-	{
-		/* if (tokens[0].length() != 1)
-			throw Parser::ErrorException("Wrong line '" + tokens[0] + "'"); */
-		if (tokens[0].length() == 1 && (tokens[0][0] != '{' && tokens[0][0] != '}'))
-			throw Parser::ErrorException("Wrong line '" + tokens[0] + "'");
-	}
-
-	// Create Server
-	/* if ((vector_size == 1 && tokens[0] == "server") || (vector_size == 2 && tokens[0] == "server" && tokens[1] == "{"))
-	{
-		Server server;
-		_server_count++;
-	} */
 }
