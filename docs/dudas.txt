@@ -1,0 +1,5 @@
+El server puede tener metodos? -> De momento sólo los proceso dentro de los locations
+ERROR: Estamos heredando mal en los locatins el client_max_body_size
+ERROR: Estamos heredando mal en los locatins el sd
+Necesario añadir en el print() de location: upload_enable y upload_store
+Necesario añadir en el print() de location: cgissd
