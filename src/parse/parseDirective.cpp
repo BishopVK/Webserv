@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:56:27 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 02:06:03 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/02 03:40:15 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ void	Parser::parseDirective(Server &server, const std::vector<std::string> &toke
 			throw ErrorException("Expected path after error_page codes");
 		std::string path = tokens[i++];
 
-		if (i >= tokens.size() || tokens[i] == ";")
+		/* if (i >= tokens.size() || tokens[i] != ";")
 			throw ErrorException("Expected ';' after error_page path");
-		++i;
+		++i; */ // NECESSARY ????
 
 		for (size_t j = 0; j < codes.size(); ++j)
 			server.addErrorPage(codes[j], path);
@@ -79,7 +79,7 @@ void	Parser::parseDirective(Server &server, const std::vector<std::string> &toke
 		throw ErrorException("Unknown directive: " + key);
 	
 	if (tokens[i] != ";")
-		throw ErrorException("Expected ';' after directive");
+		throw ErrorException("Expected ';' after directive " + key);
 
 	++i;
 }
