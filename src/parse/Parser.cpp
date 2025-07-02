@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:20:04 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/01 23:42:43 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/02 10:49:39 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	Parser::tokenizeConfigFile()
 		std::cout << *it << " "; // DB
 	std::cout << std::endl; // DB
 
-	parseConfig(tokens);
+	_parsed_servers = parseConfig(tokens);
 
 	configFile.close();
 }

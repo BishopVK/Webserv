@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 02:06:57 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 03:05:09 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/02 10:39:23 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@
 
 Location	Parser::parseLocation(const std::vector<std::string> &tokens, size_t &i)
 {
-	Location location;
+	//std::cout << "First token at location: " << tokens[i] << std::endl;
+	Location location(tokens[i++]);
 
-	location.setRoute(tokens[i++]);
+	// location.setRoute(tokens[i++]);
 
 	if (tokens[i++] != "{")
 		throw ErrorException("Expected '{' after location path");

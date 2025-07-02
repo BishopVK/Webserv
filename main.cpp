@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:44:17 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 03:23:10 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/02 10:50:44 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,16 @@ int main(int argc, char** argv)
 	try
 	{
 		Parser parser(configPath);
-		Server server = create_server_for_testing(); // TESTING
-		std::vector<Server> servers;
-		servers.push_back(server);
-		server.print();
+		//Server server = create_server_for_testing(); // TESTING
+		//std::vector<Server> servers;
+		//servers.push_back(server);
+		//server.print();
+		std::vector<Server> servers = parser.getParsedServers();
+		if (servers.empty())
+			std::cout << "servers está vacio" << std::endl;
+		std::vector<Server>::iterator it;
+		for (it = servers.begin(); it != servers.end(); ++it)
+			it->print();
 		HttpServer httpServer(servers);
 		httpServer.run();
 	}
