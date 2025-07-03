@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 18:08:18 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 03:24:40 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/03 09:00:22 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ std::string	Config::getRoot() const { return _root; }
 
 void	Config::setRoot(const std::string &root)
 {
+	if (root[0] != '/' || *(root.end() - 1) == '/')
+		throw ErrorException("Invalid root path format");
 	_root = root;
 	_inherit_initizalized.at(_init_root) = true;
 }
