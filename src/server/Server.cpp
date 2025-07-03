@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:09:45 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 20:56:31 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/03 08:31:22 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void				Server::addPort(int port)
 {
 	if (_ports.size() == 1 && _ports.at(0) == -1)
 		_ports.clear();
-	if (!hasPort(port) && port > 0 && port < 65535)
+	if (!hasPort(port) && port > 0 && port < MAX_PORT)
 		_ports.push_back(port);
 }
 bool				Server::hasPort(int port) const
