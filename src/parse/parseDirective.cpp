@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:56:27 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 03:40:15 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/03 08:50:13 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,15 @@ void	Parser::parseDirective(Server &server, const std::vector<std::string> &toke
 		else
 		{
 			while (tokens[i] != ";")
+			{
+				int port = std::atoi(tokens[i].c_str());
+				std::stringstream ss;
+				ss << port;
+				std::string str = ss.str();
+				if (tokens[i].length() != str.length())
+					throw ErrorException(tokens[i] + ": invalid port");
 				server.addPort(std::atoi(tokens[i++].c_str()));
+			}
 		}
 	}
 	else if (key == "server_name")
