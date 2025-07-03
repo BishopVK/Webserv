@@ -10,4 +10,3 @@
 [-] Añadir excepciones en los seters de las clases Config, Server, Location...	
 [X] Revisar si el parseo controla correctamente varios puertos sin IP
 [?] Gestionar en el parser un error de upload si no tengo "upload_enable on" o "upload_store" con un path o dejar que el servidor envíe un error por no poder procesar la petición?
-asdadad
