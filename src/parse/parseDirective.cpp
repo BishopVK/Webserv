@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:56:27 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/03 08:50:13 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/04 08:13:20 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,15 @@ void	Parser::parseDirective(Server &server, const std::vector<std::string> &toke
 		std::vector<int> codes;
 
 		while (i < tokens.size() && tokens[i][0] != '/' && tokens[i] != ";")
+		{
+			int code = std::atoi(tokens[i].c_str());
+			std::stringstream ss;
+			ss << code;
+			std::string str = ss.str();
+			if (tokens[i].length() != str.length())
+				throw ErrorException(tokens[i] + ": invalid error_pages code");
 			codes.push_back(std::atoi(tokens[i++].c_str()));
+		}
 
 		if (i >= tokens.size() || tokens[i] == ";")
 			throw ErrorException("Expected path after error_page codes");
