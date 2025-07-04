@@ -6,12 +6,12 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:20:04 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 10:49:39 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/04 13:10:59 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/Parser.hpp"
-#include "../../include/prototypes.hpp"
+#include "Parser.hpp"
+#include "prototypes.hpp"
 
 Parser::Parser(const std::string &configFile) : _server_count(0), _config_file(configFile)
 {

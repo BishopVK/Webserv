@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.cpp                                    :+:      :+:    :+:   */
+/*   parseUtils.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 23:41:41 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/01 23:41:50 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/04 13:10:59 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/webserv.hpp"
-#include "../../include/Server.hpp"
-#include "../../include/Parser.hpp"
-#include "../../include/definitions.hpp"
+#include "webserv.hpp"
+#include "Server.hpp"
+#include "Parser.hpp"
+#include "definitions.hpp"
 
 std::string Parser::removeSpaces(const std::string& line)
 {

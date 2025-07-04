@@ -6,14 +6,14 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:56:27 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/04 11:13:25 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/04 13:07:34 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/webserv.hpp"
-#include "../../include/Server.hpp"
-#include "../../include/Parser.hpp"
-#include "../../include/definitions.hpp"
+#include "webserv.hpp"
+#include "Server.hpp"
+#include "Parser.hpp"
+#include "definitions.hpp"
 
 void	Parser::parseDirective(Server &server, const std::vector<std::string> &tokens, size_t &i)
 {

@@ -1,4 +1,4 @@
-#include "../../include/valueObjects/IntValue.hpp"
+#include "IntValue.hpp"
 #include <sstream>
 
 IntValue::IntValue() : _value(0), _is_null(true)

@@ -6,11 +6,11 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 18:08:18 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/03 09:00:22 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/04 13:09:34 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/Config.hpp"
+#include "Config.hpp"
 
 Config::Config() : _root(ROOT_DEFAULT), _autoindex(AUTOINDEX_DEFAULT), _client_max_body_size(CLIENT_MAX_BODY_SIZE_DEFAULT)
 {
@@ -27,9 +27,6 @@ Config::Config() : _root(ROOT_DEFAULT), _autoindex(AUTOINDEX_DEFAULT), _client_m
 	// Init Return struct
 	_return_data.code = -1;
 	_return_data.text = "";
-
-	// Append the GET method
-	//_methods.push_back("GET");
 }
 
 Config::~Config() {}
@@ -53,9 +50,32 @@ void	Config::addIndexFile(const std::string &index_file)
 {
 	if (std::find(_index_files.begin(), _index_files.end(), index_file) == _index_files.end())
 	{
+		std::vector<std::string>	tokens;
+		size_t						start = 0;
+		size_t						end;
+		
+		while ((end = index_file.find('.', start)) != std::string::npos)
+		{
+			tokens.push_back(index_file.substr(start, end - start));
+			start = end + 1;
+		}
+
+		// Add last part
+		tokens.push_back(index_file.substr(start));
+		if (tokens.size() != 2)
+			throw ErrorException(index_file + ": invalid index_file format");
+			
+		for (std::vector<std::string>::iterator it = tokens.begin(); it != tokens.end(); ++it)
+		{
+			if ((*it).empty())
+				throw ErrorException(index_file + ": invalid index_file format");
+		}
+		
 		_index_files.push_back(index_file);
 		_inherit_initizalized.at(_init_index_files) = true;
 	}
+	else
+		throw ErrorException(index_file + ": repeated index file");
 }
 
 // autoindex

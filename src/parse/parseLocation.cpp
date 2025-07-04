@@ -6,15 +6,15 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 02:06:57 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 20:36:07 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/04 13:10:59 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/webserv.hpp"
-#include "../../include/Config.hpp"
-#include "../../include/Server.hpp"
-#include "../../include/Parser.hpp"
-#include "../../include/definitions.hpp"
+#include "webserv.hpp"
+#include "Config.hpp"
+#include "Server.hpp"
+#include "Parser.hpp"
+#include "definitions.hpp"
 
 Location	Parser::parseLocation(const std::vector<std::string> &tokens, size_t &i)
 {

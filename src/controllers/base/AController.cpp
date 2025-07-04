@@ -1,5 +1,5 @@
 #include "AController.hpp"
-#include "../../http/HttpResponse.hpp"
+#include "HttpResponse.hpp"
 #include <string>
 
 AController::AController() : _route("/")

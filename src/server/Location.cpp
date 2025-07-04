@@ -6,11 +6,11 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:15:57 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 20:50:36 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/04 13:10:59 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/Location.hpp"
+#include "Location.hpp"
 
 //Location::Location() : Config(), _route(""), _alias(ALIAS_DEFAULT) {}
 Location::Location() : Config(), _route(""), _upload_enable(false), _upload_store("") {}

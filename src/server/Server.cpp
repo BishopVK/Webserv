@@ -6,11 +6,11 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:09:45 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/04 12:11:15 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/04 13:05:59 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/Server.hpp"
+#include "Server.hpp"
 
 Server::Server() : Config(), _ip(IP_DEFAULT), _is_running(false)
 {

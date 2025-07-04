@@ -6,7 +6,7 @@
 #    By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/20 12:20:33 by danjimen,is       #+#    #+#              #
-#    Updated: 2025/07/02 03:22:18 by danjimen,is      ###   ########.fr        #
+#    Updated: 2025/07/04 13:15:56 by danjimen,is      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,8 @@ NAME		=	webserv
 
 CXX			=	c++
 CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
+
+HEADERS		=	-I./include -I./include/valueObjects -I./src/http -I./src/io -I./src/controllers
 
 VPATH		=	src src/server src/controllers src/controllers/base src/http src/io src/valueObjects src/parse .
 
@@ -49,11 +51,11 @@ OBJ			:= $(addprefix $(OBJDIR)/, $(OBJ))
 
 # Main rule
 $(NAME):	$(OBJ)
-	$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $(HEADERS) $(OBJ) -o $(NAME)
 
 # Rule to create obj/ if doesn't exist and compile every .cpp
 $(OBJDIR)/%.o: %.cpp | $(OBJDIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(HEADERS) -c $< -o $@
 
 # Create obj/ directory
 $(OBJDIR):
@@ -74,7 +76,8 @@ rc:	re
 	rm -f $(OBJ)
 
 run:
-	./$(NAME) $(ARG)
+#	./$(NAME) $(ARG)
+	./$(NAME) config2.conf
 
 valgrind:
 	valgrind --leak-check=full -s ./$(NAME) $(ARG)
