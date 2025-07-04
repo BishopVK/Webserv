@@ -1,0 +1,7 @@
+CompileFlags:
+  Add:
+    - "--include-directory=/home/sergioffdev/development/Webserv/include"
+    - "--include-directory=/home/sergioffdev/development/Webserv/include/valueObjects"
+    - "-I/home/sergioffdev/development/Webserv/src/http"
+    - "-I/home/sergioffdev/development/Webserv/src/io"
+    - "-I/home/sergioffdev/development/Webserv/src/controllers"
