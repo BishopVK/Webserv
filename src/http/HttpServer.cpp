@@ -1,5 +1,6 @@
 #include "HttpServer.hpp"
 #include "../../include/Server.hpp"
+#include "../../include/utils/Logger.hpp"
 #include "../../include/valueObjects/Port.hpp"
 #include "../http/HttpRequest.hpp"
 #include "../http/HttpRequestHandler.hpp"
@@ -7,8 +8,9 @@
 #include "../io/Multiplexer.hpp"
 #include "../io/SocketUtils.hpp"
 #include <errno.h>
-#include <iostream>
+#include <exception>
 #include <map>
+#include <string>
 #include <sys/socket.h>
 #include <unistd.h>
 #include <vector>
@@ -40,7 +42,7 @@ void HttpServer::run()
 {
     Multiplexer                     multiplexer;
     std::map<int, ClientConnection> clients;
-    std::vector<int>                server_fds;
+    // std::vector<int>                server_fds;
 
     for (std::vector<Server>::iterator it = _servers.begin(); it != _servers.end(); ++it)
     {
@@ -48,7 +50,7 @@ void HttpServer::run()
 
         if (ports.empty())
         {
-            std::cerr << "No ports defined for server." << std::endl;
+            Logger::instance().error("No existen puertos para el servidor.");
             continue;
         }
 
@@ -58,16 +60,16 @@ void HttpServer::run()
             std::string port = Port(*port_it).toString();
             if (port.empty())
             {
-                std::cerr << "Invalid port: " << *port_it << "." << std::endl;
+                Logger::instance().error("Puerto inválido: " + IntValue(*port_it).toString() + ".");
                 continue;
             }
 
-            std::cout << "Starting server on port: " << port << std::endl;
+            Logger::instance().info("Iniciando servidor en el puerto: " + port + ".");
 
             int server_fd = SocketUtils::createServerSocket(port.c_str());
             if (server_fd == -1)
             {
-                std::cerr << "Failed to create server socket on port " << port << std::endl;
+                Logger::instance().error("No se pudo crear el socket del servidor en el puerto: " + port + ".");
                 continue;
             }
 
@@ -75,13 +77,14 @@ void HttpServer::run()
             SocketUtils::setReuseAddr(server_fd);
             multiplexer.addFd(server_fd, Multiplexer::READ);
             // TODO: Esto deberia de estar en el servidor junto con el puerto
-            server_fds.push_back(server_fd);
+            // server_fds.push_back(server_fd);
+            _serverConnections[port] = ServerConnection(server_fd);
         }
     }
 
-    if (server_fds.empty())
+    if (_serverConnections.empty())
     {
-        std::cerr << "No server sockets available. Exiting." << std::endl;
+        Logger::instance().error("No hay sockets de servidor disponibles.");
         return;
     }
 
@@ -91,27 +94,50 @@ void HttpServer::run()
 
         if (ready_count == -1)
         {
-            std::cerr << "Poll failed" << std::endl;
+            Logger::instance().error("Poll fallido: " + std::string(strerror(errno)));
             break;
         }
 
         if (ready_count == 0)
             continue;
 
-        for (size_t i = 0; i < server_fds.size(); ++i)
+        // for (size_t i = 0; i < server_fds.size(); ++i)
+        // {
+        //     int server_fd = server_fds[i];
+        //     if (multiplexer.isReadReady(server_fd))
+        //     {
+        //         int client_fd = accept(server_fd, NULL, NULL);
+        //         if (client_fd != -1)
+        //         {
+        //             SocketUtils::setNonBlocking(client_fd);
+        //             multiplexer.addFd(client_fd, Multiplexer::READ);
+        //             clients[client_fd] = ClientConnection();
+        //             Logger::instance().info("Nuevo cliente conectado: " + IntValue(client_fd).toString() + ".");
+        //         }
+        //     }
+        // }
+
+        std::map<std::string, ServerConnection>::iterator server_it;
+        for (server_it = _serverConnections.begin(); server_it != _serverConnections.end(); ++server_it)
         {
-            int server_fd = server_fds[i];
-            if (multiplexer.isReadReady(server_fd))
+            const ServerConnection& server_conn = server_it->second;
+            int                     server_fd = server_conn.fd;
+
+            if (!multiplexer.isReadReady(server_fd))
+                continue;
+
+            int client_fd = accept(server_fd, NULL, NULL);
+
+            if (client_fd == -1)
             {
-                int client_fd = accept(server_fd, NULL, NULL);
-                if (client_fd != -1)
-                {
-                    SocketUtils::setNonBlocking(client_fd);
-                    multiplexer.addFd(client_fd, Multiplexer::READ);
-                    clients[client_fd] = ClientConnection();
-                    std::cout << "New client connected: " << client_fd << std::endl;
-                }
+                Logger::instance().error("Error al aceptar conexión: " + std::string(strerror(errno)));
+                continue;
             }
+
+            SocketUtils::setNonBlocking(client_fd);
+            multiplexer.addFd(client_fd, Multiplexer::READ);
+            clients[client_fd] = ClientConnection();
+            Logger::instance().info("Nuevo cliente conectado: " + IntValue(client_fd).toString() + ".");
         }
 
         std::vector<int> ready_fds = multiplexer.getReadyFds();
@@ -132,7 +158,7 @@ void HttpServer::run()
 
             if (multiplexer.hasError(fd) || multiplexer.hasHangup(fd))
             {
-                std::cout << "Client disconnected: " << fd << std::endl;
+                Logger::instance().debug("Cliente desconectado o error en el socket: " + IntValue(fd).toString() + ".");
                 multiplexer.removeFd(fd);
                 clients.erase(fd);
                 SocketUtils::closeSocket(fd);
@@ -172,15 +198,24 @@ bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multi
 
     if (client.read_buffer.find("\r\n\r\n") != std::string::npos)
     {
-        client.request_complete = true;
+        try
+        {
+            client.request_complete = true;
 
-        HttpRequest        request(client.read_buffer.c_str());
-        HttpRequestHandler handler;
-        HttpResponse       response = handler.handle(request);
+            HttpRequest        request(client.read_buffer.c_str());
+            HttpRequestHandler handler;
+            HttpResponse       response = handler.handle(request);
 
-        client.write_buffer = response.toString();
+            client.write_buffer = response.toString();
 
-        multiplexer.modifyFd(client_fd, Multiplexer::WRITE);
+            multiplexer.modifyFd(client_fd, Multiplexer::WRITE);
+        }
+        catch (const std::exception& e)
+        {
+            client.write_buffer = HttpResponse::internalServerError(e.what()).toString();
+
+            multiplexer.modifyFd(client_fd, Multiplexer::WRITE);
+        }
     }
 
     return true;

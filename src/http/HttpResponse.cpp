@@ -116,3 +116,12 @@ HttpResponse HttpResponse::methodNotAllowed(const std::string& body, const std::
     response.setBody(body);
     return response;
 }
+
+HttpResponse HttpResponse::internalServerError(const std::string& body, const std::string& contentType)
+{
+    HttpResponse response;
+    response.setStatus(500, "Internal Server Error");
+    response.setHeader("Content-Type", contentType);
+    response.setBody(body);
+    return response;
+}

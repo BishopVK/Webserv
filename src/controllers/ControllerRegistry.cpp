@@ -3,6 +3,7 @@
 #include "base/IController.hpp"
 #include "TaskController.hpp"
 #include "UserController.hpp"
+#include <string>
 
 ControllerRegistry::ControllerRegistry()
 {
@@ -40,7 +41,9 @@ HttpResponse ControllerRegistry::processRequest(const HttpRequest& request)
         }
     }
 
-    return HttpResponse::notFound();
+    std::string notFoundHtml = "<html><body><h1>404 Not Found, aqui no es :( <br>Quien soy, Donde estoy, Cual es mi proposito</h1></body></html>";
+
+    return HttpResponse::notFound(notFoundHtml, "text/html");
 }
 
 HttpResponse ControllerRegistry::handleControllerRequest(IController& controller, const HttpRequest& request)

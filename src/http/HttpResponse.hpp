@@ -25,11 +25,18 @@ class HttpResponse
 
     std::string toString() const;
 
+    // Http 200
     static HttpResponse ok(const std::string& body = "", const std::string& contentType = "text/plain");
+    // Http 400
     static HttpResponse badRequest(const std::string& body = "", const std::string& contentType = "text/plain");
+    // Http 404
     static HttpResponse notFound(const std::string& body = "", const std::string& contentType = "text/plain");
+    // Http 501
     static HttpResponse notImplemented(const std::string& body = "", const std::string& contentType = "text/plain");
+    // Http 405
     static HttpResponse methodNotAllowed(const std::string& body = "", const std::string& contentType = "text/plain");
+    // Http 500
+    static HttpResponse internalServerError(const std::string& body = "", const std::string& contentType = "text/plain");
 };
 
 #endif

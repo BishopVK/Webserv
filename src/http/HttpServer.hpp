@@ -24,9 +24,23 @@ class HttpServer
         }
     };
 
+    struct ServerConnection
+    {
+        int fd;
+        // Server& server;
+
+        // ServerConnection(int fd, Server& server) : fd(fd), server(server)
+        // {
+        // }
+        ServerConnection(int fd) : fd(fd)
+        {
+        }
+    };
+
   private:
     // std::vector<std::string> _ports;
-    std::vector<Server>      _servers;
+    std::vector<Server>                     _servers;
+    std::map<std::string, ServerConnection> _serverConnections;
 
     bool handleClientRead(int client_fd, ClientConnection& client, Multiplexer& multiplexer);
     bool handleClientWrite(int client_fd, ClientConnection& client, Multiplexer& multiplexer);

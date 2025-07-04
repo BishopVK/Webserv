@@ -15,7 +15,7 @@ NAME		=	webserv
 CXX			=	c++
 CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
 
-VPATH		=	src src/server src/controllers src/controllers/base src/http src/io src/valueObjects src/parse .
+VPATH		=	src src/server src/utils src/controllers src/controllers/base src/http src/io src/valueObjects src/parse .
 
 SRC			=	main.cpp \
 				Config.cpp \
@@ -39,6 +39,7 @@ SRC			=	main.cpp \
 				parseServer.cpp \
 				parseDirective.cpp \
 				parseLocation.cpp \
+				Logger.cpp \
 
 # .o folder
 OBJDIR		=	obj
