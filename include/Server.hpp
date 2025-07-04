@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 13:10:56 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/04 10:38:46 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/04 12:12:07 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,9 @@ class Server : public Config
 {
 	private:
 		std::string						_ip;
-		//int							_port;
-		std::vector<int>				_ports; // DEBEMOS TENER LA POSIBILIDAD DE ESCUCHAR VARIOS PUERTOS
+		std::vector<int>				_ports;
 		std::string						_server_name;
-		//int								_server_fd; // DEBE SER UN VECTOR
-		//std::vector<int>				_server_fds;
 		std::vector<int>				_sockets;
-		//int								_servers_count; // Number of servers created
-		//std::map<std::string, Location>	_locations; // List of the server locations
 		std::vector<Location>			_locations;
 		bool							_is_running; // Flag to know if the server is running
 
@@ -44,17 +39,12 @@ class Server : public Config
 
 		// ports
 		std::vector<int>	getPorts() const;
-		//int					getPort() const;
 		void				addPort(int port);
 		bool				hasPort(int port) const;
 
 		// server_name
 		std::string	getServerName() const;
 		void		setServerName(const std::string &server_name);
-
-		// server_fds
-		// std::vector<int>	getServerFds() const;
-		// void				setServerFds(int fd);
 
 		// sockets
 		std::vector<int>	getSockets() const;
@@ -64,9 +54,6 @@ class Server : public Config
 		std::vector<Location>	getLocations() const;
 		const Location*			getLocation(std::string route) const;
 		void					addLocation(Location location);
-		/* std::map<std::string, Location>	getLocations() const;
-		const Location*					getLocation(std::string route) const;
-		void							addLocation(const std::string &route, Location location); */
 
 		// is_running
 		bool	isRunning() const;

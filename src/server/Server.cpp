@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:09:45 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/04 12:03:36 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/04 12:11:15 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,7 @@
 
 Server::Server() : Config(), _ip(IP_DEFAULT), _is_running(false)
 {
-	//Set the name to the server
-	//_servers_count = 0;
-	/* std::stringstream	ss;
-	ss << ++_servers_count;
-	_server_name = "Server " + ss.str(); */
 	_server_name = "server_name";
-
-	//_server_fd = -1;
-	//_server_fds.clear();
-	//_port = -1;
 	_ports.push_back(-1);
 	_sockets.clear();
 	_locations.clear();
@@ -31,16 +22,7 @@ Server::Server() : Config(), _ip(IP_DEFAULT), _is_running(false)
 
 Server::Server(int port) : Config(), _ip(IP_DEFAULT), _is_running(false)
 {
-	//Set the name to the server
-	//_servers_count = 0;
-	/* std::stringstream	ss;
-	ss << ++_servers_count;
-	_server_name = "Server " + ss.str(); */
 	_server_name = "server_name";
-
-	//_server_fd = -1;
-	//_server_fds.clear();
-	//_port = port;
 	_ports.push_back(port);
 	_sockets.clear();
 	_locations.clear();
@@ -59,7 +41,6 @@ Server::Server(const Server &other) : Config(other), _ip(other.getIp()), _is_run
 	_inherit_initizalized = other.getInheritInitialized();
 	_ports = other.getPorts();
 	_server_name = other.getServerName();
-	//_server_fds = other.getServerFds();
 	_sockets = other.getSockets();
 	_locations = other.getLocations();
 }
@@ -80,7 +61,6 @@ Server &Server::operator=(const Server &other)
 		_ip = other.getIp();
 		_ports = other.getPorts();
 		_server_name = other.getServerName();
-		//_server_fds = other.getServerFds();
 		_sockets = other.getSockets();
 		_locations = other.getLocations();
 		_is_running = other.isRunning();
@@ -92,12 +72,6 @@ Server::~Server()
 {
 	_is_running = false;
 	_locations.clear();
-
-	/* std::vector<int>::iterator it;
-	for (it = _server_fds.begin(); it != _server_fds.end(); ++it)
-		close(*it); */
-	/* if (_server_fd != -1)
-		close(_server_fd); */
 }
 
 /* GETERS and SETERS */
@@ -156,18 +130,6 @@ bool				Server::hasPort(int port) const
 	return std::find(_ports.begin(), _ports.end(), port) != _ports.end();
 }
 
-// port
-/* int	Server::getPort() const { return _port; }
-void				Server::addPort(int port)
-{
-	if (_port == -1)
-		_port = port;
-}
-bool				Server::hasPort(int port) const
-{
-	return _port == port;
-} */
-
 // server_name
 std::string	Server::getServerName() const { return _server_name; }
 
@@ -180,20 +142,6 @@ bool				Server::hasSocket(int socket) const
 {
 	return std::find(_sockets.begin(), _sockets.end(), socket) != _sockets.end();
 }
-
-// server_fds
-/* std::vector<int>	Server::getServerFds() const { return _server_fds; }
-
-void				Server::setServerFds(int fd)
-{
-	std::vector<int>::iterator it;
-	for (it = _server_fds.begin(); it != _server_fds.end(); ++it)
-	{
-		if (*it == fd)
-			throw ErrorException("Trying to add repeated fd to _server_fds");
-	}
-	_server_fds.push_back(fd);
-} */
 
 // locations
 std::vector<Location>	Server::getLocations() const { return _locations; }
@@ -223,52 +171,8 @@ void	Server::addLocation(Location location)
 }
 
 
-
-/* std::map<std::string, Location>		Server::getLocations() const { return _locations; }
-const Location*	Server::getLocation(std::string route) const
-{
-	std::map<std::string, Location>::const_iterator it;
-	int index;
-
-	while (true)
-	{
-		it = _locations.find(route);
-		if (it != _locations.end())
-			return &(it->second); // Se encontró coincidencia exacta. Devolvemos el puntero
-
-		index = route.rfind("/");
-		std::string last = route.substr(0, index);
-		if (last.empty())
-			last = "/";
-		if (last == route)
-			break;
-		route = last;
-	}
-
-	return NULL; // No se encontró ninguna coincidencia
-}
-
-void	Server::addLocation(const std::string &route, Location location)
-{
-	if (_locations.find(route) == _locations.end())
-	{
-		location.inherit(*this);
-		_locations.insert(std::pair<std::string, Location>(route, location));
-	}
-} */
-
 // is_running
 bool	Server::isRunning() const { return _is_running; }
-
-
-// TESTING
-/* Server::Server(int port) : _port(port), _server_fd(-1) {}
-
-Server::~Server()
-{
-	if (_server_fd != -1)
-		close(_server_fd);
-} */
 
 void Server::start()
 {
@@ -353,12 +257,6 @@ void	Server::print() const
 
 	// server_name
 	std::cout << "server_name = " << getServerName() << std::endl;
-
-	// server_fd
-	/* std::cout << "server_fds:" << std::endl;
-	std::vector<int>::const_iterator it;
-	for (it = _server_fds.begin(); it != _server_fds.end(); ++it)
-		std::cout << "\t- " << *it << std::endl; */
 
 	// sockets
 	if (!_sockets.empty())
