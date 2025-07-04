@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:09:45 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/04 11:16:20 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/04 12:03:36 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ Server::~Server()
 /* GETERS and SETERS */
 // ip
 std::string	Server::getIp() const { return _ip; }
+
 void		Server::setIp(const std::string &ip)
 {
 	if (ip != "localhost")
@@ -134,6 +135,7 @@ void		Server::setIp(const std::string &ip)
 
 // ports
 std::vector<int>	Server::getPorts() const { return _ports; }
+
 void				Server::addPort(int port)
 {
 	if (_ports.size() == 1 && _ports.at(0) == -1)
@@ -141,8 +143,14 @@ void				Server::addPort(int port)
 	if (!hasPort(port) && port > 0 && port < MAX_PORT)
 		_ports.push_back(port);
 	else
-		throw ErrorException(port + ": invalid port"); // Convertir port a STRING
+	{
+		std::stringstream ss;
+		ss << port;
+		std::string port_str = ss.str();
+		throw ErrorException(port_str + ": invalid port");
+	}
 }
+
 bool				Server::hasPort(int port) const
 {
 	return std::find(_ports.begin(), _ports.end(), port) != _ports.end();
@@ -162,10 +170,12 @@ bool				Server::hasPort(int port) const
 
 // server_name
 std::string	Server::getServerName() const { return _server_name; }
+
 void		Server::setServerName(const std::string &server_name) { _server_name = server_name; }
 
 // sockets
 std::vector<int>	Server::getSockets() const { return _sockets; }
+
 bool				Server::hasSocket(int socket) const
 {
 	return std::find(_sockets.begin(), _sockets.end(), socket) != _sockets.end();
