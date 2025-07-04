@@ -1,8 +1,12 @@
-El server puede tener metodos? -> De momento sólo los proceso dentro de los locations
-ERROR: Estamos heredando mal en los locatins el client_max_body_size
-ERROR: Estamos heredando mal en los locatins el sd
-Necesario añadir en el print() de location: upload_enable y upload_store
-Necesario añadir en el print() de location: cgissd
-SERVER: No necesitamos guardar fds
-CGIs: cgi-extension ??
-Añadir excepciones en los geters/seters de las clases Config, Server, Location...
+[X] El server puede tener metodos? -> De momento sólo los proceso dentro de los locations
+	No, no puede, y por defecto si en un location no se especifican métodos, todos están permitidos.
+[X] ERROR: Estamos heredando mal en los locatins el client_max_body_size
+	Faltaba llamar a inherit() tras crear el location
+[X] Necesario añadir en el print() de location: upload_enable y upload_store
+[X] Necesario añadir en el print() de location: cgis
+[X] SERVER: No necesitamos guardar fds
+[X] CGIs: cgi-extension ??
+	No necesario pero de momento lo dejamos para poder comprobar la extensión del fichero entrante
+[-] Añadir excepciones en los seters de las clases Config, Server, Location...	
+[X] Revisar si el parseo controla correctamente varios puertos sin IP
+[?] Gestionar en el parser un error de upload si no tengo "upload_enable on" o "upload_store" con un path o dejar que el servidor envíe un error por no poder procesar la petición?

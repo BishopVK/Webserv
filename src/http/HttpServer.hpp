@@ -1,8 +1,8 @@
 #ifndef HTTPSERVER_HPP
 #define HTTPSERVER_HPP
 
-#include "../../include/Server.hpp"
-#include "../io/Multiplexer.hpp"
+#include "Server.hpp"
+#include "Multiplexer.hpp"
 #include <netdb.h>
 #include <string>
 #include <vector>

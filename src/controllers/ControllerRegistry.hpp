@@ -1,8 +1,8 @@
 #ifndef CONTROLLER_REGISTRY_HPP
 #define CONTROLLER_REGISTRY_HPP
 
-#include "../http/HttpRequest.hpp"
-#include "../http/HttpResponse.hpp"
+#include "HttpRequest.hpp"
+#include "HttpResponse.hpp"
 #include "base/AController.hpp"
 #include "base/IController.hpp"
 #include <string>

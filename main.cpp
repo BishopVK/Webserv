@@ -6,18 +6,17 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:44:17 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 10:50:44 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/04 13:13:20 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/Config.hpp"
-#include "include/Parser.hpp"
-#include "include/Server.hpp"
-#include "include/prototypes.hpp"
-#include "include/utils/Logger.hpp"
-#include "include/valueObjects/Port.hpp"
-#include "include/webserv.hpp"
-#include "src/http/HttpServer.hpp"
+#include "webserv.hpp"
+#include "prototypes.hpp"
+#include "Parser.hpp"
+#include "Config.hpp"
+#include "Server.hpp"
+#include "Port.hpp"
+#include "HttpServer.hpp"
 #include <vector>
 
 Server create_server_for_testing()

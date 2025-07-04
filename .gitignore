@@ -36,3 +36,7 @@ webserv
 .vscode
 .zed
 .idea
+.cache
+
+# Config
+.clangd

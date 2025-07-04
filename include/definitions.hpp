@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 10:00:39 by danjimen          #+#    #+#             */
-/*   Updated: 2025/06/30 23:11:03 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/03 08:31:07 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define SERVER_PROTOCOL				"HTML/1.1"
 # define ALIAS_DEFAULT					""
 # define DEFAULT_ERROR_PAGE				"100 /error.html" // INTERESANTE TENER UNA WEB DE ERROR POR DEFECTO EN CASO DE NO SER ESPECIFICADA
+# define MAX_PORT						65535
 
 /* COLORS */
 # define RED "\033[31m"

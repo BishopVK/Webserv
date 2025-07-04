@@ -6,24 +6,15 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:09:45 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 03:26:03 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/04 13:05:59 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/Server.hpp"
+#include "Server.hpp"
 
 Server::Server() : Config(), _ip(IP_DEFAULT), _is_running(false)
 {
-	//Set the name to the server
-	//_servers_count = 0;
-	/* std::stringstream	ss;
-	ss << ++_servers_count;
-	_server_name = "Server " + ss.str(); */
 	_server_name = "server_name";
-
-	//_server_fd = -1;
-	_server_fds.clear();
-	//_port = -1;
 	_ports.push_back(-1);
 	_sockets.clear();
 	_locations.clear();
@@ -31,16 +22,7 @@ Server::Server() : Config(), _ip(IP_DEFAULT), _is_running(false)
 
 Server::Server(int port) : Config(), _ip(IP_DEFAULT), _is_running(false)
 {
-	//Set the name to the server
-	//_servers_count = 0;
-	/* std::stringstream	ss;
-	ss << ++_servers_count;
-	_server_name = "Server " + ss.str(); */
 	_server_name = "server_name";
-
-	//_server_fd = -1;
-	_server_fds.clear();
-	//_port = port;
 	_ports.push_back(port);
 	_sockets.clear();
 	_locations.clear();
@@ -59,7 +41,6 @@ Server::Server(const Server &other) : Config(other), _ip(other.getIp()), _is_run
 	_inherit_initizalized = other.getInheritInitialized();
 	_ports = other.getPorts();
 	_server_name = other.getServerName();
-	_server_fds = other.getServerFds();
 	_sockets = other.getSockets();
 	_locations = other.getLocations();
 }
@@ -80,7 +61,6 @@ Server &Server::operator=(const Server &other)
 		_ip = other.getIp();
 		_ports = other.getPorts();
 		_server_name = other.getServerName();
-		_server_fds = other.getServerFds();
 		_sockets = other.getSockets();
 		_locations = other.getLocations();
 		_is_running = other.isRunning();
@@ -92,68 +72,75 @@ Server::~Server()
 {
 	_is_running = false;
 	_locations.clear();
-
-	std::vector<int>::iterator it;
-	for (it = _server_fds.begin(); it != _server_fds.end(); ++it)
-		close(*it);
-	/* if (_server_fd != -1)
-		close(_server_fd); */
 }
 
 /* GETERS and SETERS */
 // ip
 std::string	Server::getIp() const { return _ip; }
-void		Server::setIp(const std::string &ip) {_ip = ip; }
+
+void		Server::setIp(const std::string &ip)
+{
+	if (ip != "localhost")
+	{
+		std::vector<std::string>	tokens;
+		size_t						start = 0;
+		size_t						end;
+		
+		while ((end = ip.find('.', start)) != std::string::npos)
+		{
+			tokens.push_back(ip.substr(start, end - start));
+			start = end + 1;
+		}
+
+		// Add last part
+		tokens.push_back(ip.substr(start));
+		if (tokens.size() != 4)
+			throw ErrorException(ip + ": invalid ip format");
+			
+		for (std::vector<std::string>::iterator it = tokens.begin(); it != tokens.end(); ++it)
+		{
+			int nbr = std::atoi((*it).c_str());
+			if ((*it).empty() || nbr < 0 || nbr > 255)
+				throw ErrorException(ip + ": invalid ip format");
+		}
+	}
+	_ip = ip;
+}
 
 // ports
 std::vector<int>	Server::getPorts() const { return _ports; }
+
 void				Server::addPort(int port)
 {
 	if (_ports.size() == 1 && _ports.at(0) == -1)
 		_ports.clear();
-	if (!hasPort(port) && port > 0 && port < 65535)
+	if (!hasPort(port) && port > 0 && port < MAX_PORT)
 		_ports.push_back(port);
+	else
+	{
+		std::stringstream ss;
+		ss << port;
+		std::string port_str = ss.str();
+		throw ErrorException(port_str + ": invalid port");
+	}
 }
+
 bool				Server::hasPort(int port) const
 {
 	return std::find(_ports.begin(), _ports.end(), port) != _ports.end();
 }
 
-// port
-/* int	Server::getPort() const { return _port; }
-void				Server::addPort(int port)
-{
-	if (_port == -1)
-		_port = port;
-}
-bool				Server::hasPort(int port) const
-{
-	return _port == port;
-} */
-
 // server_name
 std::string	Server::getServerName() const { return _server_name; }
+
 void		Server::setServerName(const std::string &server_name) { _server_name = server_name; }
 
 // sockets
 std::vector<int>	Server::getSockets() const { return _sockets; }
+
 bool				Server::hasSocket(int socket) const
 {
 	return std::find(_sockets.begin(), _sockets.end(), socket) != _sockets.end();
-}
-
-// server_fds
-std::vector<int>	Server::getServerFds() const { return _server_fds; }
-
-void				Server::setServerFds(int fd)
-{
-	std::vector<int>::iterator it;
-	for (it = _server_fds.begin(); it != _server_fds.end(); ++it)
-	{
-		if (*it == fd)
-			throw ErrorException("Trying to add repeated fd to _server_fds");
-	}
-	_server_fds.push_back(fd);
 }
 
 // locations
@@ -184,52 +171,8 @@ void	Server::addLocation(Location location)
 }
 
 
-
-/* std::map<std::string, Location>		Server::getLocations() const { return _locations; }
-const Location*	Server::getLocation(std::string route) const
-{
-	std::map<std::string, Location>::const_iterator it;
-	int index;
-
-	while (true)
-	{
-		it = _locations.find(route);
-		if (it != _locations.end())
-			return &(it->second); // Se encontró coincidencia exacta. Devolvemos el puntero
-
-		index = route.rfind("/");
-		std::string last = route.substr(0, index);
-		if (last.empty())
-			last = "/";
-		if (last == route)
-			break;
-		route = last;
-	}
-
-	return NULL; // No se encontró ninguna coincidencia
-}
-
-void	Server::addLocation(const std::string &route, Location location)
-{
-	if (_locations.find(route) == _locations.end())
-	{
-		location.inherit(*this);
-		_locations.insert(std::pair<std::string, Location>(route, location));
-	}
-} */
-
 // is_running
 bool	Server::isRunning() const { return _is_running; }
-
-
-// TESTING
-/* Server::Server(int port) : _port(port), _server_fd(-1) {}
-
-Server::~Server()
-{
-	if (_server_fd != -1)
-		close(_server_fd);
-} */
 
 void Server::start()
 {
@@ -314,12 +257,6 @@ void	Server::print() const
 
 	// server_name
 	std::cout << "server_name = " << getServerName() << std::endl;
-
-	// server_fd
-	std::cout << "server_fds:" << std::endl;
-	std::vector<int>::const_iterator it;
-	for (it = _server_fds.begin(); it != _server_fds.end(); ++it)
-		std::cout << "\t- " << *it << std::endl;
 
 	// sockets
 	if (!_sockets.empty())

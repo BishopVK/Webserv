@@ -1,7 +1,7 @@
 #ifndef HTTP_REQUEST_HANDLER_HPP
 #define HTTP_REQUEST_HANDLER_HPP
 
-#include "../controllers/ControllerRegistry.hpp"
+#include "ControllerRegistry.hpp"
 
 class HttpRequest;
 class HttpResponse;

@@ -6,14 +6,14 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:56:27 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 03:40:15 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/04 13:07:34 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/webserv.hpp"
-#include "../../include/Server.hpp"
-#include "../../include/Parser.hpp"
-#include "../../include/definitions.hpp"
+#include "webserv.hpp"
+#include "Server.hpp"
+#include "Parser.hpp"
+#include "definitions.hpp"
 
 void	Parser::parseDirective(Server &server, const std::vector<std::string> &tokens, size_t &i)
 {
@@ -27,13 +27,25 @@ void	Parser::parseDirective(Server &server, const std::vector<std::string> &toke
 		{
 			server.setIp(tokens[i].substr(0, pos));
 			std::string port = tokens[i].substr(pos + 1);
+			for (size_t j = 0; j < port.length(); ++j)
+			{
+				if (!std::isdigit(port[j]))
+					throw ErrorException(tokens[i] + ": invalid port");
+			}
 			server.addPort(std::atoi(port.c_str()));
 			i++;
 		}
 		else
 		{
 			while (tokens[i] != ";")
+			{
+				for (size_t j = 0; j < tokens[i].length(); ++j)
+				{
+					if (!std::isdigit(tokens[i][j]))
+						throw ErrorException(tokens[i] + ": invalid port");
+				}
 				server.addPort(std::atoi(tokens[i++].c_str()));
+			}
 		}
 	}
 	else if (key == "server_name")
@@ -54,7 +66,7 @@ void	Parser::parseDirective(Server &server, const std::vector<std::string> &toke
 		else if (tokens[i] == "off")
 			server.setAutoindex(false);
 		else
-			throw ErrorException("Wrong Autoindex value");
+			throw ErrorException("Wrong Autoindex " + tokens[i] + " value");
 		i++;
 	}
 	else if (key == "error_page")
@@ -62,7 +74,15 @@ void	Parser::parseDirective(Server &server, const std::vector<std::string> &toke
 		std::vector<int> codes;
 
 		while (i < tokens.size() && tokens[i][0] != '/' && tokens[i] != ";")
+		{
+			// Only digits avalible and positive numbers.
+			for (size_t j = 0; j < tokens[i].length(); ++j)
+			{
+				if (!std::isdigit(tokens[i][j]))
+					throw ErrorException(tokens[i] + ": invalid error_pages code");
+			}
 			codes.push_back(std::atoi(tokens[i++].c_str()));
+		}
 
 		if (i >= tokens.size() || tokens[i] == ";")
 			throw ErrorException("Expected path after error_page codes");
