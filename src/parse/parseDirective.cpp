@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:56:27 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/04 08:13:20 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/04 11:13:25 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ void	Parser::parseDirective(Server &server, const std::vector<std::string> &toke
 		{
 			server.setIp(tokens[i].substr(0, pos));
 			std::string port = tokens[i].substr(pos + 1);
+			for (size_t j = 0; j < port.length(); ++j)
+			{
+				if (!std::isdigit(port[j]))
+					throw ErrorException(tokens[i] + ": invalid port");
+			}
 			server.addPort(std::atoi(port.c_str()));
 			i++;
 		}
@@ -34,12 +39,11 @@ void	Parser::parseDirective(Server &server, const std::vector<std::string> &toke
 		{
 			while (tokens[i] != ";")
 			{
-				int port = std::atoi(tokens[i].c_str());
-				std::stringstream ss;
-				ss << port;
-				std::string str = ss.str();
-				if (tokens[i].length() != str.length())
-					throw ErrorException(tokens[i] + ": invalid port");
+				for (size_t j = 0; j < tokens[i].length(); ++j)
+				{
+					if (!std::isdigit(tokens[i][j]))
+						throw ErrorException(tokens[i] + ": invalid port");
+				}
 				server.addPort(std::atoi(tokens[i++].c_str()));
 			}
 		}
@@ -62,7 +66,7 @@ void	Parser::parseDirective(Server &server, const std::vector<std::string> &toke
 		else if (tokens[i] == "off")
 			server.setAutoindex(false);
 		else
-			throw ErrorException("Wrong Autoindex value");
+			throw ErrorException("Wrong Autoindex " + tokens[i] + " value");
 		i++;
 	}
 	else if (key == "error_page")
@@ -71,12 +75,12 @@ void	Parser::parseDirective(Server &server, const std::vector<std::string> &toke
 
 		while (i < tokens.size() && tokens[i][0] != '/' && tokens[i] != ";")
 		{
-			int code = std::atoi(tokens[i].c_str());
-			std::stringstream ss;
-			ss << code;
-			std::string str = ss.str();
-			if (tokens[i].length() != str.length())
-				throw ErrorException(tokens[i] + ": invalid error_pages code");
+			// Only digits avalible and positive numbers.
+			for (size_t j = 0; j < tokens[i].length(); ++j)
+			{
+				if (!std::isdigit(tokens[i][j]))
+					throw ErrorException(tokens[i] + ": invalid error_pages code");
+			}
 			codes.push_back(std::atoi(tokens[i++].c_str()));
 		}
 

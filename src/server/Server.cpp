@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:09:45 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/03 08:31:22 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/04 11:16:20 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,34 @@ Server::~Server()
 /* GETERS and SETERS */
 // ip
 std::string	Server::getIp() const { return _ip; }
-void		Server::setIp(const std::string &ip) {_ip = ip; }
+void		Server::setIp(const std::string &ip)
+{
+	if (ip != "localhost")
+	{
+		std::vector<std::string>	tokens;
+		size_t						start = 0;
+		size_t						end;
+		
+		while ((end = ip.find('.', start)) != std::string::npos)
+		{
+			tokens.push_back(ip.substr(start, end - start));
+			start = end + 1;
+		}
+
+		// Add last part
+		tokens.push_back(ip.substr(start));
+		if (tokens.size() != 4)
+			throw ErrorException(ip + ": invalid ip format");
+			
+		for (std::vector<std::string>::iterator it = tokens.begin(); it != tokens.end(); ++it)
+		{
+			int nbr = std::atoi((*it).c_str());
+			if ((*it).empty() || nbr < 0 || nbr > 255)
+				throw ErrorException(ip + ": invalid ip format");
+		}
+	}
+	_ip = ip;
+}
 
 // ports
 std::vector<int>	Server::getPorts() const { return _ports; }
@@ -113,6 +140,8 @@ void				Server::addPort(int port)
 		_ports.clear();
 	if (!hasPort(port) && port > 0 && port < MAX_PORT)
 		_ports.push_back(port);
+	else
+		throw ErrorException(port + ": invalid port"); // Convertir port a STRING
 }
 bool				Server::hasPort(int port) const
 {
