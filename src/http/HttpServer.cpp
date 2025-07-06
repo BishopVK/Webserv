@@ -1,10 +1,11 @@
 #include "HttpServer.hpp"
-#include "Server.hpp"
-#include "Port.hpp"
 #include "HttpRequest.hpp"
 #include "HttpRequestHandler.hpp"
 #include "HttpResponse.hpp"
+#include "Logger.hpp"
 #include "Multiplexer.hpp"
+#include "Port.hpp"
+#include "Server.hpp"
 #include "SocketUtils.hpp"
 #include <errno.h>
 #include <exception>
@@ -116,8 +117,8 @@ void HttpServer::run()
         //     }
         // }
 
-        std::map<std::string, ServerConnection>::iterator server_it;
-        for (server_it = _serverConnections.begin(); server_it != _serverConnections.end(); ++server_it)
+        for (std::map<std::string, ServerConnection>::iterator server_it = _serverConnections.begin();
+             server_it != _serverConnections.end(); ++server_it)
         {
             const ServerConnection& server_conn = server_it->second;
             int                     server_fd = server_conn.fd;
@@ -144,9 +145,11 @@ void HttpServer::run()
         {
             int  fd = *it;
             bool is_server_fd = false;
-            for (size_t j = 0; j < server_fds.size(); ++j)
+            
+            for (std::map<std::string, ServerConnection>::iterator server_it = _serverConnections.begin();
+                 server_it != _serverConnections.end(); ++server_it)
             {
-                if (server_fds[j] == fd)
+                if (server_it->second.fd == fd)
                 {
                     is_server_fd = true;
                     break;
@@ -172,8 +175,8 @@ void HttpServer::run()
         }
     }
 
-    for (size_t i = 0; i < server_fds.size(); ++i)
-        SocketUtils::closeSocket(server_fds[i]);
+    for (std::map<std::string, ServerConnection>::iterator it = _serverConnections.begin(); it != _serverConnections.end(); ++it)
+        SocketUtils::closeSocket(it->second.fd);
 }
 
 bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multiplexer& multiplexer)
