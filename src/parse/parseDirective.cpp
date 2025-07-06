@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:56:27 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/04 13:07:34 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/06 16:38:14 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,25 @@ void	Parser::parseDirective(Server &server, const std::vector<std::string> &toke
 
 	if (key == "listen")
 	{
-		size_t pos = tokens[i].find(':');
+		while (tokens[i] != ";")
+		{
+			size_t pos = tokens[i].find(':');
 
-		if (pos != std::string::npos) // ':' was found
-		{
-			server.setIp(tokens[i].substr(0, pos));
-			std::string port = tokens[i].substr(pos + 1);
-			for (size_t j = 0; j < port.length(); ++j)
+			if (pos != std::string::npos) // ':' was found
 			{
-				if (!std::isdigit(port[j]))
+				std::string ip = tokens[i].substr(0, pos);
+				std::string port = tokens[i].substr(pos + 1);
+
+				for (size_t j = 0; j < port.length(); ++j)
+				{
+					if (!std::isdigit(port[j]))
 					throw ErrorException(tokens[i] + ": invalid port");
+				}
+				server.setIp(ip);
+				server.addPort(std::atoi(port.c_str()));
+				
 			}
-			server.addPort(std::atoi(port.c_str()));
-			i++;
-		}
-		else
-		{
-			while (tokens[i] != ";")
+			else
 			{
 				for (size_t j = 0; j < tokens[i].length(); ++j)
 				{
@@ -46,6 +48,7 @@ void	Parser::parseDirective(Server &server, const std::vector<std::string> &toke
 				}
 				server.addPort(std::atoi(tokens[i++].c_str()));
 			}
+			i++;
 		}
 	}
 	else if (key == "server_name")
