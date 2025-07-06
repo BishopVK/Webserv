@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:09:45 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/04 13:05:59 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/06 20:59:01 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,7 @@ Server::Server() : Config(), _ip(IP_DEFAULT), _is_running(false)
 {
 	_server_name = "server_name";
 	_ports.push_back(-1);
-	_sockets.clear();
-	_locations.clear();
-}
-
-Server::Server(int port) : Config(), _ip(IP_DEFAULT), _is_running(false)
-{
-	_server_name = "server_name";
-	_ports.push_back(port);
+	_listen_set.clear();
 	_sockets.clear();
 	_locations.clear();
 }
@@ -40,6 +33,7 @@ Server::Server(const Server &other) : Config(other), _ip(other.getIp()), _is_run
 	_methods = other.getMethods();
 	_inherit_initizalized = other.getInheritInitialized();
 	_ports = other.getPorts();
+	_listen_set = other.getListenSet();
 	_server_name = other.getServerName();
 	_sockets = other.getSockets();
 	_locations = other.getLocations();
@@ -60,6 +54,7 @@ Server &Server::operator=(const Server &other)
 		_inherit_initizalized = other.getInheritInitialized();
 		_ip = other.getIp();
 		_ports = other.getPorts();
+		_listen_set = other.getListenSet();
 		_server_name = other.getServerName();
 		_sockets = other.getSockets();
 		_locations = other.getLocations();
@@ -114,7 +109,8 @@ void				Server::addPort(int port)
 {
 	if (_ports.size() == 1 && _ports.at(0) == -1)
 		_ports.clear();
-	if (!hasPort(port) && port > 0 && port < MAX_PORT)
+	//if (!hasPort(port) && port > 0 && port < MAX_PORT)
+	if (port > 0 && port < MAX_PORT)
 		_ports.push_back(port);
 	else
 	{
@@ -125,9 +121,76 @@ void				Server::addPort(int port)
 	}
 }
 
-bool				Server::hasPort(int port) const
+bool	Server::hasPort(int port) const
 {
 	return std::find(_ports.begin(), _ports.end(), port) != _ports.end();
+}
+
+// listen_set
+std::multimap<std::string, int>	Server::getListenSet() const { return _listen_set; }
+
+std::vector<int>	Server::getListenPort(const std::string &ip) const
+{
+	// Find keys initialized whit "ip"
+	std::pair<
+		std::multimap<std::string, int>::const_iterator,
+		std::multimap<std::string, int>::const_iterator
+	> range = _listen_set.equal_range(ip);
+
+	// Key not found
+	if (range.first == _listen_set.end())
+		return std::vector<int>(); // void vector returned
+
+	// Add values to ports vector
+	std::vector<int>	ports;
+	std::multimap<std::string, int>::const_iterator	it;
+	for (it = range.first; it != range.second; ++it)
+		ports.push_back(it->second);
+	
+	return ports;
+}
+
+void	Server::addListenSet(const std::string &ip, int port)
+{
+	// _listen_set its void
+	if (_listen_set.empty())
+	{
+		_listen_set.insert(std::make_pair(ip, port));
+		return;
+	}
+
+	// Find keys initialized whit "ip"
+	std::pair<
+		std::multimap<std::string, int>::const_iterator,
+		std::multimap<std::string, int>::const_iterator
+	> range = _listen_set.equal_range(ip);
+
+	// Key not found
+	if (range.first == _listen_set.end())
+		_listen_set.insert(std::make_pair(ip, port));
+	else
+	{
+		// Detect if port already exists for this ip
+		std::multimap<std::string, int>::const_iterator it;
+		for (it = range.first; it != range.second; ++it)
+		{
+			if (it->second == port)
+			{
+				std::stringstream ss;
+				ss << port;
+				std::string port_str = ss.str();
+				throw ErrorException(port_str + ": Duplicated port for " + ip);
+			}
+		}
+		//Not found port for this ip
+		_listen_set.insert(std::make_pair(ip, port));
+	}
+}
+
+void	Server::addListenPort(int port)
+{
+	std::string ip = IP_DEFAULT;
+	addListenSet(ip, port);
 }
 
 // server_name
@@ -254,6 +317,17 @@ void	Server::print() const
 		for (it = _ports.begin(); it != _ports.end(); ++it)
 			std::cout << "\t- " << *it << std::endl;
 	}
+
+	// listen_set
+	if (!_listen_set.empty())
+	{
+		std::cout << "Listen ports:" << std::endl;
+		std::multimap<std::string, int>::const_iterator it;
+		for (it = _listen_set.begin(); it != _listen_set.end(); ++it)
+			std::cout << "\t- " << it->first << ":" << it->second << std::endl;
+	}
+	else
+		std::cout << "_listen_set it's empty! 😭" << std::endl;
 
 	// server_name
 	std::cout << "server_name = " << getServerName() << std::endl;

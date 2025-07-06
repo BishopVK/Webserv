@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 13:10:56 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/04 12:12:07 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/06 18:11:53 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ class Server : public Config
 	private:
 		std::string						_ip;
 		std::vector<int>				_ports;
+		std::multimap<std::string, int>	_listen_set;
 		std::string						_server_name;
 		std::vector<int>				_sockets;
 		std::vector<Location>			_locations;
@@ -41,6 +42,12 @@ class Server : public Config
 		std::vector<int>	getPorts() const;
 		void				addPort(int port);
 		bool				hasPort(int port) const;
+
+		// listen_set
+		std::multimap<std::string, int>	getListenSet() const;
+		std::vector<int>				getListenPort(const std::string &ip) const;
+		void							addListenSet(const std::string &ip, int port);
+		void							addListenPort(int port);
 
 		// server_name
 		std::string	getServerName() const;
