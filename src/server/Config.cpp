@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 18:08:18 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/04 13:09:34 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/06 09:50:20 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,16 @@ std::string	Config::getCgi(const std::string &extension) const
 
 void	Config::addCgi(const std::string &extension, const std::string &path)
 {
+	if (extension.size() < 2 || extension[0] != '.')
+		throw ErrorException(extension + ": Invalid CGI extension");
+		
+	if (path[0] != '/')
+		throw ErrorException(path + ": Invalid CGI path");
+
+	// CAPTURAR??
+	if (extension == ".php" && path != PHP_PATH)
+		throw ErrorException(path + ": Invalid CGI path for '" + extension + "' extension");
+
 	std::map<std::string, std::string>::iterator it = _cgi.find(extension);
 
 	if (it == _cgi.end())
@@ -159,6 +169,9 @@ std::vector<std::string>	Config::getMethods() const { return _methods; }
 
 void	Config::addMethod(const std::string &method)
 {
+	if (method != "GET" && method != "POST" && method != "DELETE")
+		throw ErrorException(method + ": Method not allowed");
+
 	if (!hasMethod(method))
 		_methods.push_back(method);
 }

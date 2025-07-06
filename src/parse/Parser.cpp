@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:20:04 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/04 13:10:59 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/06 09:51:44 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,6 @@ void	Parser::tokenizeConfigFile()
 		std::istringstream ss(line);
 		std::string field;
 
-		/* // Create vector to save tokens
-		std::vector<std::string>	tokens; */
-
 		// Read each field separated by space
 		while (std::getline(ss, field, ' '))
 		{
@@ -82,20 +79,12 @@ void	Parser::tokenizeConfigFile()
 				tokens.push_back(field);
 			}
 		}
-		/* if (!line.empty()) // DB
-			std::cout << "---- End of line ----" << std::endl; //DB */
-		
-		// Verify tokens
-		//check_tokens(tokens);
-
-		// Clear vector
-		//tokens.clear();
 	}
-	std::vector<std::string>::iterator it; // DB
+	/* std::vector<std::string>::iterator it; // DB
 	std::cout << "TOKENS:" << std::endl; // DB
 	for (it = tokens.begin(); it != tokens.end(); ++it) // DB
 		std::cout << *it << " "; // DB
-	std::cout << std::endl; // DB
+	std::cout << std::endl; // DB */
 
 	_parsed_servers = parseConfig(tokens);
 
