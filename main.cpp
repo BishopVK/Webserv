@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:44:17 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/04 13:13:20 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/07 11:20:10 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "HttpServer.hpp"
 #include <vector>
 
-Server	create_server_for_testing()
+/* Server	create_server_for_testing()
 {
 	Server server;
 	server.setRoot("www.testing.cat");
@@ -42,6 +42,7 @@ Server	create_server_for_testing()
 	location1.setReturnData(301, "http://example.com");
 	location1.addMethod("GET");
 	location1.addMethod("POST");
+	location1.inherit(server);
 
 	server.addLocation(location1);
 
@@ -55,6 +56,8 @@ Server	create_server_for_testing()
 	location2.addCgi(".py", "/usr/bin/python3");
 	location2.setReturnData(302, "http://python-example.com");
 	location2.addMethod("DELETE");
+	location2.inherit(server);
+
 
 	server.addLocation(location2);
 
@@ -70,7 +73,7 @@ Server	create_server_for_testing()
 	server.addLocation(location3);
 
 	return server;
-}
+} */
 
 int main(int argc, char** argv)
 {
