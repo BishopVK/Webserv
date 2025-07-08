@@ -17,13 +17,6 @@ char **create_command(std::string file_path, std::string file_name)
 		command[i] = strdup(command_vec[i].c_str());
 	}
 	command[command_vec.size()] = NULL;
-//	char *const * command = (char *const *)&command_vec[0];
-	// int i = 0;
-	// while(command[i])
-	// {
-	// 	std::cout << command[i] << std::endl;
-	// 	i++;
-	// }
 	return (command);
 }
 
@@ -38,19 +31,17 @@ char **create_env(std::string method, std::string file_path,
 	env_vec.push_back("SCRIPT_FILENAME=" + file_path + file_name);
 	env_vec.push_back("SCRIPT_NAME=" + file_name);
 	if (method == "GET")
-		env_vec.push_back("QUERY_STRING" + body);
+		env_vec.push_back("QUERY_STRING=" + body);
 	env_vec.push_back("SERVER_PROTOCOL=HTTP/1.1");
-	std::string content_type = "CONTENT_TYPE=" + type;
-	if (!(boundary.empty()))
+	if (method == "POST")
 	{
-		std::cout << "->" << boundary << "." << std::endl;
-		content_type  += "; boundary=" + boundary;
+		std::string content_type = "CONTENT_TYPE=" + type;
+		if (!(boundary.empty()))
+			content_type  += "; boundary=" + boundary;
+		env_vec.push_back(content_type);
 	}
-	env_vec.push_back(content_type);
 	env_vec.push_back("CONTENT_LENGTH=" + length);
 	env_vec.push_back("REDIRECT_STATUS=200");
-//	env_vec.push_back(NULL);
-
 
 	char	**env = new char*[env_vec.size() + 1];
 	for (size_t i = 0; i < env_vec.size(); i++)
@@ -58,14 +49,6 @@ char **create_env(std::string method, std::string file_path,
 		env[i] = strdup(env_vec[i].c_str());
 	}
 	env[env_vec.size()] = NULL;
-
-	//char *const *env = (char *const *)&env_vec[0];
-	// int i = 0;
-	// while (env[i])
-	// {
-	// 	std::cout << env[i] << std::endl;
-	// 	i++;
-	// }
 	return (env);
 }
 
@@ -74,11 +57,18 @@ int	main(void)
 	std::string	method = "POST";
 	std::string	file_path = "/home/isainz-r/Webserv/cgis/";
 	std::string	file_name = "a_cgi.php";
+	//std::string	file_name = "file.php";
 	std::string	content_type = "application/x-www-form-urlencoded";
+	//std::string	content_type = "multipart/form-data";
 	std::string	content_lenght = "10";
-	std::string	body = "age=21";
+	std::string	body = "age=20";
+	//std::string	body = "--XYZ\r\n"
+	//					"Content-Disposition: form-data; name=\"file\"; filename=\"test.txt\"\r\n"
+	//					"Content-Type: text/plain\r\n"
+	//					"\r\n"
+	//					"Hello from the file!\r\n"
+	//					"--XYZ--\r\n";
 	std::string	boundary = "";
-	//std::string	host;      //idk if i have to use it or what it is
 
 	pid_t		num_fork;
 	int			server_to_cgi_pipe[2];
@@ -89,8 +79,8 @@ int	main(void)
 	pipe(server_to_cgi_pipe);
 	pipe(cgi_to_server_pipe);
 	num_fork = fork();
-	// if (num_fork == -1)
-	// 	return (-1);
+	if (num_fork == -1)
+		return (-1);
 	if (num_fork == 0)
 	{
 		dup2(server_to_cgi_pipe[0], 0);
@@ -103,14 +93,14 @@ int	main(void)
 		content_type, boundary, content_lenght);
 		command = create_command(file_path, file_name);
 
-		for (size_t i = 0; env[i]; i++)
-		{
-			printf("->%s\n", env[i]);
-		}
-		for (size_t i = 0; command[i]; i++)
-		{
-			printf("*>%s\n", command[i]);
-		}
+		// for (size_t i = 0; env[i]; i++)
+		// {
+		// 	printf("->%s\n", env[i]);
+		// }
+		// for (size_t i = 0; command[i]; i++)
+		// {
+		// 	printf("*>%s\n", command[i]);
+		// }
 		execve("/usr/bin/php-cgi", command, env);
 		perror("execve cgi error");
 		exit(127);
