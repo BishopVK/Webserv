@@ -138,7 +138,7 @@ void	Config::addCgi(const std::string &extension, const std::string &path)
 		throw ErrorException(path + ": Invalid CGI path");
 
 	// CAPTURAR??
-	if (extension == ".php" && path != PHP_PATH)
+	if (extension == ".php" && path != PATH_INFO)
 		throw ErrorException(path + ": Invalid CGI path for '" + extension + "' extension");
 
 	std::map<std::string, std::string>::iterator it = _cgi.find(extension);

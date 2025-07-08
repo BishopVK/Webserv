@@ -23,7 +23,7 @@
 # define ALIAS_DEFAULT					""
 # define DEFAULT_ERROR_PAGE				"100 /error.html" // INTERESANTE TENER UNA WEB DE ERROR POR DEFECTO EN CASO DE NO SER ESPECIFICADA
 # define MAX_PORT						65535
-# define PHP_PATH						"/usr/bin/php-cgi"
+# define PATH_INFO						"/usr/bin/php-cgi"
 
 /* COLORS */
 # define RED "\033[31m"
