@@ -44,6 +44,46 @@ void HttpServer::run()
 
     for (std::vector<Server>::iterator it = _servers.begin(); it != _servers.end(); ++it)
     {
+        std::multimap<std::string, int> listen_set = it->getListenSet();
+
+        if (listen_set.empty())
+        {
+            std::cerr << "No listen entries defined for server." << std::endl;
+            continue;
+        }
+
+        for (std::multimap<std::string, int>::iterator listen_it = listen_set.begin(); listen_it != listen_set.end(); ++listen_it)
+        {
+            // TODO: Esto puede lanzar una excepción si el puerto es inválido!!
+            const std::string &ip = listen_it->first;
+            int port_num = listen_it->second;
+
+            std::string port = Port(port_num).toString();
+            if (port.empty())
+            {
+                std::cerr << "Invalid port: " << port_num << "." << std::endl;
+                continue;
+            }
+
+            std::cout << "Starting server on " << ip << ":" << port << std::endl;
+
+            int server_fd = SocketUtils::createServerSocket(ip.c_str(), port.c_str());
+            if (server_fd == -1)
+            {
+                std::cerr << "Failed to create server socket on " << ip << ":" << port << std::endl;
+                continue;
+            }
+
+            SocketUtils::setNonBlocking(server_fd);
+            SocketUtils::setReuseAddr(server_fd);
+            multiplexer.addFd(server_fd, Multiplexer::READ);
+            // TODO: Esto deberia de estar en el servidor junto con el puerto
+            server_fds.push_back(server_fd);
+        }
+    }
+
+    /* for (std::vector<Server>::iterator it = _servers.begin(); it != _servers.end(); ++it)
+    {
         std::vector<int> ports = it->getPorts();
 
         if (ports.empty())
@@ -77,7 +117,7 @@ void HttpServer::run()
             // TODO: Esto deberia de estar en el servidor junto con el puerto
             server_fds.push_back(server_fd);
         }
-    }
+    } */
 
     if (server_fds.empty())
     {
