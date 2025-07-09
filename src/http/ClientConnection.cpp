@@ -1,12 +1,13 @@
 #include "ClientConnection.hpp"
 
-ClientConnection::ClientConnection() : _request_complete(false), _response_sent(false)
+ClientConnection::ClientConnection() : _request_complete(false), _response_sent(false), _server_connection(NULL)
 {
 }
 
 ClientConnection::ClientConnection(const ClientConnection& other)
     : _read_buffer(other._read_buffer), _write_buffer(other._write_buffer),
-      _request_complete(other._request_complete), _response_sent(other._response_sent)
+      _request_complete(other._request_complete), _response_sent(other._response_sent),
+      _server_connection(other._server_connection)
 {
 }
 
@@ -18,6 +19,7 @@ ClientConnection& ClientConnection::operator=(const ClientConnection& other)
         _write_buffer = other._write_buffer;
         _request_complete = other._request_complete;
         _response_sent = other._response_sent;
+        _server_connection = other._server_connection;
     }
     return *this;
 }
@@ -47,6 +49,11 @@ bool ClientConnection::isResponseSent() const
     return _response_sent;
 }
 
+ServerConnection* ClientConnection::getServerConnection() const
+{
+    return _server_connection;
+}
+
 // Setters
 void ClientConnection::setReadBuffer(const std::string& buffer)
 {
@@ -66,6 +73,11 @@ void ClientConnection::setRequestComplete(bool complete)
 void ClientConnection::setResponseSent(bool sent)
 {
     _response_sent = sent;
+}
+
+void ClientConnection::setServerConnection(ServerConnection* server_connection)
+{
+    _server_connection = server_connection;
 }
 
 void ClientConnection::appendToReadBuffer(const std::string& data)
@@ -99,10 +111,16 @@ bool ClientConnection::hasCompleteRequest() const
     return _read_buffer.find("\r\n\r\n") != std::string::npos;
 }
 
+bool ClientConnection::hasServerConnection() const
+{
+    return _server_connection != NULL;
+}
+
 void ClientConnection::reset()
 {
     _read_buffer.clear();
     _write_buffer.clear();
     _request_complete = false;
     _response_sent = false;
+    _server_connection = NULL;
 }

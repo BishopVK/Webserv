@@ -79,7 +79,7 @@ void HttpServer::run()
             SocketUtils::setNonBlocking(server_fd);
             SocketUtils::setReuseAddr(server_fd);
             multiplexer.addFd(server_fd, Multiplexer::READ);
-            _serverConnections.insert(std::make_pair(server_fd, ServerConnection(server_fd)));
+            _serverConnections.insert(std::make_pair(server_fd, ServerConnection(server_fd, &(*it))));
         }
     }
 
@@ -122,6 +122,7 @@ void HttpServer::run()
             SocketUtils::setNonBlocking(client_fd);
             multiplexer.addFd(client_fd, Multiplexer::READ);
             clients[client_fd] = ClientConnection();
+            clients[client_fd].setServerConnection(&server_it->second);
             Logger::instance().info("Nuevo cliente conectado: " + IntValue(client_fd).toString() + ".");
         }
 
@@ -194,7 +195,7 @@ bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multi
 
             HttpRequest        request(client.getReadBuffer().c_str());
             HttpRequestHandler handler;
-            HttpResponse       response = handler.handle(request);
+            HttpResponse       response = handler.handle(request, client);
 
             client.setWriteBuffer(response.toString());
 

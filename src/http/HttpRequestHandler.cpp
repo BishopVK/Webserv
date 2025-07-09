@@ -48,7 +48,7 @@ HttpRequestHandler::~HttpRequestHandler()
 {
 }
 
-HttpResponse HttpRequestHandler::handle(const HttpRequest& request)
+HttpResponse HttpRequestHandler::handle(const HttpRequest& request, const ClientConnection& client) const
 {
     if (!request.isValid())
     {
@@ -64,10 +64,30 @@ HttpResponse HttpRequestHandler::handle(const HttpRequest& request)
 
     ResourceType resourceType = getResourceType(fullPath);
 
-    if (resourceType == DIRECTORY)
+    if (resourceType == DIRECTORY && client.getServerConnection()->getServer()->getAutoindex() == true)
     {
+        std::string indexFile = fullPath + "index.html";
+
+        struct stat indexStat;
+        if (stat(indexFile.c_str(), &indexStat) == 0 && S_ISREG(indexStat.st_mode))
+        {
+            Logger::instance().debug("Redirigiendo a index.html: " + indexFile);
+            std::string content = getFileContent(indexFile);
+            if (content.empty())
+            {
+                Logger::instance().warning("No se ha podido leer el contenido del archivo index: " + indexFile);
+                return HttpResponse::notFound();
+            }
+            return HttpResponse::ok(content, getContentType(indexFile));
+        }
+
         Logger::instance().debug("Leyendo directorio: " + fullPath);
         return HttpResponse::ok(generateAutoIndexHtml(fullPath), "text/html");
+    }
+    else if (resourceType == DIRECTORY && client.getServerConnection()->getServer()->getAutoindex() == false)
+    {
+        Logger::instance().warning("Directorio sin autoindex encontrado");
+        return HttpResponse::notFound("Not found, buscate tu ahora la vida campeon");
     }
     else if (resourceType == FILE)
     {

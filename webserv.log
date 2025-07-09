@@ -100,3 +100,142 @@
 [2025-07-09 15:34:29] [INFO] Nuevo cliente conectado: 6.
 [2025-07-09 15:34:29] [DEBUG] Fichero: ./var/www/pato/style.css
 [2025-07-09 15:34:29] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 15:54:18] [INFO] Logger inicializado correctamente
+[2025-07-09 15:54:20] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 15:54:20] [DEBUG] Fichero: ./var/www/pato/index.html
+[2025-07-09 15:54:20] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 15:54:20] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 15:54:20] [INFO] Nuevo cliente conectado: 7.
+[2025-07-09 15:54:20] [DEBUG] Fichero: ./var/www/pato/script.js
+[2025-07-09 15:54:20] [DEBUG] Fichero con tipo: application/javascript
+[2025-07-09 15:54:20] [DEBUG] Fichero: ./var/www/pato/style.css
+[2025-07-09 15:54:20] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 15:54:21] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 15:54:21] [DEBUG] Fichero: ./var/www/pato/style.css
+[2025-07-09 15:54:21] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 15:54:25] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 15:54:25] [DEBUG] Fichero: ./var/www/index.html
+[2025-07-09 15:54:25] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 15:54:25] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 15:54:25] [DEBUG] Fichero: ./var/www/style.css
+[2025-07-09 15:54:25] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 15:59:36] [INFO] Logger inicializado correctamente
+[2025-07-09 16:03:29] [INFO] Logger inicializado correctamente
+[2025-07-09 16:03:32] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:03:32] [DEBUG] Fichero: ./var/www/index.html
+[2025-07-09 16:03:32] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 16:03:33] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:03:33] [DEBUG] Fichero: ./var/www/style.css
+[2025-07-09 16:03:33] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 16:03:33] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:03:33] [DEBUG] Fichero: ./var/www/index.html
+[2025-07-09 16:03:33] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 16:03:33] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:03:33] [DEBUG] Fichero: ./var/www/style.css
+[2025-07-09 16:03:33] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 16:03:33] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:03:33] [DEBUG] Fichero: ./var/www/index.html
+[2025-07-09 16:03:33] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 16:03:33] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:03:33] [DEBUG] Fichero: ./var/www/style.css
+[2025-07-09 16:03:33] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 16:28:27] [INFO] Logger inicializado correctamente
+[2025-07-09 16:31:47] [INFO] Logger inicializado correctamente
+[2025-07-09 16:32:12] [INFO] Logger inicializado correctamente
+[2025-07-09 16:34:08] [INFO] Logger inicializado correctamente
+[2025-07-09 16:34:13] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:34:13] [WARNING] Directory listing disabled for: /var/www/html/
+[2025-07-09 16:34:16] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:34:16] [WARNING] Directory listing disabled for: /var/www/html/
+[2025-07-09 16:34:43] [INFO] Logger inicializado correctamente
+[2025-07-09 16:34:45] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:34:45] [WARNING] Directory listing disabled for: /var/www/html/
+[2025-07-09 16:34:46] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:34:46] [WARNING] Directory listing disabled for: /var/www/html/
+[2025-07-09 16:34:46] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:34:46] [WARNING] Directory listing disabled for: /var/www/html/
+[2025-07-09 16:34:46] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:34:46] [WARNING] Directory listing disabled for: /var/www/html/
+[2025-07-09 16:34:47] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:34:47] [WARNING] Directory listing disabled for: /var/www/html/
+[2025-07-09 16:34:57] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:34:57] [WARNING] Directory listing disabled for: /var/www/html/
+[2025-07-09 16:35:02] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:35:02] [WARNING] Directory listing disabled for: /var/www/html/
+[2025-07-09 16:35:02] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:35:02] [WARNING] Directory listing disabled for: /var/www/html/
+[2025-07-09 16:35:20] [INFO] Logger inicializado correctamente
+[2025-07-09 16:35:22] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:35:22] [DEBUG] Leyendo directorio: ./var/www/
+[2025-07-09 16:35:22] [DEBUG] Entry found: .. in path: ./var/www/
+[2025-07-09 16:35:22] [DEBUG] Entry found: pato in path: ./var/www/
+[2025-07-09 16:35:22] [DEBUG] Entry found: images in path: ./var/www/
+[2025-07-09 16:35:22] [DEBUG] Entry found: index.html in path: ./var/www/
+[2025-07-09 16:35:22] [DEBUG] Entry found: style.css in path: ./var/www/
+[2025-07-09 16:35:24] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:35:24] [DEBUG] Fichero: ./var/www/index.html
+[2025-07-09 16:35:24] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 16:35:24] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:35:24] [DEBUG] Fichero: ./var/www/style.css
+[2025-07-09 16:35:24] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 16:43:29] [INFO] Logger inicializado correctamente
+[2025-07-09 16:43:31] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:43:31] [DEBUG] Fichero: ./var/www/index.html
+[2025-07-09 16:43:31] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 16:43:31] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:43:31] [DEBUG] Fichero: ./var/www/style.css
+[2025-07-09 16:43:31] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 16:43:32] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:43:32] [DEBUG] Fichero: ./var/www/index.html
+[2025-07-09 16:43:32] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 16:43:32] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:43:32] [DEBUG] Fichero: ./var/www/style.css
+[2025-07-09 16:43:32] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 16:43:32] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:43:32] [DEBUG] Fichero: ./var/www/index.html
+[2025-07-09 16:43:32] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 16:43:32] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:43:32] [DEBUG] Fichero: ./var/www/style.css
+[2025-07-09 16:43:32] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 16:50:50] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:50:50] [DEBUG] Fichero: ./var/www/index.html
+[2025-07-09 16:50:50] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 16:50:50] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:50:50] [DEBUG] Fichero: ./var/www/style.css
+[2025-07-09 16:50:50] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 16:54:25] [INFO] Logger inicializado correctamente
+[2025-07-09 16:54:27] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:54:27] [DEBUG] Fichero: ./var/www/index.html
+[2025-07-09 16:54:27] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 16:54:27] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:54:27] [DEBUG] Fichero: ./var/www/style.css
+[2025-07-09 16:54:27] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 16:54:27] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:54:27] [DEBUG] Fichero: ./var/www/index.html
+[2025-07-09 16:54:27] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 16:54:27] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:54:27] [DEBUG] Fichero: ./var/www/style.css
+[2025-07-09 16:54:27] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 16:54:31] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:54:31] [DEBUG] Redirigiendo a index.html: ./var/www/pato/index.html
+[2025-07-09 16:54:31] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:54:31] [INFO] Nuevo cliente conectado: 7.
+[2025-07-09 16:54:31] [DEBUG] Fichero: ./var/www/pato/script.js
+[2025-07-09 16:54:31] [DEBUG] Fichero con tipo: application/javascript
+[2025-07-09 16:54:31] [DEBUG] Fichero: ./var/www/pato/style.css
+[2025-07-09 16:54:31] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 16:54:32] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:54:32] [DEBUG] Fichero: ./var/www/pato/style.css
+[2025-07-09 16:54:32] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 16:54:42] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:54:42] [DEBUG] Leyendo directorio: ./var/www/images
+[2025-07-09 16:54:42] [DEBUG] Entry found: .. in path: ./var/www/images
+[2025-07-09 16:54:42] [DEBUG] Entry found: img.png in path: ./var/www/images
+[2025-07-09 16:54:42] [DEBUG] Entry found: whip.gif in path: ./var/www/images
+[2025-07-09 16:54:57] [INFO] Logger inicializado correctamente
+[2025-07-09 16:54:58] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:54:59] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:54:59] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:56:15] [INFO] Logger inicializado correctamente
+[2025-07-09 16:56:16] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 16:56:16] [WARN] Directorio sin autoindex encontrado

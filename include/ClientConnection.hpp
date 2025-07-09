@@ -1,15 +1,17 @@
 #ifndef CLIENTCONNECTION_HPP
 #define CLIENTCONNECTION_HPP
 
+#include "ServerConnection.hpp"
 #include <string>
 
 class ClientConnection
 {
   private:
-    std::string _read_buffer;
-    std::string _write_buffer;
-    bool        _request_complete;
-    bool        _response_sent;
+    std::string       _read_buffer;
+    std::string       _write_buffer;
+    bool              _request_complete;
+    bool              _response_sent;
+    ServerConnection* _server_connection;
 
   public:
     ClientConnection();
@@ -22,12 +24,14 @@ class ClientConnection
     const std::string& getWriteBuffer() const;
     bool               isRequestComplete() const;
     bool               isResponseSent() const;
+    ServerConnection*  getServerConnection() const;
 
     // Setters
     void setReadBuffer(const std::string& buffer);
     void setWriteBuffer(const std::string& buffer);
     void setRequestComplete(bool complete);
     void setResponseSent(bool sent);
+    void setServerConnection(ServerConnection* server_connection);
 
     // Buffer manipulation methods
     void appendToReadBuffer(const std::string& data);
@@ -38,6 +42,7 @@ class ClientConnection
 
     // Utility methods
     bool hasCompleteRequest() const;
+    bool hasServerConnection() const;
     void reset();
 };
 

@@ -1,6 +1,7 @@
 #ifndef HTTP_REQUEST_HANDLER_HPP
 #define HTTP_REQUEST_HANDLER_HPP
 
+#include "ClientConnection.hpp"
 #include <map>
 #include <string>
 
@@ -31,7 +32,7 @@ class HttpRequestHandler
     HttpRequestHandler& operator=(const HttpRequestHandler& other);
     ~HttpRequestHandler();
 
-    HttpResponse handle(const HttpRequest& request);
+    HttpResponse handle(const HttpRequest& request, const ClientConnection& client) const;
 };
 
 #endif
