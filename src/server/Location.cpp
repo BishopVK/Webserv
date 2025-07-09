@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:15:57 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/04 13:10:59 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/06 09:58:01 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,12 @@ Location::~Location() {}
 /* GETERS and SETERS */
 // route
 std::string	Location::getRoute() const { return _route; }
-void	Location::setRoute(const std::string &route) { _route = route; }
+void	Location::setRoute(const std::string &route)
+{
+	if (route[0] != '/')
+		throw ErrorException(route + ": Invalidad location route format");
+	_route = route;
+}
 
 // alias
 //std::string	Location::getAlias() const { return _alias; }
@@ -55,7 +60,12 @@ void	Location::setUploadEnable(bool value) { _upload_enable = value; }
 // upload_store
 std::string	Location::getUploadStore() const { return _upload_store; }
 
-void	Location::setUploadStore(const std::string &path) { _upload_store = path; }
+void	Location::setUploadStore(const std::string &path)
+{
+	if (path[0] != '/')
+		throw ErrorException(path + ": Invalidad upload store path format");
+	_upload_store = path;
+}
 
 // FALTA POR DEFINIR
 void Location::inherit(const Config &config)
@@ -172,5 +182,4 @@ void	Location::print() const
 	// upload_store
 	if (!_upload_store.empty())
 		std::cout << "upload_store = " << _upload_store << std::endl;
-	
 }

@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:56:27 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/04 13:07:34 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/06 20:58:19 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,39 @@ void	Parser::parseDirective(Server &server, const std::vector<std::string> &toke
 
 	if (key == "listen")
 	{
-		size_t pos = tokens[i].find(':');
+		while (tokens[i] != ";")
+		{
+			size_t pos = tokens[i].find(':');
 
-		if (pos != std::string::npos) // ':' was found
-		{
-			server.setIp(tokens[i].substr(0, pos));
-			std::string port = tokens[i].substr(pos + 1);
-			for (size_t j = 0; j < port.length(); ++j)
+			if (pos != std::string::npos) // ':' was found
 			{
-				if (!std::isdigit(port[j]))
+				std::string ip = tokens[i].substr(0, pos);
+				std::string port = tokens[i].substr(pos + 1);
+
+				if (ip.empty())
+					throw ErrorException(tokens[i] + ": invalid ip format");
+				if (port.empty())
 					throw ErrorException(tokens[i] + ": invalid port");
+				for (size_t j = 0; j < port.length(); ++j)
+				{
+					if (!std::isdigit(port[j]))
+						throw ErrorException(tokens[i] + ": invalid port");
+				}
+				server.setIp(ip);
+				server.addPort(std::atoi(port.c_str()));
+				server.addListenSet(ip, std::atoi(port.c_str()));
 			}
-			server.addPort(std::atoi(port.c_str()));
-			i++;
-		}
-		else
-		{
-			while (tokens[i] != ";")
+			else
 			{
 				for (size_t j = 0; j < tokens[i].length(); ++j)
 				{
 					if (!std::isdigit(tokens[i][j]))
 						throw ErrorException(tokens[i] + ": invalid port");
 				}
-				server.addPort(std::atoi(tokens[i++].c_str()));
+				server.addPort(std::atoi(tokens[i].c_str()));
+				server.addListenPort(std::atoi(tokens[i].c_str()));
 			}
+			i++;
 		}
 	}
 	else if (key == "server_name")
