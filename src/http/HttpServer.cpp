@@ -80,7 +80,8 @@ void HttpServer::run()
             SocketUtils::setReuseAddr(server_fd);
             multiplexer.addFd(server_fd, Multiplexer::READ);
             // TODO: Esto deberia de estar en el servidor junto con el puerto
-            server_fds.push_back(server_fd);
+            // server_fds.push_back(server_fd);
+            _serverConnections.insert(std::make_pair(server_fd, ServerConnection(server_fd)));
         }
     }
 
