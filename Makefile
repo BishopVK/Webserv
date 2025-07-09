@@ -23,10 +23,6 @@ SRC			=	main.cpp \
 				Config.cpp \
 				Location.cpp \
 				Server.cpp \
-				ControllerRegistry.cpp \
-				TaskController.cpp \
-				UserController.cpp \
-				AController.cpp \
 				HttpRequest.cpp \
 				HttpRequestHandler.cpp \
 				HttpResponse.cpp \

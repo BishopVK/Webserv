@@ -13,7 +13,7 @@
 
 std::map<std::string, std::string> HttpRequestHandler::_contentTypeMap;
 
-HttpRequestHandler::HttpRequestHandler() : _registry()
+HttpRequestHandler::HttpRequestHandler()
 {
     if (_contentTypeMap.empty())
     {
@@ -33,14 +33,14 @@ HttpRequestHandler::HttpRequestHandler() : _registry()
     }
 }
 
-HttpRequestHandler::HttpRequestHandler(const HttpRequestHandler& other) : _registry(other._registry)
+HttpRequestHandler::HttpRequestHandler(const HttpRequestHandler& other)
 {
+    (void)other;
 }
 
 HttpRequestHandler& HttpRequestHandler::operator=(const HttpRequestHandler& other)
 {
-    if (this != &other)
-        _registry = other._registry;
+    (void)other;
     return *this;
 }
 
@@ -82,14 +82,11 @@ HttpResponse HttpRequestHandler::handle(const HttpRequest& request)
         Logger::instance().debug("Fichero con tipo: " + contentType);
         return HttpResponse::ok(content, contentType);
     }
-    else if (resourceType == NOT_FOUND)
+    else
     {
         Logger::instance().warning("Recurso no encontrado: " + fullPath);
         return HttpResponse::notFound();
     }
-
-    Logger::instance().debug("Fallo al procesar la solicitud.");
-    return _registry.processRequest(request);
 }
 
 std::string HttpRequestHandler::generateAutoIndexHtml(const std::string& path) const

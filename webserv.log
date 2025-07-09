@@ -1,0 +1,52 @@
+[2025-07-09 11:46:26] [INFO] Logger inicializado correctamente
+[2025-07-09 11:46:31] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 11:46:31] [DEBUG] Leyendo directorio: ./var/www/
+[2025-07-09 11:46:31] [DEBUG] Entry found: .. in path: ./var/www/
+[2025-07-09 11:46:31] [DEBUG] Entry found: index.html in path: ./var/www/
+[2025-07-09 11:46:31] [DEBUG] Entry found: pato in path: ./var/www/
+[2025-07-09 11:46:31] [DEBUG] Entry found: images in path: ./var/www/
+[2025-07-09 11:46:31] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 11:46:31] [WARNING] Recurso no encontrado: ./var/www/favicon.ico
+[2025-07-09 11:51:22] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 11:51:22] [DEBUG] Fichero: ./var/www/index.html
+[2025-07-09 11:51:22] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 11:54:22] [INFO] Logger inicializado correctamente
+[2025-07-09 11:54:24] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 11:54:24] [DEBUG] Fichero: ./var/www/index.html
+[2025-07-09 11:54:24] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 11:54:25] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 11:54:25] [DEBUG] Fichero: ./var/www/index.html
+[2025-07-09 11:54:25] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 11:54:27] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 11:54:27] [DEBUG] Leyendo directorio: ./var/www/pato
+[2025-07-09 11:54:27] [DEBUG] Entry found: .. in path: ./var/www/pato
+[2025-07-09 11:54:27] [DEBUG] Entry found: index.html in path: ./var/www/pato
+[2025-07-09 11:54:27] [DEBUG] Entry found: style.css in path: ./var/www/pato
+[2025-07-09 11:54:27] [DEBUG] Entry found: script.js in path: ./var/www/pato
+[2025-07-09 11:54:29] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 11:54:29] [DEBUG] Fichero: ./var/www/pato/index.html
+[2025-07-09 11:54:29] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 11:54:29] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 11:54:29] [INFO] Nuevo cliente conectado: 7.
+[2025-07-09 11:54:29] [DEBUG] Fichero: ./var/www/pato/script.js
+[2025-07-09 11:54:29] [DEBUG] Fichero con tipo: application/javascript
+[2025-07-09 11:54:29] [DEBUG] Fichero: ./var/www/pato/style.css
+[2025-07-09 11:54:29] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 11:54:31] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 11:54:31] [DEBUG] Fichero: ./var/www/pato/style.css
+[2025-07-09 11:54:31] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 11:54:38] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 11:54:38] [DEBUG] Fichero: ./var/www/pato/index.html
+[2025-07-09 11:54:38] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 11:54:38] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 11:54:38] [DEBUG] Fichero: ./var/www/pato/script.js
+[2025-07-09 11:54:38] [DEBUG] Fichero con tipo: application/javascript
+[2025-07-09 11:54:38] [INFO] Nuevo cliente conectado: 7.
+[2025-07-09 11:54:38] [DEBUG] Fichero: ./var/www/pato/style.css
+[2025-07-09 11:54:38] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 11:54:42] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 11:54:42] [DEBUG] Fichero: ./var/www/pato/style.css
+[2025-07-09 11:54:42] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 11:54:45] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 11:54:45] [DEBUG] Fichero: ./var/www/pato/script.js
+[2025-07-09 11:54:45] [DEBUG] Fichero con tipo: application/javascript
