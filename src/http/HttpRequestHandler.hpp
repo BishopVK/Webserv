@@ -2,6 +2,8 @@
 #define HTTP_REQUEST_HANDLER_HPP
 
 #include "ControllerRegistry.hpp"
+#include <map>
+#include <string>
 
 class HttpRequest;
 class HttpResponse;
@@ -10,7 +12,20 @@ class BadRequestHttpResponse;
 class HttpRequestHandler
 {
   private:
-    ControllerRegistry _registry;
+    ControllerRegistry                        _registry;
+    static std::map<std::string, std::string> _contentTypeMap;
+    std::string                               generateAutoIndexHtml(const std::string& path) const;
+    std::string                               getFileContent(const std::string& path) const;
+    std::string                               getContentType(const std::string& path) const;
+
+    enum ResourceType
+    {
+        FILE,
+        DIRECTORY,
+        NOT_FOUND
+    };
+
+    ResourceType getResourceType(const std::string& path) const;
 
   public:
     HttpRequestHandler();
