@@ -27,6 +27,8 @@ SRC			=	main.cpp \
 				HttpRequestHandler.cpp \
 				HttpResponse.cpp \
 				HttpServer.cpp \
+				ClientConnection.cpp \
+				ServerConnection.cpp \
 				Multiplexer.cpp \
 				SocketUtils.cpp \
 				IntValue.cpp \

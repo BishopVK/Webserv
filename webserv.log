@@ -50,3 +50,53 @@
 [2025-07-09 11:54:45] [INFO] Nuevo cliente conectado: 6.
 [2025-07-09 11:54:45] [DEBUG] Fichero: ./var/www/pato/script.js
 [2025-07-09 11:54:45] [DEBUG] Fichero con tipo: application/javascript
+[2025-07-09 15:20:09] [INFO] Logger inicializado correctamente
+[2025-07-09 15:24:36] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 15:24:36] [DEBUG] Leyendo directorio: ./var/www/
+[2025-07-09 15:24:36] [DEBUG] Entry found: .. in path: ./var/www/
+[2025-07-09 15:24:36] [DEBUG] Entry found: index.html in path: ./var/www/
+[2025-07-09 15:24:36] [DEBUG] Entry found: pato in path: ./var/www/
+[2025-07-09 15:24:36] [DEBUG] Entry found: images in path: ./var/www/
+[2025-07-09 15:24:36] [DEBUG] Entry found: task in path: ./var/www/
+[2025-07-09 15:24:38] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 15:24:38] [DEBUG] Leyendo directorio: ./var/www/images
+[2025-07-09 15:24:38] [DEBUG] Entry found: .. in path: ./var/www/images
+[2025-07-09 15:24:38] [DEBUG] Entry found: img.png in path: ./var/www/images
+[2025-07-09 15:24:38] [DEBUG] Entry found: whip.gif in path: ./var/www/images
+[2025-07-09 15:24:39] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 15:24:39] [DEBUG] Fichero: ./var/www/images/whip.gif
+[2025-07-09 15:24:39] [DEBUG] Fichero con tipo: image/gif
+[2025-07-09 15:30:26] [INFO] Logger inicializado correctamente
+[2025-07-09 15:30:26] [ERROR] No hay sockets de servidor disponibles.
+[2025-07-09 15:33:26] [INFO] Logger inicializado correctamente
+[2025-07-09 15:34:16] [INFO] Logger inicializado correctamente
+[2025-07-09 15:34:18] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 15:34:18] [DEBUG] Fichero: ./var/www/images/whip.gif
+[2025-07-09 15:34:18] [DEBUG] Fichero con tipo: image/gif
+[2025-07-09 15:34:19] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 15:34:19] [DEBUG] Fichero: ./var/www/images/whip.gif
+[2025-07-09 15:34:19] [DEBUG] Fichero con tipo: image/gif
+[2025-07-09 15:34:19] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 15:34:19] [DEBUG] Fichero: ./var/www/images/whip.gif
+[2025-07-09 15:34:19] [DEBUG] Fichero con tipo: image/gif
+[2025-07-09 15:34:24] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 15:34:24] [DEBUG] Fichero: ./var/www/index.html
+[2025-07-09 15:34:24] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 15:34:26] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 15:34:26] [DEBUG] Leyendo directorio: ./var/www/pato
+[2025-07-09 15:34:26] [DEBUG] Entry found: .. in path: ./var/www/pato
+[2025-07-09 15:34:26] [DEBUG] Entry found: index.html in path: ./var/www/pato
+[2025-07-09 15:34:26] [DEBUG] Entry found: style.css in path: ./var/www/pato
+[2025-07-09 15:34:26] [DEBUG] Entry found: script.js in path: ./var/www/pato
+[2025-07-09 15:34:27] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 15:34:27] [DEBUG] Fichero: ./var/www/pato/index.html
+[2025-07-09 15:34:27] [DEBUG] Fichero con tipo: text/html
+[2025-07-09 15:34:28] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 15:34:28] [INFO] Nuevo cliente conectado: 7.
+[2025-07-09 15:34:28] [DEBUG] Fichero: ./var/www/pato/script.js
+[2025-07-09 15:34:28] [DEBUG] Fichero con tipo: application/javascript
+[2025-07-09 15:34:28] [DEBUG] Fichero: ./var/www/pato/style.css
+[2025-07-09 15:34:28] [DEBUG] Fichero con tipo: text/css
+[2025-07-09 15:34:29] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 15:34:29] [DEBUG] Fichero: ./var/www/pato/style.css
+[2025-07-09 15:34:29] [DEBUG] Fichero con tipo: text/css
