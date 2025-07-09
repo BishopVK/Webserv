@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Logger.hpp"
 #include "webserv.hpp"
 #include "prototypes.hpp"
 #include "Parser.hpp"

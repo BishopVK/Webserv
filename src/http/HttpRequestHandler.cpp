@@ -25,6 +25,8 @@ HttpResponse HttpRequestHandler::handle(const HttpRequest& request)
 {
     if (!request.isValid())
         return HttpResponse::badRequest();
+        
+    
 
     return _registry.processRequest(request);
 }

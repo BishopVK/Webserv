@@ -145,7 +145,7 @@ void HttpServer::run()
         {
             int  fd = *it;
             bool is_server_fd = false;
-            
+
             for (std::map<std::string, ServerConnection>::iterator server_it = _serverConnections.begin();
                  server_it != _serverConnections.end(); ++server_it)
             {
@@ -176,7 +176,10 @@ void HttpServer::run()
     }
 
     for (std::map<std::string, ServerConnection>::iterator it = _serverConnections.begin(); it != _serverConnections.end(); ++it)
+    {
         SocketUtils::closeSocket(it->second.fd);
+        _serverConnections.erase(it);
+    }
 }
 
 bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multiplexer& multiplexer)
