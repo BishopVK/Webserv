@@ -81,6 +81,10 @@ std::string Logger::getTimestamp() const
     std::ostringstream oss;
     std::time_t        t = std::time(NULL);
     std::tm*           tm = std::localtime(&t);
-    oss << std::setfill('0') << std::setw(2) << tm->tm_hour << ":" << std::setw(2) << tm->tm_min << ":" << std::setw(2) << tm->tm_sec;
+    // oss << std::setfill('0') << std::setw(2) << tm->tm_hour << ":" << std::setw(2) << tm->tm_min << ":" << std::setw(2) << tm->tm_sec;
+    // iso 8601 format 98 standard
+    oss << std::setfill('0') << std::setw(4) << (tm->tm_year + 1900) << "-"
+        << std::setw(2) << (tm->tm_mon + 1) << "-" << std::setw(2) << tm->tm_mday << " "
+        << std::setw(2) << tm->tm_hour << ":" << std::setw(2) << tm->tm_min << ":" << std::setw(2) << tm->tm_sec;
     return oss.str();
 }

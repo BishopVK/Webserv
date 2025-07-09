@@ -78,7 +78,7 @@ void HttpServer::run()
             multiplexer.addFd(server_fd, Multiplexer::READ);
             // TODO: Esto deberia de estar en el servidor junto con el puerto
             // server_fds.push_back(server_fd);
-            _serverConnections[port] = ServerConnection(server_fd);
+            _serverConnections.insert(std::make_pair(server_fd, ServerConnection(server_fd)));
         }
     }
 
@@ -117,7 +117,7 @@ void HttpServer::run()
         //     }
         // }
 
-        for (std::map<std::string, ServerConnection>::iterator server_it = _serverConnections.begin();
+        for (std::map<int, ServerConnection>::iterator server_it = _serverConnections.begin();
              server_it != _serverConnections.end(); ++server_it)
         {
             const ServerConnection& server_conn = server_it->second;
@@ -146,7 +146,7 @@ void HttpServer::run()
             int  fd = *it;
             bool is_server_fd = false;
 
-            for (std::map<std::string, ServerConnection>::iterator server_it = _serverConnections.begin();
+            for (std::map<int, ServerConnection>::iterator server_it = _serverConnections.begin();
                  server_it != _serverConnections.end(); ++server_it)
             {
                 if (server_it->second.fd == fd)
@@ -175,7 +175,7 @@ void HttpServer::run()
         }
     }
 
-    for (std::map<std::string, ServerConnection>::iterator it = _serverConnections.begin(); it != _serverConnections.end(); ++it)
+    for (std::map<int, ServerConnection>::iterator it = _serverConnections.begin(); it != _serverConnections.end(); ++it)
     {
         SocketUtils::closeSocket(it->second.fd);
         _serverConnections.erase(it);

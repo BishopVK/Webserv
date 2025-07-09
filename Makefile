@@ -17,7 +17,7 @@ CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
 
 HEADERS		=	-I./include -I./include/valueObjects -I./include/utils -I./src/http -I./src/io -I./src/controllers
 
-VPATH		=	src src/server src/controllers src/controllers/base src/http src/io src/valueObjects src/parse .
+VPATH		=	src src/server src/controllers src/controllers/base src/http src/io src/valueObjects src/parse src/utils .
 
 SRC			=	main.cpp \
 				Config.cpp \

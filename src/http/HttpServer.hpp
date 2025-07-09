@@ -29,6 +29,8 @@ class HttpServer
         int fd;
         // Server& server;
 
+
+
         // ServerConnection(int fd, Server& server) : fd(fd), server(server)
         // {
         // }
@@ -40,7 +42,7 @@ class HttpServer
   private:
     // std::vector<std::string> _ports;
     std::vector<Server>                     _servers;
-    std::map<std::string, ServerConnection> _serverConnections;
+    std::map<int, ServerConnection> _serverConnections;
 
     bool handleClientRead(int client_fd, ClientConnection& client, Multiplexer& multiplexer);
     bool handleClientWrite(int client_fd, ClientConnection& client, Multiplexer& multiplexer);
