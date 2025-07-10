@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:58:17 by danjimen          #+#    #+#             */
-/*   Updated: 2025/07/01 23:59:49 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/10 12:17:29 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ class  Config
 		bool								_autoindex;
 		size_t								_client_max_body_size;
 		std::map<int, std::string>			_error_pages; /* <status_code, page_path> */
-		std::map<std::string, std::string>	_cgi; /* List of possible cgis <extension, path> */
 		ReturnData							_return_data;
 		std::vector<std::string>			_methods;
 		std::vector<bool>					_inherit_initizalized;
@@ -70,11 +69,6 @@ class  Config
 		std::map<int, std::string>	getErrorPages() const;
 		std::string					getErrorPage(int status_code) const;
 		void						addErrorPage(int status_code, const std::string &path);
-
-		// cgi
-		std::map<std::string, std::string>	getCgis() const;
-		std::string							getCgi(const std::string &extension) const;
-		void								addCgi(const std::string &extension, const std::string &path);
 
 		// return_data
 		const ReturnData	&getReturnData() const;
