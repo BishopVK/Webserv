@@ -13,9 +13,9 @@
 NAME		=	webserv
 
 CXX			=	c++
-CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
+CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98 -g
 
-HEADERS		=	-I./include -I./include/valueObjects -I./include/utils -I./src/http -I./src/io -I./src/controllers
+HEADERS		=	-I./include -I./include/valueObjects -I./include/utils -I./include/http -I./src/http -I./src/io -I./src/controllers
 
 VPATH		=	src src/server src/controllers src/controllers/base src/http src/io src/valueObjects src/parse src/utils .
 
@@ -40,6 +40,11 @@ SRC			=	main.cpp \
 				parseDirective.cpp \
 				parseLocation.cpp \
 				Logger.cpp \
+				ContentTypeManager.cpp \
+				FileSystemHandler.cpp \
+				AutoIndexGenerator.cpp \
+				LocationMatcher.cpp \
+				PathHandler.cpp \
 
 # .o folder
 OBJDIR		=	obj

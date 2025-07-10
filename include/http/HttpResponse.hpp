@@ -1,15 +1,16 @@
 #ifndef HTTPRESPONSE_HPP
 #define HTTPRESPONSE_HPP
 
+#include <map>
 #include <string>
 
 class HttpResponse
 {
   private:
-    int         _statusCode;
-    std::string _reasonPhrase;
-    std::string _body;
-    std::string _headers;
+    int                                _statusCode;
+    std::string                        _reasonPhrase;
+    std::string                        _body;
+    std::map<std::string, std::string> _headers;
 
     void updateContentLength();
 
@@ -25,6 +26,8 @@ class HttpResponse
 
     std::string toString() const;
 
+    // custom
+    static HttpResponse response(int code, const std::string& reason, const std::string& body = "", const std::string& contentType = "text/plain");
     // Http 200
     static HttpResponse ok(const std::string& body = "", const std::string& contentType = "text/plain");
     // Http 400
@@ -37,6 +40,8 @@ class HttpResponse
     static HttpResponse methodNotAllowed(const std::string& body = "", const std::string& contentType = "text/plain");
     // Http 500
     static HttpResponse internalServerError(const std::string& body = "", const std::string& contentType = "text/plain");
+
+    static HttpResponse redirect(const std::string& location, int code = 302);
 };
 
 #endif

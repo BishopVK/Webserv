@@ -1,241 +1,1204 @@
-[2025-07-09 11:46:26] [INFO] Logger inicializado correctamente
-[2025-07-09 11:46:31] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 11:46:31] [DEBUG] Leyendo directorio: ./var/www/
-[2025-07-09 11:46:31] [DEBUG] Entry found: .. in path: ./var/www/
-[2025-07-09 11:46:31] [DEBUG] Entry found: index.html in path: ./var/www/
-[2025-07-09 11:46:31] [DEBUG] Entry found: pato in path: ./var/www/
-[2025-07-09 11:46:31] [DEBUG] Entry found: images in path: ./var/www/
-[2025-07-09 11:46:31] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 11:46:31] [WARNING] Recurso no encontrado: ./var/www/favicon.ico
-[2025-07-09 11:51:22] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 11:51:22] [DEBUG] Fichero: ./var/www/index.html
-[2025-07-09 11:51:22] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 11:54:22] [INFO] Logger inicializado correctamente
-[2025-07-09 11:54:24] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 11:54:24] [DEBUG] Fichero: ./var/www/index.html
-[2025-07-09 11:54:24] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 11:54:25] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 11:54:25] [DEBUG] Fichero: ./var/www/index.html
-[2025-07-09 11:54:25] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 11:54:27] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 11:54:27] [DEBUG] Leyendo directorio: ./var/www/pato
-[2025-07-09 11:54:27] [DEBUG] Entry found: .. in path: ./var/www/pato
-[2025-07-09 11:54:27] [DEBUG] Entry found: index.html in path: ./var/www/pato
-[2025-07-09 11:54:27] [DEBUG] Entry found: style.css in path: ./var/www/pato
-[2025-07-09 11:54:27] [DEBUG] Entry found: script.js in path: ./var/www/pato
-[2025-07-09 11:54:29] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 11:54:29] [DEBUG] Fichero: ./var/www/pato/index.html
-[2025-07-09 11:54:29] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 11:54:29] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 11:54:29] [INFO] Nuevo cliente conectado: 7.
-[2025-07-09 11:54:29] [DEBUG] Fichero: ./var/www/pato/script.js
-[2025-07-09 11:54:29] [DEBUG] Fichero con tipo: application/javascript
-[2025-07-09 11:54:29] [DEBUG] Fichero: ./var/www/pato/style.css
-[2025-07-09 11:54:29] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 11:54:31] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 11:54:31] [DEBUG] Fichero: ./var/www/pato/style.css
-[2025-07-09 11:54:31] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 11:54:38] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 11:54:38] [DEBUG] Fichero: ./var/www/pato/index.html
-[2025-07-09 11:54:38] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 11:54:38] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 11:54:38] [DEBUG] Fichero: ./var/www/pato/script.js
-[2025-07-09 11:54:38] [DEBUG] Fichero con tipo: application/javascript
-[2025-07-09 11:54:38] [INFO] Nuevo cliente conectado: 7.
-[2025-07-09 11:54:38] [DEBUG] Fichero: ./var/www/pato/style.css
-[2025-07-09 11:54:38] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 11:54:42] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 11:54:42] [DEBUG] Fichero: ./var/www/pato/style.css
-[2025-07-09 11:54:42] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 11:54:45] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 11:54:45] [DEBUG] Fichero: ./var/www/pato/script.js
-[2025-07-09 11:54:45] [DEBUG] Fichero con tipo: application/javascript
-[2025-07-09 15:20:09] [INFO] Logger inicializado correctamente
-[2025-07-09 15:24:36] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 15:24:36] [DEBUG] Leyendo directorio: ./var/www/
-[2025-07-09 15:24:36] [DEBUG] Entry found: .. in path: ./var/www/
-[2025-07-09 15:24:36] [DEBUG] Entry found: index.html in path: ./var/www/
-[2025-07-09 15:24:36] [DEBUG] Entry found: pato in path: ./var/www/
-[2025-07-09 15:24:36] [DEBUG] Entry found: images in path: ./var/www/
-[2025-07-09 15:24:36] [DEBUG] Entry found: task in path: ./var/www/
-[2025-07-09 15:24:38] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 15:24:38] [DEBUG] Leyendo directorio: ./var/www/images
-[2025-07-09 15:24:38] [DEBUG] Entry found: .. in path: ./var/www/images
-[2025-07-09 15:24:38] [DEBUG] Entry found: img.png in path: ./var/www/images
-[2025-07-09 15:24:38] [DEBUG] Entry found: whip.gif in path: ./var/www/images
-[2025-07-09 15:24:39] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 15:24:39] [DEBUG] Fichero: ./var/www/images/whip.gif
-[2025-07-09 15:24:39] [DEBUG] Fichero con tipo: image/gif
-[2025-07-09 15:30:26] [INFO] Logger inicializado correctamente
-[2025-07-09 15:30:26] [ERROR] No hay sockets de servidor disponibles.
-[2025-07-09 15:33:26] [INFO] Logger inicializado correctamente
-[2025-07-09 15:34:16] [INFO] Logger inicializado correctamente
-[2025-07-09 15:34:18] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 15:34:18] [DEBUG] Fichero: ./var/www/images/whip.gif
-[2025-07-09 15:34:18] [DEBUG] Fichero con tipo: image/gif
-[2025-07-09 15:34:19] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 15:34:19] [DEBUG] Fichero: ./var/www/images/whip.gif
-[2025-07-09 15:34:19] [DEBUG] Fichero con tipo: image/gif
-[2025-07-09 15:34:19] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 15:34:19] [DEBUG] Fichero: ./var/www/images/whip.gif
-[2025-07-09 15:34:19] [DEBUG] Fichero con tipo: image/gif
-[2025-07-09 15:34:24] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 15:34:24] [DEBUG] Fichero: ./var/www/index.html
-[2025-07-09 15:34:24] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 15:34:26] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 15:34:26] [DEBUG] Leyendo directorio: ./var/www/pato
-[2025-07-09 15:34:26] [DEBUG] Entry found: .. in path: ./var/www/pato
-[2025-07-09 15:34:26] [DEBUG] Entry found: index.html in path: ./var/www/pato
-[2025-07-09 15:34:26] [DEBUG] Entry found: style.css in path: ./var/www/pato
-[2025-07-09 15:34:26] [DEBUG] Entry found: script.js in path: ./var/www/pato
-[2025-07-09 15:34:27] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 15:34:27] [DEBUG] Fichero: ./var/www/pato/index.html
-[2025-07-09 15:34:27] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 15:34:28] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 15:34:28] [INFO] Nuevo cliente conectado: 7.
-[2025-07-09 15:34:28] [DEBUG] Fichero: ./var/www/pato/script.js
-[2025-07-09 15:34:28] [DEBUG] Fichero con tipo: application/javascript
-[2025-07-09 15:34:28] [DEBUG] Fichero: ./var/www/pato/style.css
-[2025-07-09 15:34:28] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 15:34:29] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 15:34:29] [DEBUG] Fichero: ./var/www/pato/style.css
-[2025-07-09 15:34:29] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 15:54:18] [INFO] Logger inicializado correctamente
-[2025-07-09 15:54:20] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 15:54:20] [DEBUG] Fichero: ./var/www/pato/index.html
-[2025-07-09 15:54:20] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 15:54:20] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 15:54:20] [INFO] Nuevo cliente conectado: 7.
-[2025-07-09 15:54:20] [DEBUG] Fichero: ./var/www/pato/script.js
-[2025-07-09 15:54:20] [DEBUG] Fichero con tipo: application/javascript
-[2025-07-09 15:54:20] [DEBUG] Fichero: ./var/www/pato/style.css
-[2025-07-09 15:54:20] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 15:54:21] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 15:54:21] [DEBUG] Fichero: ./var/www/pato/style.css
-[2025-07-09 15:54:21] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 15:54:25] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 15:54:25] [DEBUG] Fichero: ./var/www/index.html
-[2025-07-09 15:54:25] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 15:54:25] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 15:54:25] [DEBUG] Fichero: ./var/www/style.css
-[2025-07-09 15:54:25] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 15:59:36] [INFO] Logger inicializado correctamente
-[2025-07-09 16:03:29] [INFO] Logger inicializado correctamente
-[2025-07-09 16:03:32] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:03:32] [DEBUG] Fichero: ./var/www/index.html
-[2025-07-09 16:03:32] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 16:03:33] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:03:33] [DEBUG] Fichero: ./var/www/style.css
-[2025-07-09 16:03:33] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 16:03:33] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:03:33] [DEBUG] Fichero: ./var/www/index.html
-[2025-07-09 16:03:33] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 16:03:33] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:03:33] [DEBUG] Fichero: ./var/www/style.css
-[2025-07-09 16:03:33] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 16:03:33] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:03:33] [DEBUG] Fichero: ./var/www/index.html
-[2025-07-09 16:03:33] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 16:03:33] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:03:33] [DEBUG] Fichero: ./var/www/style.css
-[2025-07-09 16:03:33] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 16:28:27] [INFO] Logger inicializado correctamente
-[2025-07-09 16:31:47] [INFO] Logger inicializado correctamente
-[2025-07-09 16:32:12] [INFO] Logger inicializado correctamente
-[2025-07-09 16:34:08] [INFO] Logger inicializado correctamente
-[2025-07-09 16:34:13] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:34:13] [WARNING] Directory listing disabled for: /var/www/html/
-[2025-07-09 16:34:16] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:34:16] [WARNING] Directory listing disabled for: /var/www/html/
-[2025-07-09 16:34:43] [INFO] Logger inicializado correctamente
-[2025-07-09 16:34:45] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:34:45] [WARNING] Directory listing disabled for: /var/www/html/
-[2025-07-09 16:34:46] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:34:46] [WARNING] Directory listing disabled for: /var/www/html/
-[2025-07-09 16:34:46] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:34:46] [WARNING] Directory listing disabled for: /var/www/html/
-[2025-07-09 16:34:46] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:34:46] [WARNING] Directory listing disabled for: /var/www/html/
-[2025-07-09 16:34:47] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:34:47] [WARNING] Directory listing disabled for: /var/www/html/
-[2025-07-09 16:34:57] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:34:57] [WARNING] Directory listing disabled for: /var/www/html/
-[2025-07-09 16:35:02] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:35:02] [WARNING] Directory listing disabled for: /var/www/html/
-[2025-07-09 16:35:02] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:35:02] [WARNING] Directory listing disabled for: /var/www/html/
-[2025-07-09 16:35:20] [INFO] Logger inicializado correctamente
-[2025-07-09 16:35:22] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:35:22] [DEBUG] Leyendo directorio: ./var/www/
-[2025-07-09 16:35:22] [DEBUG] Entry found: .. in path: ./var/www/
-[2025-07-09 16:35:22] [DEBUG] Entry found: pato in path: ./var/www/
-[2025-07-09 16:35:22] [DEBUG] Entry found: images in path: ./var/www/
-[2025-07-09 16:35:22] [DEBUG] Entry found: index.html in path: ./var/www/
-[2025-07-09 16:35:22] [DEBUG] Entry found: style.css in path: ./var/www/
-[2025-07-09 16:35:24] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:35:24] [DEBUG] Fichero: ./var/www/index.html
-[2025-07-09 16:35:24] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 16:35:24] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:35:24] [DEBUG] Fichero: ./var/www/style.css
-[2025-07-09 16:35:24] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 16:43:29] [INFO] Logger inicializado correctamente
-[2025-07-09 16:43:31] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:43:31] [DEBUG] Fichero: ./var/www/index.html
-[2025-07-09 16:43:31] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 16:43:31] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:43:31] [DEBUG] Fichero: ./var/www/style.css
-[2025-07-09 16:43:31] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 16:43:32] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:43:32] [DEBUG] Fichero: ./var/www/index.html
-[2025-07-09 16:43:32] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 16:43:32] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:43:32] [DEBUG] Fichero: ./var/www/style.css
-[2025-07-09 16:43:32] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 16:43:32] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:43:32] [DEBUG] Fichero: ./var/www/index.html
-[2025-07-09 16:43:32] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 16:43:32] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:43:32] [DEBUG] Fichero: ./var/www/style.css
-[2025-07-09 16:43:32] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 16:50:50] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:50:50] [DEBUG] Fichero: ./var/www/index.html
-[2025-07-09 16:50:50] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 16:50:50] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:50:50] [DEBUG] Fichero: ./var/www/style.css
-[2025-07-09 16:50:50] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 16:54:25] [INFO] Logger inicializado correctamente
-[2025-07-09 16:54:27] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:54:27] [DEBUG] Fichero: ./var/www/index.html
-[2025-07-09 16:54:27] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 16:54:27] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:54:27] [DEBUG] Fichero: ./var/www/style.css
-[2025-07-09 16:54:27] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 16:54:27] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:54:27] [DEBUG] Fichero: ./var/www/index.html
-[2025-07-09 16:54:27] [DEBUG] Fichero con tipo: text/html
-[2025-07-09 16:54:27] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:54:27] [DEBUG] Fichero: ./var/www/style.css
-[2025-07-09 16:54:27] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 16:54:31] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:54:31] [DEBUG] Redirigiendo a index.html: ./var/www/pato/index.html
-[2025-07-09 16:54:31] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:54:31] [INFO] Nuevo cliente conectado: 7.
-[2025-07-09 16:54:31] [DEBUG] Fichero: ./var/www/pato/script.js
-[2025-07-09 16:54:31] [DEBUG] Fichero con tipo: application/javascript
-[2025-07-09 16:54:31] [DEBUG] Fichero: ./var/www/pato/style.css
-[2025-07-09 16:54:31] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 16:54:32] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:54:32] [DEBUG] Fichero: ./var/www/pato/style.css
-[2025-07-09 16:54:32] [DEBUG] Fichero con tipo: text/css
-[2025-07-09 16:54:42] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:54:42] [DEBUG] Leyendo directorio: ./var/www/images
-[2025-07-09 16:54:42] [DEBUG] Entry found: .. in path: ./var/www/images
-[2025-07-09 16:54:42] [DEBUG] Entry found: img.png in path: ./var/www/images
-[2025-07-09 16:54:42] [DEBUG] Entry found: whip.gif in path: ./var/www/images
-[2025-07-09 16:54:57] [INFO] Logger inicializado correctamente
-[2025-07-09 16:54:58] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:54:59] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:54:59] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:56:15] [INFO] Logger inicializado correctamente
-[2025-07-09 16:56:16] [INFO] Nuevo cliente conectado: 6.
-[2025-07-09 16:56:16] [WARN] Directorio sin autoindex encontrado
+[2025-07-09 18:22:14] [INFO] Logger inicializado correctamente
+[2025-07-09 18:22:16] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:22:16] [DEBUG] Handling request for path: /
+[2025-07-09 18:22:16] [DEBUG] Finding best match for path: /
+[2025-07-09 18:22:16] [DEBUG] Found exact match: /
+[2025-07-09 18:22:16] [DEBUG] Found matching location: /
+[2025-07-09 18:22:16] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:22:16] [DEBUG] Relative path: /
+[2025-07-09 18:22:16] [DEBUG] Full physical path: /var/www/html/
+[2025-07-09 18:22:16] [DEBUG] Handling directory: /var/www/html/
+[2025-07-09 18:22:16] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html/
+[2025-07-09 18:22:17] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:22:17] [DEBUG] Handling request for path: /
+[2025-07-09 18:22:17] [DEBUG] Finding best match for path: /
+[2025-07-09 18:22:17] [DEBUG] Found exact match: /
+[2025-07-09 18:22:17] [DEBUG] Found matching location: /
+[2025-07-09 18:22:17] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:22:17] [DEBUG] Relative path: /
+[2025-07-09 18:22:17] [DEBUG] Full physical path: /var/www/html/
+[2025-07-09 18:22:17] [DEBUG] Handling directory: /var/www/html/
+[2025-07-09 18:22:17] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html/
+[2025-07-09 18:22:17] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:22:17] [DEBUG] Handling request for path: /
+[2025-07-09 18:22:17] [DEBUG] Finding best match for path: /
+[2025-07-09 18:22:17] [DEBUG] Found exact match: /
+[2025-07-09 18:22:17] [DEBUG] Found matching location: /
+[2025-07-09 18:22:17] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:22:17] [DEBUG] Relative path: /
+[2025-07-09 18:22:17] [DEBUG] Full physical path: /var/www/html/
+[2025-07-09 18:22:17] [DEBUG] Handling directory: /var/www/html/
+[2025-07-09 18:22:17] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html/
+[2025-07-09 18:22:18] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:22:18] [DEBUG] Handling request for path: /
+[2025-07-09 18:22:18] [DEBUG] Finding best match for path: /
+[2025-07-09 18:22:18] [DEBUG] Found exact match: /
+[2025-07-09 18:22:18] [DEBUG] Found matching location: /
+[2025-07-09 18:22:18] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:22:18] [DEBUG] Relative path: /
+[2025-07-09 18:22:18] [DEBUG] Full physical path: /var/www/html/
+[2025-07-09 18:22:18] [DEBUG] Handling directory: /var/www/html/
+[2025-07-09 18:22:18] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html/
+[2025-07-09 18:24:52] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:24:52] [DEBUG] Handling request for path: /
+[2025-07-09 18:24:52] [DEBUG] Finding best match for path: /
+[2025-07-09 18:24:52] [DEBUG] Found exact match: /
+[2025-07-09 18:24:52] [DEBUG] Found matching location: /
+[2025-07-09 18:24:52] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:24:52] [DEBUG] Relative path: /
+[2025-07-09 18:24:52] [DEBUG] Full physical path: /var/www/html/
+[2025-07-09 18:24:52] [DEBUG] Handling directory: /var/www/html/
+[2025-07-09 18:24:52] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html/
+[2025-07-09 18:24:53] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:24:53] [DEBUG] Handling request for path: /
+[2025-07-09 18:24:53] [DEBUG] Finding best match for path: /
+[2025-07-09 18:24:53] [DEBUG] Found exact match: /
+[2025-07-09 18:24:53] [DEBUG] Found matching location: /
+[2025-07-09 18:24:53] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:24:53] [DEBUG] Relative path: /
+[2025-07-09 18:24:53] [DEBUG] Full physical path: /var/www/html/
+[2025-07-09 18:24:53] [DEBUG] Handling directory: /var/www/html/
+[2025-07-09 18:24:53] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html/
+[2025-07-09 18:30:34] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:30:34] [DEBUG] Handling request for path: /
+[2025-07-09 18:30:34] [DEBUG] Finding best match for path: /
+[2025-07-09 18:30:34] [DEBUG] Found exact match: /
+[2025-07-09 18:30:34] [DEBUG] Found matching location: /
+[2025-07-09 18:30:34] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:30:34] [DEBUG] Relative path: /
+[2025-07-09 18:30:34] [DEBUG] Full physical path: /var/www/html/
+[2025-07-09 18:30:34] [DEBUG] Handling directory: /var/www/html/
+[2025-07-09 18:30:34] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html/
+[2025-07-09 18:30:36] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:30:36] [DEBUG] Handling request for path: /
+[2025-07-09 18:30:36] [DEBUG] Finding best match for path: /
+[2025-07-09 18:30:36] [DEBUG] Found exact match: /
+[2025-07-09 18:30:36] [DEBUG] Found matching location: /
+[2025-07-09 18:30:36] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:30:36] [DEBUG] Relative path: /
+[2025-07-09 18:30:36] [DEBUG] Full physical path: /var/www/html/
+[2025-07-09 18:30:36] [DEBUG] Handling directory: /var/www/html/
+[2025-07-09 18:30:36] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html/
+[2025-07-09 18:30:54] [INFO] Logger inicializado correctamente
+[2025-07-09 18:30:54] [ERROR] No hay sockets de servidor disponibles.
+[2025-07-09 18:31:38] [INFO] Logger inicializado correctamente
+[2025-07-09 18:31:38] [ERROR] No hay sockets de servidor disponibles.
+[2025-07-09 18:31:48] [INFO] Logger inicializado correctamente
+[2025-07-09 18:32:06] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:32:06] [DEBUG] Handling request for path: /
+[2025-07-09 18:32:06] [DEBUG] Finding best match for path: /
+[2025-07-09 18:32:06] [DEBUG] Found exact match: /
+[2025-07-09 18:32:06] [DEBUG] Found matching location: /
+[2025-07-09 18:32:06] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:32:06] [DEBUG] Relative path: /
+[2025-07-09 18:32:06] [DEBUG] Full physical path: /var/www/html/
+[2025-07-09 18:32:06] [DEBUG] Handling directory: /var/www/html/
+[2025-07-09 18:32:06] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html/
+[2025-07-09 18:32:40] [INFO] Logger inicializado correctamente
+[2025-07-09 18:34:11] [INFO] Logger inicializado correctamente
+[2025-07-09 18:36:05] [INFO] Logger inicializado correctamente
+[2025-07-09 18:36:05] [ERROR] No hay sockets de servidor disponibles.
+[2025-07-09 18:36:08] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:36:08] [DEBUG] Handling request for path: /
+[2025-07-09 18:36:08] [DEBUG] Finding best match for path: /
+[2025-07-09 18:36:08] [DEBUG] Found exact match: /
+[2025-07-09 18:36:08] [DEBUG] Found matching location: /
+[2025-07-09 18:36:08] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:36:08] [DEBUG] Relative path: /
+[2025-07-09 18:36:08] [DEBUG] Full physical path: /var/www/html/
+[2025-07-09 18:36:08] [DEBUG] Handling directory: /var/www/html/
+[2025-07-09 18:36:08] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html/
+[2025-07-09 18:36:09] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:36:09] [DEBUG] Handling request for path: /
+[2025-07-09 18:36:09] [DEBUG] Finding best match for path: /
+[2025-07-09 18:36:09] [DEBUG] Found exact match: /
+[2025-07-09 18:36:09] [DEBUG] Found matching location: /
+[2025-07-09 18:36:09] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:36:09] [DEBUG] Relative path: /
+[2025-07-09 18:36:09] [DEBUG] Full physical path: /var/www/html/
+[2025-07-09 18:36:09] [DEBUG] Handling directory: /var/www/html/
+[2025-07-09 18:36:09] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html/
+[2025-07-09 18:36:09] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:36:09] [DEBUG] Handling request for path: /
+[2025-07-09 18:36:09] [DEBUG] Finding best match for path: /
+[2025-07-09 18:36:09] [DEBUG] Found exact match: /
+[2025-07-09 18:36:09] [DEBUG] Found matching location: /
+[2025-07-09 18:36:09] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:36:09] [DEBUG] Relative path: /
+[2025-07-09 18:36:09] [DEBUG] Full physical path: /var/www/html/
+[2025-07-09 18:36:09] [DEBUG] Handling directory: /var/www/html/
+[2025-07-09 18:36:09] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html/
+[2025-07-09 18:36:44] [INFO] Logger inicializado correctamente
+[2025-07-09 18:36:44] [ERROR] No hay sockets de servidor disponibles.
+[2025-07-09 18:36:45] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:36:45] [DEBUG] Handling request for path: /
+[2025-07-09 18:36:45] [DEBUG] Finding best match for path: /
+[2025-07-09 18:36:45] [DEBUG] Found exact match: /
+[2025-07-09 18:36:45] [DEBUG] Found matching location: /
+[2025-07-09 18:36:45] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:36:45] [DEBUG] Relative path: /
+[2025-07-09 18:36:45] [DEBUG] Full physical path: /var/www/html/
+[2025-07-09 18:36:45] [DEBUG] Handling directory: /var/www/html/
+[2025-07-09 18:36:45] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html/
+[2025-07-09 18:41:11] [INFO] Logger inicializado correctamente
+[2025-07-09 18:41:11] [ERROR] No hay sockets de servidor disponibles.
+[2025-07-09 18:41:21] [INFO] Logger inicializado correctamente
+[2025-07-09 18:41:23] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:41:23] [DEBUG] Handling request for path: /
+[2025-07-09 18:41:23] [DEBUG] Finding best match for path: /
+[2025-07-09 18:41:23] [DEBUG] Found exact match: /
+[2025-07-09 18:41:23] [DEBUG] Found matching location: /
+[2025-07-09 18:41:23] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:41:23] [DEBUG] Relative path: /
+[2025-07-09 18:41:23] [DEBUG] Full physical path lololo: /var/www/html/
+[2025-07-09 18:41:23] [DEBUG] Handling directory: /var/www/html/
+[2025-07-09 18:41:23] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html/
+[2025-07-09 18:46:53] [INFO] Logger inicializado correctamente
+[2025-07-09 18:48:52] [INFO] Logger inicializado correctamente
+[2025-07-09 18:48:54] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:48:54] [DEBUG] Handling request for path: /
+[2025-07-09 18:48:54] [DEBUG] Finding best match for path: /
+[2025-07-09 18:48:54] [DEBUG] Found exact match: /
+[2025-07-09 18:48:54] [DEBUG] Found matching location: /
+[2025-07-09 18:48:54] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:48:54] [DEBUG] Relative path: /
+[2025-07-09 18:48:54] [DEBUG] Full physical path: /var/www/html
+[2025-07-09 18:48:54] [DEBUG] Handling directory: /var/www/html
+[2025-07-09 18:48:54] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html
+[2025-07-09 18:48:54] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:48:54] [DEBUG] Handling request for path: /
+[2025-07-09 18:48:54] [DEBUG] Finding best match for path: /
+[2025-07-09 18:48:54] [DEBUG] Found exact match: /
+[2025-07-09 18:48:54] [DEBUG] Found matching location: /
+[2025-07-09 18:48:54] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:48:54] [DEBUG] Relative path: /
+[2025-07-09 18:48:54] [DEBUG] Full physical path: /var/www/html
+[2025-07-09 18:48:54] [DEBUG] Handling directory: /var/www/html
+[2025-07-09 18:48:54] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html
+[2025-07-09 18:48:54] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:48:54] [DEBUG] Handling request for path: /
+[2025-07-09 18:48:54] [DEBUG] Finding best match for path: /
+[2025-07-09 18:48:54] [DEBUG] Found exact match: /
+[2025-07-09 18:48:54] [DEBUG] Found matching location: /
+[2025-07-09 18:48:54] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:48:54] [DEBUG] Relative path: /
+[2025-07-09 18:48:54] [DEBUG] Full physical path: /var/www/html
+[2025-07-09 18:48:54] [DEBUG] Handling directory: /var/www/html
+[2025-07-09 18:48:54] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html
+[2025-07-09 18:48:55] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:48:55] [DEBUG] Handling request for path: /
+[2025-07-09 18:48:55] [DEBUG] Finding best match for path: /
+[2025-07-09 18:48:55] [DEBUG] Found exact match: /
+[2025-07-09 18:48:55] [DEBUG] Found matching location: /
+[2025-07-09 18:48:55] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:48:55] [DEBUG] Relative path: /
+[2025-07-09 18:48:55] [DEBUG] Full physical path: /var/www/html
+[2025-07-09 18:48:55] [DEBUG] Handling directory: /var/www/html
+[2025-07-09 18:48:55] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html
+[2025-07-09 18:50:21] [INFO] Logger inicializado correctamente
+[2025-07-09 18:50:22] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:50:22] [DEBUG] Handling request for path: /
+[2025-07-09 18:50:22] [DEBUG] Finding best match for path: /
+[2025-07-09 18:50:22] [DEBUG] Found exact match: /
+[2025-07-09 18:50:22] [DEBUG] Found matching location: /
+[2025-07-09 18:50:22] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:50:22] [DEBUG] Relative path: /
+[2025-07-09 18:50:22] [DEBUG] Full physical path: /var/www/html/
+[2025-07-09 18:50:22] [DEBUG] Handling directory: /var/www/html/
+[2025-07-09 18:50:22] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html/
+[2025-07-09 18:50:22] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:50:22] [DEBUG] Handling request for path: /
+[2025-07-09 18:50:22] [DEBUG] Finding best match for path: /
+[2025-07-09 18:50:22] [DEBUG] Found exact match: /
+[2025-07-09 18:50:22] [DEBUG] Found matching location: /
+[2025-07-09 18:50:22] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:50:22] [DEBUG] Relative path: /
+[2025-07-09 18:50:22] [DEBUG] Full physical path: /var/www/html/
+[2025-07-09 18:50:22] [DEBUG] Handling directory: /var/www/html/
+[2025-07-09 18:50:22] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html/
+[2025-07-09 18:50:23] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:50:23] [DEBUG] Handling request for path: /
+[2025-07-09 18:50:23] [DEBUG] Finding best match for path: /
+[2025-07-09 18:50:23] [DEBUG] Found exact match: /
+[2025-07-09 18:50:23] [DEBUG] Found matching location: /
+[2025-07-09 18:50:23] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:50:23] [DEBUG] Relative path: /
+[2025-07-09 18:50:23] [DEBUG] Full physical path: /var/www/html/
+[2025-07-09 18:50:23] [DEBUG] Handling directory: /var/www/html/
+[2025-07-09 18:50:23] [WARNING] Directory access forbidden (autoindex disabled): /var/www/html/
+[2025-07-09 18:51:38] [INFO] Logger inicializado correctamente
+[2025-07-09 18:51:41] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:51:41] [DEBUG] Handling request for path: /
+[2025-07-09 18:51:41] [DEBUG] Finding best match for path: /
+[2025-07-09 18:51:41] [DEBUG] Found exact match: /
+[2025-07-09 18:51:41] [DEBUG] Found matching location: /
+[2025-07-09 18:51:41] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:51:41] [DEBUG] Relative path: /
+[2025-07-09 18:51:41] [DEBUG] Full physical path: ./var/www/html/
+[2025-07-09 18:51:41] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-09 18:51:41] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-09 18:51:41] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-09 18:51:41] [DEBUG] File content type: text/html
+[2025-07-09 18:53:01] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:53:01] [DEBUG] Handling request for path: /pato/
+[2025-07-09 18:53:01] [DEBUG] Finding best match for path: /pato/
+[2025-07-09 18:53:01] [DEBUG] Found prefix match: /
+[2025-07-09 18:53:01] [DEBUG] Found matching location: /
+[2025-07-09 18:53:01] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:53:01] [DEBUG] Relative path: /pato
+[2025-07-09 18:53:01] [DEBUG] Full physical path: ./var/www/html/pato
+[2025-07-09 18:53:01] [WARNING] Resource not found: ./var/www/html/pato
+[2025-07-09 18:53:57] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:53:57] [DEBUG] Handling request for path: /noindex
+[2025-07-09 18:53:57] [DEBUG] Finding best match for path: /noindex
+[2025-07-09 18:53:57] [DEBUG] Found prefix match: /
+[2025-07-09 18:53:57] [DEBUG] Found matching location: /
+[2025-07-09 18:53:57] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:53:57] [DEBUG] Relative path: /noindex
+[2025-07-09 18:53:57] [DEBUG] Full physical path: ./var/www/html/noindex
+[2025-07-09 18:53:57] [DEBUG] Handling directory: ./var/www/html/noindex
+[2025-07-09 18:53:57] [WARNING] Directory access forbidden (autoindex disabled): ./var/www/html/noindex
+[2025-07-09 18:54:37] [INFO] Logger inicializado correctamente
+[2025-07-09 18:54:39] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:54:39] [DEBUG] Handling request for path: /noindex
+[2025-07-09 18:54:39] [DEBUG] Finding best match for path: /noindex
+[2025-07-09 18:54:39] [DEBUG] Found prefix match: /
+[2025-07-09 18:54:39] [DEBUG] Found matching location: /
+[2025-07-09 18:54:39] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:54:39] [DEBUG] Relative path: /noindex
+[2025-07-09 18:54:39] [DEBUG] Full physical path: ./var/www/html/noindex
+[2025-07-09 18:54:39] [DEBUG] Handling directory: ./var/www/html/noindex
+[2025-07-09 18:54:39] [DEBUG] Generating autoindex for: ./var/www/html/noindex
+[2025-07-09 18:54:39] [DEBUG] Generating autoindex for path: ./var/www/html/noindex
+[2025-07-09 18:54:46] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:54:46] [DEBUG] Handling request for path: /noindex/file.txt
+[2025-07-09 18:54:46] [DEBUG] Finding best match for path: /noindex/file.txt
+[2025-07-09 18:54:46] [DEBUG] Found prefix match: /
+[2025-07-09 18:54:46] [DEBUG] Found matching location: /
+[2025-07-09 18:54:46] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:54:46] [DEBUG] Relative path: /noindex/file.txt
+[2025-07-09 18:54:46] [DEBUG] Full physical path: ./var/www/html/noindex/file.txt
+[2025-07-09 18:54:46] [DEBUG] Handling file: ./var/www/html/noindex/file.txt
+[2025-07-09 18:54:46] [DEBUG] File content type: text/plain
+[2025-07-09 18:54:49] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 18:54:49] [DEBUG] Handling request for path: /
+[2025-07-09 18:54:49] [DEBUG] Finding best match for path: /
+[2025-07-09 18:54:49] [DEBUG] Found exact match: /
+[2025-07-09 18:54:49] [DEBUG] Found matching location: /
+[2025-07-09 18:54:49] [DEBUG] Using document root: /var/www/html
+[2025-07-09 18:54:49] [DEBUG] Relative path: /
+[2025-07-09 18:54:49] [DEBUG] Full physical path: ./var/www/html/
+[2025-07-09 18:54:49] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-09 18:54:49] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-09 18:54:49] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-09 18:54:49] [DEBUG] File content type: text/html
+[2025-07-09 19:12:22] [INFO] Logger inicializado correctamente
+[2025-07-09 19:12:23] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 19:12:23] [DEBUG] Handling request for path: /
+[2025-07-09 19:12:23] [DEBUG] Finding best match for path: /
+[2025-07-09 19:12:23] [DEBUG] Found exact match: /
+[2025-07-09 19:12:23] [DEBUG] Found matching location: /
+[2025-07-09 19:12:23] [DEBUG] Using document root: /var/www/html
+[2025-07-09 19:12:23] [DEBUG] Relative path: /
+[2025-07-09 19:12:23] [DEBUG] Full physical path: ./var/www/html/
+[2025-07-09 19:12:23] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-09 19:12:23] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-09 19:12:23] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-09 19:12:23] [DEBUG] File content type: text/html
+[2025-07-09 19:12:26] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 19:12:26] [DEBUG] Handling request for path: /pato/
+[2025-07-09 19:12:26] [DEBUG] Finding best match for path: /pato/
+[2025-07-09 19:12:26] [DEBUG] Found prefix match: /
+[2025-07-09 19:12:26] [DEBUG] Found matching location: /
+[2025-07-09 19:12:26] [DEBUG] Using document root: /var/www/html
+[2025-07-09 19:12:26] [DEBUG] Relative path: /pato
+[2025-07-09 19:12:26] [DEBUG] Full physical path: ./var/www/html/pato
+[2025-07-09 19:12:26] [WARNING] Resource not found: ./var/www/html/pato
+[2025-07-09 19:12:31] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 19:12:31] [DEBUG] Handling request for path: /noindex/
+[2025-07-09 19:12:31] [DEBUG] Finding best match for path: /noindex/
+[2025-07-09 19:12:31] [DEBUG] Found prefix match: /
+[2025-07-09 19:12:31] [DEBUG] Found matching location: /
+[2025-07-09 19:12:31] [DEBUG] Using document root: /var/www/html
+[2025-07-09 19:12:31] [DEBUG] Relative path: /noindex
+[2025-07-09 19:12:31] [DEBUG] Full physical path: ./var/www/html/noindex
+[2025-07-09 19:12:31] [DEBUG] Handling directory: ./var/www/html/noindex
+[2025-07-09 19:12:31] [DEBUG] Generating autoindex for: ./var/www/html/noindex
+[2025-07-09 19:12:31] [DEBUG] Generating simple autoindex for path: ./var/www/html/noindex
+[2025-07-09 19:12:37] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 19:12:37] [DEBUG] Handling request for path: /noindex
+[2025-07-09 19:12:37] [DEBUG] Finding best match for path: /noindex
+[2025-07-09 19:12:37] [DEBUG] Found prefix match: /
+[2025-07-09 19:12:37] [DEBUG] Found matching location: /
+[2025-07-09 19:12:37] [DEBUG] Using document root: /var/www/html
+[2025-07-09 19:12:37] [DEBUG] Relative path: /noindex
+[2025-07-09 19:12:37] [DEBUG] Full physical path: ./var/www/html/noindex
+[2025-07-09 19:12:37] [DEBUG] Handling directory: ./var/www/html/noindex
+[2025-07-09 19:12:37] [DEBUG] Generating autoindex for: ./var/www/html/noindex
+[2025-07-09 19:12:37] [DEBUG] Generating simple autoindex for path: ./var/www/html/noindex
+[2025-07-09 19:12:37] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 19:12:37] [DEBUG] Handling request for path: /
+[2025-07-09 19:12:37] [DEBUG] Finding best match for path: /
+[2025-07-09 19:12:37] [DEBUG] Found exact match: /
+[2025-07-09 19:12:37] [DEBUG] Found matching location: /
+[2025-07-09 19:12:37] [DEBUG] Using document root: /var/www/html
+[2025-07-09 19:12:37] [DEBUG] Relative path: /
+[2025-07-09 19:12:37] [DEBUG] Full physical path: ./var/www/html/
+[2025-07-09 19:12:37] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-09 19:12:37] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-09 19:12:37] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-09 19:12:37] [DEBUG] File content type: text/html
+[2025-07-09 19:12:40] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 19:12:40] [DEBUG] Handling request for path: /
+[2025-07-09 19:12:40] [DEBUG] Finding best match for path: /
+[2025-07-09 19:12:40] [DEBUG] Found exact match: /
+[2025-07-09 19:12:40] [DEBUG] Found matching location: /
+[2025-07-09 19:12:40] [DEBUG] Using document root: /var/www/html
+[2025-07-09 19:12:40] [DEBUG] Relative path: /
+[2025-07-09 19:12:40] [DEBUG] Full physical path: ./var/www/html/
+[2025-07-09 19:12:40] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-09 19:12:40] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-09 19:12:40] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-09 19:12:40] [DEBUG] File content type: text/html
+[2025-07-09 19:12:43] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 19:12:43] [DEBUG] Handling request for path: /noindex/file.txt
+[2025-07-09 19:12:43] [DEBUG] Finding best match for path: /noindex/file.txt
+[2025-07-09 19:12:43] [DEBUG] Found prefix match: /
+[2025-07-09 19:12:43] [DEBUG] Found matching location: /
+[2025-07-09 19:12:43] [DEBUG] Using document root: /var/www/html
+[2025-07-09 19:12:43] [DEBUG] Relative path: /noindex/file.txt
+[2025-07-09 19:12:43] [DEBUG] Full physical path: ./var/www/html/noindex/file.txt
+[2025-07-09 19:12:43] [DEBUG] Handling file: ./var/www/html/noindex/file.txt
+[2025-07-09 19:12:43] [DEBUG] File content type: text/plain
+[2025-07-09 19:14:02] [INFO] Logger inicializado correctamente
+[2025-07-09 19:14:05] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 19:14:05] [DEBUG] Handling request for path: /noindex
+[2025-07-09 19:14:05] [DEBUG] Finding best match for path: /noindex
+[2025-07-09 19:14:05] [DEBUG] Found prefix match: /
+[2025-07-09 19:14:05] [DEBUG] Found matching location: /
+[2025-07-09 19:14:05] [DEBUG] Using document root: /var/www/html
+[2025-07-09 19:14:05] [DEBUG] Relative path: /noindex
+[2025-07-09 19:14:05] [DEBUG] Full physical path: ./var/www/html/noindex
+[2025-07-09 19:14:05] [DEBUG] Handling directory: ./var/www/html/noindex
+[2025-07-09 19:14:05] [DEBUG] Generating autoindex for: ./var/www/html/noindex
+[2025-07-09 19:14:05] [DEBUG] Generating simple autoindex for path: ./var/www/html/noindex
+[2025-07-09 19:14:05] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 19:14:05] [DEBUG] Handling request for path: /noindex
+[2025-07-09 19:14:05] [DEBUG] Finding best match for path: /noindex
+[2025-07-09 19:14:05] [DEBUG] Found prefix match: /
+[2025-07-09 19:14:05] [DEBUG] Found matching location: /
+[2025-07-09 19:14:05] [DEBUG] Using document root: /var/www/html
+[2025-07-09 19:14:05] [DEBUG] Relative path: /noindex
+[2025-07-09 19:14:05] [DEBUG] Full physical path: ./var/www/html/noindex
+[2025-07-09 19:14:05] [DEBUG] Handling directory: ./var/www/html/noindex
+[2025-07-09 19:14:05] [DEBUG] Generating autoindex for: ./var/www/html/noindex
+[2025-07-09 19:14:05] [DEBUG] Generating simple autoindex for path: ./var/www/html/noindex
+[2025-07-09 19:14:05] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 19:14:05] [DEBUG] Handling request for path: /noindex
+[2025-07-09 19:14:05] [DEBUG] Finding best match for path: /noindex
+[2025-07-09 19:14:05] [DEBUG] Found prefix match: /
+[2025-07-09 19:14:05] [DEBUG] Found matching location: /
+[2025-07-09 19:14:05] [DEBUG] Using document root: /var/www/html
+[2025-07-09 19:14:05] [DEBUG] Relative path: /noindex
+[2025-07-09 19:14:05] [DEBUG] Full physical path: ./var/www/html/noindex
+[2025-07-09 19:14:05] [DEBUG] Handling directory: ./var/www/html/noindex
+[2025-07-09 19:14:05] [DEBUG] Generating autoindex for: ./var/www/html/noindex
+[2025-07-09 19:14:05] [DEBUG] Generating simple autoindex for path: ./var/www/html/noindex
+[2025-07-09 20:25:21] [INFO] Logger inicializado correctamente
+[2025-07-09 20:25:26] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 20:25:26] [DEBUG] Handling request for path: /
+[2025-07-09 20:25:26] [DEBUG] Finding best match for path: /
+[2025-07-09 20:25:26] [DEBUG] Found exact match: /
+[2025-07-09 20:25:26] [DEBUG] Found matching location: /
+[2025-07-09 20:25:26] [DEBUG] Using document root: /var/www/html
+[2025-07-09 20:25:26] [DEBUG] Relative path: /
+[2025-07-09 20:25:26] [DEBUG] Full physical path: ./var/www/html/
+[2025-07-09 20:25:26] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-09 20:25:26] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-09 20:25:26] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-09 20:25:26] [DEBUG] File content type: text/html
+[2025-07-09 20:25:26] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 20:25:26] [DEBUG] Handling request for path: /favicon.ico
+[2025-07-09 20:25:26] [DEBUG] Finding best match for path: /favicon.ico
+[2025-07-09 20:25:26] [DEBUG] Found prefix match: /
+[2025-07-09 20:25:26] [DEBUG] Found matching location: /
+[2025-07-09 20:25:26] [DEBUG] Using document root: /var/www/html
+[2025-07-09 20:25:26] [DEBUG] Relative path: /favicon.ico
+[2025-07-09 20:25:26] [DEBUG] Full physical path: ./var/www/html/favicon.ico
+[2025-07-09 20:25:26] [WARNING] Resource not found: ./var/www/html/favicon.ico
+[2025-07-09 20:25:32] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 20:25:32] [DEBUG] Handling request for path: /noindex
+[2025-07-09 20:25:32] [DEBUG] Finding best match for path: /noindex
+[2025-07-09 20:25:32] [DEBUG] Found prefix match: /
+[2025-07-09 20:25:32] [DEBUG] Found matching location: /
+[2025-07-09 20:25:32] [DEBUG] Using document root: /var/www/html
+[2025-07-09 20:25:32] [DEBUG] Relative path: /noindex
+[2025-07-09 20:25:32] [DEBUG] Full physical path: ./var/www/html/noindex
+[2025-07-09 20:25:32] [DEBUG] Handling directory: ./var/www/html/noindex
+[2025-07-09 20:25:32] [DEBUG] Generating autoindex for: ./var/www/html/noindex
+[2025-07-09 20:25:32] [DEBUG] Generating simple autoindex for path: ./var/www/html/noindex
+[2025-07-09 20:25:33] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 20:25:33] [DEBUG] Handling request for path: /noindex/file.txt
+[2025-07-09 20:25:33] [DEBUG] Finding best match for path: /noindex/file.txt
+[2025-07-09 20:25:33] [DEBUG] Found prefix match: /
+[2025-07-09 20:25:33] [DEBUG] Found matching location: /
+[2025-07-09 20:25:33] [DEBUG] Using document root: /var/www/html
+[2025-07-09 20:25:33] [DEBUG] Relative path: /noindex/file.txt
+[2025-07-09 20:25:33] [DEBUG] Full physical path: ./var/www/html/noindex/file.txt
+[2025-07-09 20:25:33] [DEBUG] Handling file: ./var/www/html/noindex/file.txt
+[2025-07-09 20:25:33] [DEBUG] File content type: text/plain
+[2025-07-09 20:25:36] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 20:25:36] [DEBUG] Handling request for path: /
+[2025-07-09 20:25:36] [DEBUG] Finding best match for path: /
+[2025-07-09 20:25:36] [DEBUG] Found exact match: /
+[2025-07-09 20:25:36] [DEBUG] Found matching location: /
+[2025-07-09 20:25:36] [DEBUG] Using document root: /var/www/html
+[2025-07-09 20:25:36] [DEBUG] Relative path: /
+[2025-07-09 20:25:36] [DEBUG] Full physical path: ./var/www/html/
+[2025-07-09 20:25:36] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-09 20:25:36] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-09 20:25:36] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-09 20:25:36] [DEBUG] File content type: text/html
+[2025-07-09 20:26:06] [INFO] Nuevo cliente conectado: 6.
+[2025-07-09 20:26:06] [DEBUG] Handling request for path: /boom
+[2025-07-09 20:26:06] [DEBUG] Finding best match for path: /boom
+[2025-07-09 20:26:06] [DEBUG] Found prefix match: /
+[2025-07-09 20:26:06] [DEBUG] Found matching location: /
+[2025-07-09 20:26:06] [DEBUG] Using document root: /var/www/html
+[2025-07-09 20:26:06] [DEBUG] Relative path: /boom
+[2025-07-09 20:26:06] [DEBUG] Full physical path: ./var/www/html/boom
+[2025-07-09 20:26:06] [WARNING] Resource not found: ./var/www/html/boom
+[2025-07-10 07:22:45] [INFO] Logger inicializado correctamente
+[2025-07-10 07:24:20] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 07:24:20] [DEBUG] Handling request for path: /
+[2025-07-10 07:24:20] [DEBUG] Finding best match for path: /
+[2025-07-10 07:24:20] [DEBUG] Found exact match: /
+[2025-07-10 07:24:20] [DEBUG] Found matching location: /
+[2025-07-10 07:24:20] [DEBUG] Using document root: /var/www/html
+[2025-07-10 07:24:20] [DEBUG] Relative path: /
+[2025-07-10 07:24:20] [DEBUG] Full physical path: ./var/www/html/
+[2025-07-10 07:24:20] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-10 07:24:20] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-10 07:24:20] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-10 07:24:20] [DEBUG] File content type: text/html
+[2025-07-10 07:24:27] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 07:24:27] [DEBUG] Handling request for path: /123
+[2025-07-10 07:24:27] [DEBUG] Finding best match for path: /123
+[2025-07-10 07:24:27] [DEBUG] Found prefix match: /
+[2025-07-10 07:24:27] [DEBUG] Found matching location: /
+[2025-07-10 07:24:27] [DEBUG] Using document root: /var/www/html
+[2025-07-10 07:24:27] [DEBUG] Relative path: /123
+[2025-07-10 07:24:27] [DEBUG] Full physical path: ./var/www/html/123
+[2025-07-10 07:24:27] [WARNING] Resource not found: ./var/www/html/123
+[2025-07-10 07:24:32] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 07:24:32] [DEBUG] Handling request for path: /123
+[2025-07-10 07:24:32] [DEBUG] Finding best match for path: /123
+[2025-07-10 07:24:32] [DEBUG] Found prefix match: /
+[2025-07-10 07:24:32] [DEBUG] Found matching location: /
+[2025-07-10 07:24:32] [DEBUG] Using document root: /var/www/html
+[2025-07-10 07:24:32] [DEBUG] Relative path: /123
+[2025-07-10 07:24:32] [DEBUG] Full physical path: ./var/www/html/123
+[2025-07-10 07:24:32] [WARNING] Resource not found: ./var/www/html/123
+[2025-07-10 07:27:51] [INFO] Logger inicializado correctamente
+[2025-07-10 07:27:55] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 07:27:55] [DEBUG] Handling request for path: /123
+[2025-07-10 07:27:55] [DEBUG] Finding best match for path: /123
+[2025-07-10 07:27:55] [DEBUG] Found prefix match: /
+[2025-07-10 07:27:55] [DEBUG] Found matching location: /
+[2025-07-10 07:27:55] [DEBUG] Using document root: /var/www/html
+[2025-07-10 07:27:55] [DEBUG] Relative path: /123
+[2025-07-10 07:27:55] [DEBUG] Full physical path: ./var/www/html/123
+[2025-07-10 07:27:55] [WARNING] Resource not found: ./var/www/html/123
+[2025-07-10 07:27:55] [WARNING] No se ha encontrado un error page
+[2025-07-10 07:29:52] [INFO] Logger inicializado correctamente
+[2025-07-10 07:29:54] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 07:29:54] [DEBUG] Handling request for path: /123
+[2025-07-10 07:29:54] [DEBUG] Finding best match for path: /123
+[2025-07-10 07:29:54] [DEBUG] Found prefix match: /
+[2025-07-10 07:29:54] [DEBUG] Found matching location: /
+[2025-07-10 07:29:54] [DEBUG] Using document root: /var/www/html
+[2025-07-10 07:29:54] [DEBUG] Relative path: /123
+[2025-07-10 07:29:54] [DEBUG] Full physical path: ./var/www/html/123
+[2025-07-10 07:29:54] [WARNING] Resource not found: ./var/www/html/123
+[2025-07-10 07:29:54] [DEBUG] Buscando error page para: 404
+[2025-07-10 07:29:54] [WARNING] No se ha encontrado un error page
+[2025-07-10 07:31:01] [INFO] Logger inicializado correctamente
+[2025-07-10 07:31:04] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 07:31:04] [DEBUG] Handling request for path: /123
+[2025-07-10 07:31:04] [DEBUG] Finding best match for path: /123
+[2025-07-10 07:31:04] [DEBUG] Found prefix match: /
+[2025-07-10 07:31:04] [DEBUG] Found matching location: /
+[2025-07-10 07:31:04] [DEBUG] Using document root: /var/www/html
+[2025-07-10 07:31:04] [DEBUG] Relative path: /123
+[2025-07-10 07:31:04] [DEBUG] Full physical path: ./var/www/html/123
+[2025-07-10 07:31:04] [WARNING] Resource not found: ./var/www/html/123
+[2025-07-10 07:31:04] [DEBUG] Buscando error page para: 404
+[2025-07-10 07:31:04] [DEBUG] Resultado: /errors/404.html
+[2025-07-10 07:31:04] [WARNING] No se ha encontrado un error page
+[2025-07-10 07:35:10] [INFO] Logger inicializado correctamente
+[2025-07-10 07:35:14] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 07:35:14] [DEBUG] Handling request for path: /123
+[2025-07-10 07:35:14] [DEBUG] Finding best match for path: /123
+[2025-07-10 07:35:14] [DEBUG] Found prefix match: /
+[2025-07-10 07:35:14] [DEBUG] Found matching location: /
+[2025-07-10 07:35:14] [DEBUG] Using document root: /var/www/html
+[2025-07-10 07:35:14] [DEBUG] Relative path: /123
+[2025-07-10 07:35:14] [DEBUG] Full physical path: ./var/www/html/123
+[2025-07-10 07:35:14] [WARNING] Resource not found: ./var/www/html/123
+[2025-07-10 07:35:14] [DEBUG] Error page path: ./var/www/html/errors/404.html
+[2025-07-10 07:36:15] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 07:36:15] [DEBUG] Handling request for path: /123
+[2025-07-10 07:36:15] [DEBUG] Finding best match for path: /123
+[2025-07-10 07:36:15] [DEBUG] Found prefix match: /
+[2025-07-10 07:36:15] [DEBUG] Found matching location: /
+[2025-07-10 07:36:15] [DEBUG] Using document root: /var/www/html
+[2025-07-10 07:36:15] [DEBUG] Relative path: /123
+[2025-07-10 07:36:15] [DEBUG] Full physical path: ./var/www/html/123
+[2025-07-10 07:36:15] [WARNING] Resource not found: ./var/www/html/123
+[2025-07-10 07:36:15] [DEBUG] Error page path: ./var/www/html/errors/404.html
+[2025-07-10 07:38:11] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 07:38:11] [DEBUG] Handling request for path: /boom
+[2025-07-10 07:38:11] [DEBUG] Finding best match for path: /boom
+[2025-07-10 07:38:11] [DEBUG] Found prefix match: /
+[2025-07-10 07:38:11] [DEBUG] Found matching location: /
+[2025-07-10 07:38:11] [DEBUG] Using document root: /var/www/html
+[2025-07-10 07:38:11] [DEBUG] Relative path: /boom
+[2025-07-10 07:38:11] [DEBUG] Full physical path: ./var/www/html/boom
+[2025-07-10 07:38:11] [WARNING] Resource not found: ./var/www/html/boom
+[2025-07-10 07:38:11] [DEBUG] Error page path: ./var/www/html/errors/404.html
+[2025-07-10 07:50:04] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 07:50:04] [DEBUG] Handling request for path: /
+[2025-07-10 07:50:04] [DEBUG] Finding best match for path: /
+[2025-07-10 07:50:04] [DEBUG] Found exact match: /
+[2025-07-10 07:50:04] [DEBUG] Found matching location: /
+[2025-07-10 07:50:04] [DEBUG] Using document root: /var/www/html
+[2025-07-10 07:50:04] [DEBUG] Relative path: /
+[2025-07-10 07:50:04] [DEBUG] Full physical path: ./var/www/html/
+[2025-07-10 07:50:04] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-10 07:50:04] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-10 07:50:04] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-10 07:50:04] [DEBUG] File content type: text/html
+[2025-07-10 08:30:59] [INFO] Logger inicializado correctamente
+[2025-07-10 08:31:04] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:31:04] [DEBUG] Handling request for path: /
+[2025-07-10 08:31:04] [DEBUG] Finding best match for path: /
+[2025-07-10 08:31:04] [DEBUG] Found exact match: /
+[2025-07-10 08:31:04] [DEBUG] Found matching location: /
+[2025-07-10 08:31:04] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:31:04] [DEBUG] Relative path: /
+[2025-07-10 08:31:04] [DEBUG] Full physical path: ./var/www/html/
+[2025-07-10 08:31:04] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-10 08:31:04] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-10 08:31:04] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-10 08:31:04] [DEBUG] File content type: text/html
+[2025-07-10 08:31:45] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:31:45] [DEBUG] Handling request for path: /
+[2025-07-10 08:31:45] [DEBUG] Finding best match for path: /
+[2025-07-10 08:31:45] [DEBUG] Found exact match: /
+[2025-07-10 08:31:45] [DEBUG] Found matching location: /
+[2025-07-10 08:31:45] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:31:45] [DEBUG] Relative path: /
+[2025-07-10 08:31:45] [DEBUG] Full physical path: ./var/www/html/
+[2025-07-10 08:31:45] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-10 08:31:45] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-10 08:31:45] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-10 08:31:45] [DEBUG] File content type: text/html
+[2025-07-10 08:32:09] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:32:09] [DEBUG] Handling request for path: /
+[2025-07-10 08:32:09] [DEBUG] Finding best match for path: /
+[2025-07-10 08:32:09] [DEBUG] Found exact match: /
+[2025-07-10 08:32:09] [DEBUG] Found matching location: /
+[2025-07-10 08:32:09] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:32:09] [DEBUG] Relative path: /
+[2025-07-10 08:32:09] [DEBUG] Full physical path: ./var/www/html/
+[2025-07-10 08:32:09] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-10 08:32:09] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-10 08:32:09] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-10 08:32:09] [DEBUG] File content type: text/html
+[2025-07-10 08:32:09] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:32:09] [DEBUG] Handling request for path: /style.css
+[2025-07-10 08:32:09] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 08:32:09] [DEBUG] Found prefix match: /
+[2025-07-10 08:32:09] [DEBUG] Found matching location: /
+[2025-07-10 08:32:09] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:32:09] [DEBUG] Relative path: /style.css
+[2025-07-10 08:32:09] [DEBUG] Full physical path: ./var/www/html/style.css
+[2025-07-10 08:32:09] [DEBUG] Handling file: ./var/www/html/style.css
+[2025-07-10 08:32:09] [DEBUG] File content type: text/css
+[2025-07-10 08:32:43] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:32:43] [DEBUG] Handling request for path: /noindex
+[2025-07-10 08:32:43] [DEBUG] Finding best match for path: /noindex
+[2025-07-10 08:32:43] [DEBUG] Found prefix match: /
+[2025-07-10 08:32:43] [DEBUG] Found matching location: /
+[2025-07-10 08:32:43] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:32:43] [DEBUG] Relative path: /noindex
+[2025-07-10 08:32:43] [DEBUG] Full physical path: ./var/www/html/noindex
+[2025-07-10 08:32:43] [DEBUG] Handling directory: ./var/www/html/noindex
+[2025-07-10 08:32:43] [DEBUG] Generating autoindex for: ./var/www/html/noindex
+[2025-07-10 08:32:43] [DEBUG] Generating simple autoindex for path: ./var/www/html/noindex
+[2025-07-10 08:32:48] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:32:48] [DEBUG] Handling request for path: /noindex/file.txt
+[2025-07-10 08:32:48] [DEBUG] Finding best match for path: /noindex/file.txt
+[2025-07-10 08:32:48] [DEBUG] Found prefix match: /
+[2025-07-10 08:32:48] [DEBUG] Found matching location: /
+[2025-07-10 08:32:48] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:32:48] [DEBUG] Relative path: /noindex/file.txt
+[2025-07-10 08:32:48] [DEBUG] Full physical path: ./var/www/html/noindex/file.txt
+[2025-07-10 08:32:48] [DEBUG] Handling file: ./var/www/html/noindex/file.txt
+[2025-07-10 08:32:48] [DEBUG] File content type: text/plain
+[2025-07-10 08:32:50] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:32:50] [DEBUG] Handling request for path: /
+[2025-07-10 08:32:50] [DEBUG] Finding best match for path: /
+[2025-07-10 08:32:50] [DEBUG] Found exact match: /
+[2025-07-10 08:32:50] [DEBUG] Found matching location: /
+[2025-07-10 08:32:50] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:32:50] [DEBUG] Relative path: /
+[2025-07-10 08:32:50] [DEBUG] Full physical path: ./var/www/html/
+[2025-07-10 08:32:50] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-10 08:32:50] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-10 08:32:50] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-10 08:32:50] [DEBUG] File content type: text/html
+[2025-07-10 08:32:50] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:32:50] [DEBUG] Handling request for path: /style.css
+[2025-07-10 08:32:50] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 08:32:50] [DEBUG] Found prefix match: /
+[2025-07-10 08:32:50] [DEBUG] Found matching location: /
+[2025-07-10 08:32:50] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:32:50] [DEBUG] Relative path: /style.css
+[2025-07-10 08:32:50] [DEBUG] Full physical path: ./var/www/html/style.css
+[2025-07-10 08:32:50] [DEBUG] Handling file: ./var/www/html/style.css
+[2025-07-10 08:32:50] [DEBUG] File content type: text/css
+[2025-07-10 08:33:25] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:33:25] [DEBUG] Handling request for path: /234
+[2025-07-10 08:33:25] [DEBUG] Finding best match for path: /234
+[2025-07-10 08:33:25] [DEBUG] Found prefix match: /
+[2025-07-10 08:33:25] [DEBUG] Found matching location: /
+[2025-07-10 08:33:25] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:33:25] [DEBUG] Relative path: /234
+[2025-07-10 08:33:25] [DEBUG] Full physical path: ./var/www/html/234
+[2025-07-10 08:33:25] [WARNING] Resource not found: ./var/www/html/234
+[2025-07-10 08:33:25] [DEBUG] Error page path: ./var/www/html/errors/404.html
+[2025-07-10 08:33:49] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:33:49] [DEBUG] Handling request for path: /subdir
+[2025-07-10 08:33:49] [DEBUG] Finding best match for path: /subdir
+[2025-07-10 08:33:49] [DEBUG] Found prefix match: /
+[2025-07-10 08:33:49] [DEBUG] Found matching location: /
+[2025-07-10 08:33:49] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:33:49] [DEBUG] Relative path: /subdir
+[2025-07-10 08:33:49] [DEBUG] Full physical path: ./var/www/html/subdir
+[2025-07-10 08:33:49] [DEBUG] Handling directory: ./var/www/html/subdir
+[2025-07-10 08:33:49] [DEBUG] Generating autoindex for: ./var/www/html/subdir
+[2025-07-10 08:33:49] [DEBUG] Generating simple autoindex for path: ./var/www/html/subdir
+[2025-07-10 08:33:56] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:33:56] [DEBUG] Handling request for path: /subdir/page.html
+[2025-07-10 08:33:56] [DEBUG] Finding best match for path: /subdir/page.html
+[2025-07-10 08:33:56] [DEBUG] Found prefix match: /
+[2025-07-10 08:33:56] [DEBUG] Found matching location: /
+[2025-07-10 08:33:56] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:33:56] [DEBUG] Relative path: /subdir/page.html
+[2025-07-10 08:33:56] [DEBUG] Full physical path: ./var/www/html/subdir/page.html
+[2025-07-10 08:33:56] [DEBUG] Handling file: ./var/www/html/subdir/page.html
+[2025-07-10 08:33:56] [DEBUG] File content type: text/html
+[2025-07-10 08:34:49] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:34:49] [DEBUG] Handling request for path: /test
+[2025-07-10 08:34:49] [DEBUG] Finding best match for path: /test
+[2025-07-10 08:34:49] [DEBUG] Found prefix match: /
+[2025-07-10 08:34:49] [DEBUG] Found matching location: /
+[2025-07-10 08:34:49] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:34:49] [DEBUG] Relative path: /test
+[2025-07-10 08:34:49] [DEBUG] Full physical path: ./var/www/html/test
+[2025-07-10 08:34:49] [DEBUG] Handling directory: ./var/www/html/test
+[2025-07-10 08:34:49] [DEBUG] Found index file: ./var/www/html/test/index.html
+[2025-07-10 08:34:49] [DEBUG] Handling file: ./var/www/html/test/index.html
+[2025-07-10 08:34:49] [DEBUG] File content type: text/html
+[2025-07-10 08:36:21] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:36:21] [DEBUG] Handling request for path: /test
+[2025-07-10 08:36:21] [DEBUG] Finding best match for path: /test
+[2025-07-10 08:36:21] [DEBUG] Found prefix match: /
+[2025-07-10 08:36:21] [DEBUG] Found matching location: /
+[2025-07-10 08:36:21] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:36:21] [DEBUG] Relative path: /test
+[2025-07-10 08:36:21] [DEBUG] Full physical path: ./var/www/html/test
+[2025-07-10 08:36:21] [DEBUG] Handling directory: ./var/www/html/test
+[2025-07-10 08:36:21] [DEBUG] Found index file: ./var/www/html/test/index.html
+[2025-07-10 08:36:21] [DEBUG] Handling file: ./var/www/html/test/index.html
+[2025-07-10 08:36:21] [DEBUG] File content type: text/html
+[2025-07-10 08:36:47] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:36:47] [DEBUG] Handling request for path: /test/test.html
+[2025-07-10 08:36:47] [DEBUG] Finding best match for path: /test/test.html
+[2025-07-10 08:36:47] [DEBUG] Found prefix match: /
+[2025-07-10 08:36:47] [DEBUG] Found matching location: /
+[2025-07-10 08:36:47] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:36:47] [DEBUG] Relative path: /test/test.html
+[2025-07-10 08:36:47] [DEBUG] Full physical path: ./var/www/html/test/test.html
+[2025-07-10 08:36:47] [DEBUG] Handling file: ./var/www/html/test/test.html
+[2025-07-10 08:36:47] [DEBUG] File content type: text/html
+[2025-07-10 08:44:20] [INFO] Logger inicializado correctamente
+[2025-07-10 08:44:27] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:44:27] [DEBUG] Handling request for path: /123
+[2025-07-10 08:44:27] [DEBUG] Finding best match for path: /123
+[2025-07-10 08:44:27] [DEBUG] Found prefix match: /
+[2025-07-10 08:44:27] [DEBUG] Found matching location: /
+[2025-07-10 08:44:27] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:44:27] [DEBUG] Relative path: /123
+[2025-07-10 08:44:27] [DEBUG] Full physical path: ./var/www/html/123
+[2025-07-10 08:44:27] [WARNING] Resource not found: ./var/www/html/123
+[2025-07-10 08:44:27] [DEBUG] Error page path: ./var/www/html/errorss/404.html
+[2025-07-10 08:44:27] [WARNING] No se ha encontrado un error page
+[2025-07-10 08:45:32] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:45:32] [DEBUG] Handling request for path: /redirect-me
+[2025-07-10 08:45:32] [DEBUG] Finding best match for path: /redirect-me
+[2025-07-10 08:45:32] [DEBUG] Found exact match: /redirect-me
+[2025-07-10 08:45:32] [DEBUG] Found matching location: /redirect-me
+[2025-07-10 08:45:32] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:45:32] [DEBUG] Relative path: /
+[2025-07-10 08:45:32] [DEBUG] Full physical path: ./var/www/html/
+[2025-07-10 08:45:32] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-10 08:45:32] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-10 08:45:32] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-10 08:45:32] [DEBUG] File content type: text/html
+[2025-07-10 08:45:32] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:45:32] [DEBUG] Handling request for path: /style.css
+[2025-07-10 08:45:32] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 08:45:32] [DEBUG] Found prefix match: /
+[2025-07-10 08:45:32] [DEBUG] Found matching location: /
+[2025-07-10 08:45:32] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:45:32] [DEBUG] Relative path: /style.css
+[2025-07-10 08:45:32] [DEBUG] Full physical path: ./var/www/html/style.css
+[2025-07-10 08:45:32] [DEBUG] Handling file: ./var/www/html/style.css
+[2025-07-10 08:45:32] [DEBUG] File content type: text/css
+[2025-07-10 08:45:36] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:45:36] [DEBUG] Handling request for path: /redirect-me
+[2025-07-10 08:45:36] [DEBUG] Finding best match for path: /redirect-me
+[2025-07-10 08:45:36] [DEBUG] Found exact match: /redirect-me
+[2025-07-10 08:45:36] [DEBUG] Found matching location: /redirect-me
+[2025-07-10 08:45:36] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:45:36] [DEBUG] Relative path: /
+[2025-07-10 08:45:36] [DEBUG] Full physical path: ./var/www/html/
+[2025-07-10 08:45:36] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-10 08:45:36] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-10 08:45:36] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-10 08:45:36] [DEBUG] File content type: text/html
+[2025-07-10 08:45:36] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:45:36] [DEBUG] Handling request for path: /style.css
+[2025-07-10 08:45:36] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 08:45:36] [DEBUG] Found prefix match: /
+[2025-07-10 08:45:36] [DEBUG] Found matching location: /
+[2025-07-10 08:45:36] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:45:36] [DEBUG] Relative path: /style.css
+[2025-07-10 08:45:36] [DEBUG] Full physical path: ./var/www/html/style.css
+[2025-07-10 08:45:36] [DEBUG] Handling file: ./var/www/html/style.css
+[2025-07-10 08:45:36] [DEBUG] File content type: text/css
+[2025-07-10 08:45:47] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:45:47] [INFO] Nuevo cliente conectado: 7.
+[2025-07-10 08:45:47] [DEBUG] Handling request for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Found prefix match: /
+[2025-07-10 08:45:47] [DEBUG] Found matching location: /
+[2025-07-10 08:45:47] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:45:47] [DEBUG] Relative path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Full physical path: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] Handling file: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] File content type: text/css
+[2025-07-10 08:45:47] [INFO] Nuevo cliente conectado: 8.
+[2025-07-10 08:45:47] [DEBUG] Handling request for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Found prefix match: /
+[2025-07-10 08:45:47] [DEBUG] Found matching location: /
+[2025-07-10 08:45:47] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:45:47] [DEBUG] Relative path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Full physical path: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] Handling file: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] File content type: text/css
+[2025-07-10 08:45:47] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:45:47] [DEBUG] Handling request for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Found prefix match: /
+[2025-07-10 08:45:47] [DEBUG] Found matching location: /
+[2025-07-10 08:45:47] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:45:47] [DEBUG] Relative path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Full physical path: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] Handling file: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] File content type: text/css
+[2025-07-10 08:45:47] [DEBUG] Handling request for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Found prefix match: /
+[2025-07-10 08:45:47] [DEBUG] Found matching location: /
+[2025-07-10 08:45:47] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:45:47] [DEBUG] Relative path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Full physical path: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] Handling file: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] File content type: text/css
+[2025-07-10 08:45:47] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:45:47] [DEBUG] Handling request for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Found prefix match: /
+[2025-07-10 08:45:47] [DEBUG] Found matching location: /
+[2025-07-10 08:45:47] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:45:47] [DEBUG] Relative path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Full physical path: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] Handling file: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] File content type: text/css
+[2025-07-10 08:45:47] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:45:47] [INFO] Nuevo cliente conectado: 7.
+[2025-07-10 08:45:47] [DEBUG] Handling request for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Found prefix match: /
+[2025-07-10 08:45:47] [DEBUG] Found matching location: /
+[2025-07-10 08:45:47] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:45:47] [DEBUG] Relative path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Full physical path: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] Handling file: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] File content type: text/css
+[2025-07-10 08:45:47] [DEBUG] Handling request for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Found prefix match: /
+[2025-07-10 08:45:47] [DEBUG] Found matching location: /
+[2025-07-10 08:45:47] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:45:47] [DEBUG] Relative path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Full physical path: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] Handling file: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] File content type: text/css
+[2025-07-10 08:45:47] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:45:47] [INFO] Nuevo cliente conectado: 7.
+[2025-07-10 08:45:47] [DEBUG] Handling request for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Found prefix match: /
+[2025-07-10 08:45:47] [DEBUG] Found matching location: /
+[2025-07-10 08:45:47] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:45:47] [DEBUG] Relative path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Full physical path: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] Handling file: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] File content type: text/css
+[2025-07-10 08:45:47] [DEBUG] Handling request for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Found prefix match: /
+[2025-07-10 08:45:47] [DEBUG] Found matching location: /
+[2025-07-10 08:45:47] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:45:47] [DEBUG] Relative path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Full physical path: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] Handling file: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] File content type: text/css
+[2025-07-10 08:45:47] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:45:47] [DEBUG] Handling request for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Found prefix match: /
+[2025-07-10 08:45:47] [DEBUG] Found matching location: /
+[2025-07-10 08:45:47] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:45:47] [DEBUG] Relative path: /style.css
+[2025-07-10 08:45:47] [DEBUG] Full physical path: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] Handling file: ./var/www/html/style.css
+[2025-07-10 08:45:47] [DEBUG] File content type: text/css
+[2025-07-10 08:45:56] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:45:56] [DEBUG] Handling request for path: /redirect-me
+[2025-07-10 08:45:56] [DEBUG] Finding best match for path: /redirect-me
+[2025-07-10 08:45:56] [DEBUG] Found exact match: /redirect-me
+[2025-07-10 08:45:56] [DEBUG] Found matching location: /redirect-me
+[2025-07-10 08:45:56] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:45:56] [DEBUG] Relative path: /
+[2025-07-10 08:45:56] [DEBUG] Full physical path: ./var/www/html/
+[2025-07-10 08:45:56] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-10 08:45:56] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-10 08:45:56] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-10 08:45:56] [DEBUG] File content type: text/html
+[2025-07-10 08:45:56] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:45:56] [DEBUG] Handling request for path: /style.css
+[2025-07-10 08:45:56] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 08:45:56] [DEBUG] Found prefix match: /
+[2025-07-10 08:45:56] [DEBUG] Found matching location: /
+[2025-07-10 08:45:56] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:45:56] [DEBUG] Relative path: /style.css
+[2025-07-10 08:45:56] [DEBUG] Full physical path: ./var/www/html/style.css
+[2025-07-10 08:45:56] [DEBUG] Handling file: ./var/www/html/style.css
+[2025-07-10 08:45:56] [DEBUG] File content type: text/css
+[2025-07-10 08:46:20] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:46:20] [DEBUG] Handling request for path: /redirect-mea
+[2025-07-10 08:46:20] [DEBUG] Finding best match for path: /redirect-mea
+[2025-07-10 08:46:20] [DEBUG] Found prefix match: /
+[2025-07-10 08:46:20] [DEBUG] Found matching location: /
+[2025-07-10 08:46:20] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:46:20] [DEBUG] Relative path: /redirect-mea
+[2025-07-10 08:46:20] [DEBUG] Full physical path: ./var/www/html/redirect-mea
+[2025-07-10 08:46:20] [WARNING] Resource not found: ./var/www/html/redirect-mea
+[2025-07-10 08:46:20] [DEBUG] Error page path: ./var/www/html/errorss/404.html
+[2025-07-10 08:46:20] [WARNING] No se ha encontrado un error page
+[2025-07-10 08:46:23] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:46:23] [DEBUG] Handling request for path: /redirect-me
+[2025-07-10 08:46:23] [DEBUG] Finding best match for path: /redirect-me
+[2025-07-10 08:46:23] [DEBUG] Found exact match: /redirect-me
+[2025-07-10 08:46:23] [DEBUG] Found matching location: /redirect-me
+[2025-07-10 08:46:23] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:46:23] [DEBUG] Relative path: /
+[2025-07-10 08:46:23] [DEBUG] Full physical path: ./var/www/html/
+[2025-07-10 08:46:23] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-10 08:46:23] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-10 08:46:23] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-10 08:46:23] [DEBUG] File content type: text/html
+[2025-07-10 08:46:23] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:46:23] [DEBUG] Handling request for path: /style.css
+[2025-07-10 08:46:23] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 08:46:23] [DEBUG] Found prefix match: /
+[2025-07-10 08:46:23] [DEBUG] Found matching location: /
+[2025-07-10 08:46:23] [DEBUG] Using document root: /var/www/html
+[2025-07-10 08:46:23] [DEBUG] Relative path: /style.css
+[2025-07-10 08:46:23] [DEBUG] Full physical path: ./var/www/html/style.css
+[2025-07-10 08:46:23] [DEBUG] Handling file: ./var/www/html/style.css
+[2025-07-10 08:46:23] [DEBUG] File content type: text/css
+[2025-07-10 08:46:33] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:46:33] [DEBUG] Handling request for path: /upload
+[2025-07-10 08:46:33] [DEBUG] Finding best match for path: /upload
+[2025-07-10 08:46:33] [DEBUG] Found exact match: /upload
+[2025-07-10 08:46:33] [DEBUG] Found matching location: /upload
+[2025-07-10 08:46:33] [DEBUG] Using document root: /var/www/uploads
+[2025-07-10 08:46:33] [DEBUG] Relative path: /
+[2025-07-10 08:46:33] [DEBUG] Full physical path: ./var/www/uploads/
+[2025-07-10 08:46:33] [WARNING] Resource not found: ./var/www/uploads/
+[2025-07-10 08:46:33] [DEBUG] Error page path: ./var/www/uploads/errorss/404.html
+[2025-07-10 08:46:33] [WARNING] No se ha encontrado un error page
+[2025-07-10 08:46:55] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:46:55] [DEBUG] Handling request for path: /cgi-bin
+[2025-07-10 08:46:55] [DEBUG] Finding best match for path: /cgi-bin
+[2025-07-10 08:46:55] [DEBUG] Found exact match: /cgi-bin/
+[2025-07-10 08:46:55] [DEBUG] Found matching location: /cgi-bin/
+[2025-07-10 08:46:55] [DEBUG] Using document root: /var/www/cgi-bin
+[2025-07-10 08:46:55] [DEBUG] Relative path: /
+[2025-07-10 08:46:55] [DEBUG] Full physical path: ./var/www/cgi-bin/
+[2025-07-10 08:46:55] [WARNING] Resource not found: ./var/www/cgi-bin/
+[2025-07-10 08:46:55] [DEBUG] Error page path: ./var/www/cgi-bin/errorss/404.html
+[2025-07-10 08:46:55] [WARNING] No se ha encontrado un error page
+[2025-07-10 08:47:20] [INFO] Logger inicializado correctamente
+[2025-07-10 08:47:24] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:47:24] [DEBUG] Procesado request para: /cgi-bin
+[2025-07-10 08:47:24] [DEBUG] Finding best match for path: /cgi-bin
+[2025-07-10 08:47:24] [DEBUG] Found exact match: /cgi-bin/
+[2025-07-10 08:47:24] [DEBUG] Found matching location: /cgi-bin/
+[2025-07-10 08:47:24] [WARNING] Resource not found: ./var/www/cgi-bin/
+[2025-07-10 08:47:24] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:47:24] [DEBUG] Procesado request para: /cgi-bin
+[2025-07-10 08:47:24] [DEBUG] Finding best match for path: /cgi-bin
+[2025-07-10 08:47:24] [DEBUG] Found exact match: /cgi-bin/
+[2025-07-10 08:47:24] [DEBUG] Found matching location: /cgi-bin/
+[2025-07-10 08:47:24] [WARNING] Resource not found: ./var/www/cgi-bin/
+[2025-07-10 08:47:27] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:47:27] [DEBUG] Procesado request para: /
+[2025-07-10 08:47:27] [DEBUG] Finding best match for path: /
+[2025-07-10 08:47:27] [DEBUG] Found exact match: /
+[2025-07-10 08:47:27] [DEBUG] Found matching location: /
+[2025-07-10 08:47:27] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-10 08:47:27] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-10 08:47:27] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-10 08:47:27] [DEBUG] File content type: text/html
+[2025-07-10 08:47:27] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:47:27] [DEBUG] Procesado request para: /style.css
+[2025-07-10 08:47:27] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 08:47:27] [DEBUG] Found prefix match: /
+[2025-07-10 08:47:27] [DEBUG] Found matching location: /
+[2025-07-10 08:47:27] [DEBUG] Handling file: ./var/www/html/style.css
+[2025-07-10 08:47:27] [DEBUG] File content type: text/css
+[2025-07-10 08:47:29] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:47:29] [DEBUG] Procesado request para: /redirect-me
+[2025-07-10 08:47:29] [DEBUG] Finding best match for path: /redirect-me
+[2025-07-10 08:47:29] [DEBUG] Found exact match: /redirect-me
+[2025-07-10 08:47:29] [DEBUG] Found matching location: /redirect-me
+[2025-07-10 08:47:29] [DEBUG] Handling directory: ./var/www/html/
+[2025-07-10 08:47:29] [DEBUG] Found index file: ./var/www/html/index.html
+[2025-07-10 08:47:29] [DEBUG] Handling file: ./var/www/html/index.html
+[2025-07-10 08:47:29] [DEBUG] File content type: text/html
+[2025-07-10 08:47:29] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 08:47:29] [DEBUG] Procesado request para: /style.css
+[2025-07-10 08:47:29] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 08:47:29] [DEBUG] Found prefix match: /
+[2025-07-10 08:47:29] [DEBUG] Found matching location: /
+[2025-07-10 08:47:29] [DEBUG] Handling file: ./var/www/html/style.css
+[2025-07-10 08:47:29] [DEBUG] File content type: text/css
+[2025-07-10 09:08:41] [INFO] Logger inicializado correctamente
+[2025-07-10 09:08:45] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 09:08:45] [DEBUG] Finding best match for path: /
+[2025-07-10 09:08:45] [DEBUG] Found exact match: /
+[2025-07-10 09:10:40] [INFO] Logger inicializado correctamente
+[2025-07-10 09:10:45] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 09:10:45] [DEBUG] Finding best match for path: /
+[2025-07-10 09:10:45] [DEBUG] Found exact match: /
+[2025-07-10 09:13:51] [INFO] Logger inicializado correctamente
+[2025-07-10 09:13:54] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 09:13:54] [DEBUG] Finding best match for path: /
+[2025-07-10 09:13:54] [DEBUG] Found exact match: /
+[2025-07-10 09:13:54] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 09:13:54] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 09:13:54] [DEBUG] Found prefix match: /
+[2025-07-10 09:14:28] [INFO] Logger inicializado correctamente
+[2025-07-10 09:14:30] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 09:14:30] [DEBUG] Finding best match for path: /
+[2025-07-10 09:14:30] [DEBUG] Found exact match: /
+[2025-07-10 09:23:13] [INFO] Logger inicializado correctamente
+[2025-07-10 09:25:22] [INFO] Logger inicializado correctamente
+[2025-07-10 09:25:24] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 09:25:24] [DEBUG] Finding best match for path: /
+[2025-07-10 09:25:24] [DEBUG] Found exact match: /
+[2025-07-10 09:25:24] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 09:25:24] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 09:25:24] [DEBUG] Found prefix match: /
+[2025-07-10 09:25:26] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 09:25:26] [DEBUG] Finding best match for path: /
+[2025-07-10 09:25:26] [DEBUG] Found exact match: /
+[2025-07-10 09:25:26] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 09:25:26] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 09:25:26] [DEBUG] Found prefix match: /
+[2025-07-10 09:25:26] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 09:25:26] [DEBUG] Finding best match for path: /
+[2025-07-10 09:25:26] [DEBUG] Found exact match: /
+[2025-07-10 09:25:26] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 09:25:26] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 09:25:26] [DEBUG] Found prefix match: /
+[2025-07-10 09:26:13] [INFO] Logger inicializado correctamente
+[2025-07-10 09:26:15] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 09:26:15] [DEBUG] Finding best match for path: /
+[2025-07-10 09:26:15] [DEBUG] Found exact match: /
+[2025-07-10 09:26:15] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 09:26:15] [DEBUG] Finding best match for path: /style.css
+[2025-07-10 09:26:15] [DEBUG] Found prefix match: /
+[2025-07-10 09:26:20] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 09:26:20] [DEBUG] Finding best match for path: /redirect-me
+[2025-07-10 09:26:20] [DEBUG] Found exact match: /redirect-me
+[2025-07-10 09:29:59] [INFO] Logger inicializado correctamente
+[2025-07-10 09:30:03] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 09:30:03] [DEBUG] Finding best match for path: /redirect-me
+[2025-07-10 09:30:03] [DEBUG] Found exact match: /redirect-me
+[2025-07-10 12:01:24] [INFO] Logger inicializado correctamente
+[2025-07-10 12:01:29] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:01:30] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:01:31] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:01:31] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:01:35] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:01:37] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:01:37] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:01:38] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:06:19] [INFO] Logger inicializado correctamente
+[2025-07-10 12:06:21] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:06:21] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:06:21] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:14:08] [INFO] Logger inicializado correctamente
+[2025-07-10 12:14:09] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:14:09] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:18:44] [INFO] Logger inicializado correctamente
+[2025-07-10 12:18:45] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:18:46] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:18:46] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:18:46] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:18:50] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:24:46] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:24:49] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:24:49] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:24:53] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:24:55] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:24:56] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:24:56] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:32:34] [INFO] Logger inicializado correctamente
+[2025-07-10 12:32:39] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:32:40] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:33:02] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:44:53] [INFO] Logger inicializado correctamente
+[2025-07-10 12:44:56] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:44:59] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:44:59] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:46:16] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:46:18] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:46:20] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:46:20] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:46:32] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:46:38] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:46:41] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:46:41] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:47:25] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:47:30] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:47:33] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:47:33] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:52:47] [INFO] Logger inicializado correctamente
+[2025-07-10 12:52:49] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:52:49] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:52:52] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:53:20] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:53:21] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:53:22] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:53:34] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:53:35] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:53:37] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:53:37] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:53:58] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:54:22] [INFO] Logger inicializado correctamente
+[2025-07-10 12:54:24] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 12:54:25] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:00:32] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:00:42] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:00:45] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:00:45] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:02:25] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:02:25] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:08:30] [INFO] Logger inicializado correctamente
+[2025-07-10 13:08:33] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:08:33] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:08:33] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:08:33] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:08:33] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:08:33] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:08:37] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:10:08] [INFO] Logger inicializado correctamente
+[2025-07-10 13:10:10] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:10:10] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:10:20] [INFO] Logger inicializado correctamente
+[2025-07-10 13:10:23] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:10:27] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:10:27] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:10:32] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:10:37] [INFO] Logger inicializado correctamente
+[2025-07-10 13:11:57] [INFO] Logger inicializado correctamente
+[2025-07-10 13:11:59] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:12:12] [INFO] Logger inicializado correctamente
+[2025-07-10 13:12:15] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:12:34] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:12:36] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:12:45] [INFO] Logger inicializado correctamente
+[2025-07-10 13:12:47] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:13:02] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:13:51] [INFO] Logger inicializado correctamente
+[2025-07-10 13:13:56] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:14:36] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:17:42] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:17:44] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:44:54] [INFO] Logger inicializado correctamente
+[2025-07-10 13:44:54] [ERROR] No hay sockets de servidor disponibles.
+[2025-07-10 13:45:33] [INFO] Logger inicializado correctamente
+[2025-07-10 13:45:33] [ERROR] No hay sockets de servidor disponibles.
+[2025-07-10 13:45:48] [INFO] Logger inicializado correctamente
+[2025-07-10 13:49:15] [INFO] Logger inicializado correctamente
+[2025-07-10 13:49:20] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:49:22] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:49:25] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:49:26] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 13:49:26] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 15:17:30] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 15:17:31] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 15:46:45] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 15:58:17] [INFO] Logger inicializado correctamente
+[2025-07-10 15:58:24] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 15:58:27] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 15:58:33] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 15:59:09] [INFO] Logger inicializado correctamente
+[2025-07-10 15:59:09] [ERROR] No hay sockets de servidor disponibles.
+[2025-07-10 15:59:18] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 15:59:35] [INFO] Logger inicializado correctamente
+[2025-07-10 15:59:39] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 16:00:21] [INFO] Logger inicializado correctamente
+[2025-07-10 16:00:23] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 16:04:20] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 16:05:06] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 16:05:44] [INFO] Logger inicializado correctamente
+[2025-07-10 16:05:45] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 16:05:57] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 16:06:20] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 16:06:24] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 16:06:26] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 16:27:35] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 16:30:03] [INFO] Logger inicializado correctamente
+[2025-07-10 16:30:07] [INFO] Nuevo cliente conectado: 6.
+[2025-07-10 16:30:08] [INFO] Nuevo cliente conectado: 6.

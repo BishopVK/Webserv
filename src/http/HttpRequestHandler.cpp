@@ -1,36 +1,20 @@
 #include "HttpRequestHandler.hpp"
+#include "AutoIndexGenerator.hpp"
+#include "ClientConnection.hpp"
+#include "ContentTypeManager.hpp"
+#include "FileSystemHandler.hpp"
 #include "HttpRequest.hpp"
 #include "HttpResponse.hpp"
+#include "Location.hpp"
+#include "LocationMatcher.hpp"
 #include "Logger.hpp"
-#include <cstddef>
-#include <dirent.h>
-#include <fstream>
-#include <map>
-#include <sstream>
+#include "../utils/PathHandler.hpp"
+#include "Server.hpp"
 #include <string>
-#include <sys/stat.h>
-#include <sys/types.h>
-
-std::map<std::string, std::string> HttpRequestHandler::_contentTypeMap;
+#include <vector>
 
 HttpRequestHandler::HttpRequestHandler()
 {
-    if (_contentTypeMap.empty())
-    {
-        _contentTypeMap["html"] = "text/html";
-        _contentTypeMap["htm"] = "text/html";
-        _contentTypeMap["css"] = "text/css";
-        _contentTypeMap["js"] = "application/javascript";
-        _contentTypeMap["json"] = "application/json";
-        _contentTypeMap["png"] = "image/png";
-        _contentTypeMap["jpg"] = "image/jpeg";
-        _contentTypeMap["jpeg"] = "image/jpeg";
-        _contentTypeMap["gif"] = "image/gif";
-        _contentTypeMap["svg"] = "image/svg+xml";
-        _contentTypeMap["pdf"] = "application/pdf";
-        _contentTypeMap["txt"] = "text/plain";
-        _contentTypeMap["xml"] = "application/xml";
-    }
 }
 
 HttpRequestHandler::HttpRequestHandler(const HttpRequestHandler& other)
@@ -51,145 +35,164 @@ HttpRequestHandler::~HttpRequestHandler()
 HttpResponse HttpRequestHandler::handle(const HttpRequest& request, const ClientConnection& client) const
 {
     if (!request.isValid())
-    {
-        Logger::instance().warning("Request invalida");
         return HttpResponse::badRequest();
+
+    std::string requestPath = request.getUrl();
+    if (requestPath.empty())
+        requestPath = "/";
+
+    const Server* server = client.getServerConnection()->getServer();
+    if (!server)
+    {
+        Logger::instance().error("No existen datos del servidor");
+        return HttpResponse::internalServerError();
     }
 
-    std::string url = request.getUrl();
-    if (url.empty())
-        url = "/";
+    std::vector<Location> locations = server->getLocations();
+    const Location*       matchedLocation = LocationMatcher::findBestMatch(requestPath, locations);
 
-    std::string fullPath = "./var/www" + url;
+    if (matchedLocation)
+        return handleWithLocation(*matchedLocation, requestPath, server);
+    else
+        return handleWithServerDefaults(requestPath, server);
+}
 
-    ResourceType resourceType = getResourceType(fullPath);
+HttpResponse HttpRequestHandler::handleWithLocation(const Location& location, const std::string& requestPath, const Server* server) const
+{
+    const Config::ReturnData& returnData = location.getReturnData();
+    if (returnData.code >= 300 && returnData.code < 400 && !returnData.text.empty())
+        return HttpResponse::redirect(returnData.text, returnData.code);
 
-    if (resourceType == DIRECTORY && client.getServerConnection()->getServer()->getAutoindex() == true)
+    std::string relativePath = PathHandler::getRelativePath(requestPath, location.getRoute());
+    std::string documentRoot = location.getRoot();
+    if (documentRoot.empty())
+        documentRoot = server->getRoot();
+
+    std::string fullPath = PathHandler::joinFilePath(documentRoot, relativePath);
+
+    return handleResource(fullPath, requestPath, &location, server);
+}
+
+HttpResponse HttpRequestHandler::handleWithServerDefaults(const std::string& requestPath, const Server* server) const
+{
+    std::string documentRoot = server->getRoot();
+    if (documentRoot.empty())
+        documentRoot = "./var/www";
+
+    std::string fullPath = PathHandler::joinFilePath(documentRoot, requestPath);
+
+    return handleResource(fullPath, requestPath, NULL, server);
+}
+
+HttpResponse HttpRequestHandler::handleResource(const std::string& fullPath, const std::string& requestPath, const Location* location, const Server* server) const
+{
+    FileSystemHandler::ResourceType resourceType = FileSystemHandler::getResourceType(fullPath);
+
+    switch (resourceType)
     {
-        std::string indexFile = fullPath + "index.html";
+    case FileSystemHandler::DIRECTORY:
+        return handleDirectory(fullPath, requestPath, location, server);
 
-        struct stat indexStat;
-        if (stat(indexFile.c_str(), &indexStat) == 0 && S_ISREG(indexStat.st_mode))
-        {
-            Logger::instance().debug("Redirigiendo a index.html: " + indexFile);
-            std::string content = getFileContent(indexFile);
-            if (content.empty())
-            {
-                Logger::instance().warning("No se ha podido leer el contenido del archivo index: " + indexFile);
-                return HttpResponse::notFound();
-            }
-            return HttpResponse::ok(content, getContentType(indexFile));
-        }
+    case FileSystemHandler::FILE:
+        return handleFile(fullPath, requestPath, location, server);
 
-        Logger::instance().debug("Leyendo directorio: " + fullPath);
-        return HttpResponse::ok(generateAutoIndexHtml(fullPath), "text/html");
+    case FileSystemHandler::NOT_FOUND:
+    default:
+        return createErrorResponse(404, location, server);
     }
-    else if (resourceType == DIRECTORY && client.getServerConnection()->getServer()->getAutoindex() == false)
+}
+
+HttpResponse HttpRequestHandler::handleDirectory(const std::string& fullPath, const std::string& requestPath, const Location* location, const Server* server) const
+{
+    std::vector<std::string> indexFiles = getIndexFiles(location, server);
+
+    for (std::vector<std::string>::const_iterator it = indexFiles.begin(); it != indexFiles.end(); ++it)
     {
-        Logger::instance().warning("Directorio sin autoindex encontrado");
-        return HttpResponse::notFound("Not found, buscate tu ahora la vida campeon");
+        std::string indexPath = PathHandler::joinFilePath(fullPath, *it);
+        if (FileSystemHandler::isFile(indexPath))
+            return handleFile(indexPath, requestPath, location, server);
     }
-    else if (resourceType == FILE)
+
+    bool autoindex = location ? location->getAutoindex() : server->getAutoindex();
+
+    if (autoindex)
     {
-        Logger::instance().debug("Fichero: " + fullPath);
-        std::string content = getFileContent(fullPath);
-        if (content.empty())
-        {
-            Logger::instance().warning("No se ha podido leer el contenido del archivo: " + fullPath);
-            return HttpResponse::notFound();
-        }
-        std::string contentType = getContentType(fullPath);
-        Logger::instance().debug("Fichero con tipo: " + contentType);
-        return HttpResponse::ok(content, contentType);
+        std::string autoindexHtml = AutoIndexGenerator::generateHtml(requestPath, fullPath);
+        return HttpResponse::ok(autoindexHtml, "text/html");
     }
     else
+        return createErrorResponse(403, location, server);
+}
+
+HttpResponse HttpRequestHandler::handleFile(const std::string& fullPath, const std::string& /* requestPath */, const Location* location, const Server* server) const
+{
+    std::string content = FileSystemHandler::getFileContent(fullPath);
+    if (content.empty())
+        return createErrorResponse(404, location, server);
+
+    std::string contentType = ContentTypeManager::getContentType(fullPath);
+
+    return HttpResponse::ok(content, contentType);
+}
+
+HttpResponse HttpRequestHandler::createErrorResponse(int statusCode, const Location* location, const Server* server) const
+{
+    std::string documentRoot = location->getRoot();
+    if (documentRoot.empty())
+        documentRoot = server->getRoot();
+
+    std::string errorPage = getErrorPage(statusCode, location, server);
+    std::string errorPagePath = PathHandler::joinFilePath(documentRoot, errorPage);
+    if (!errorPage.empty() && FileSystemHandler::isFile(errorPagePath))
     {
-        Logger::instance().warning("Recurso no encontrado: " + fullPath);
+        std::string content = FileSystemHandler::getFileContent(errorPagePath);
+        if (!content.empty())
+        {
+            std::string  contentType = ContentTypeManager::getContentType(errorPagePath);
+            HttpResponse response = HttpResponse::response(statusCode, "", content, contentType);
+            return response;
+        }
+    }
+
+    switch (statusCode)
+    {
+    case 403:
+        return HttpResponse::response(403, "403 Forbidden", "", "text/html");
+    case 404:
         return HttpResponse::notFound();
+    case 500:
+    default:
+        return HttpResponse::internalServerError();
     }
 }
 
-std::string HttpRequestHandler::generateAutoIndexHtml(const std::string& path) const
+std::vector<std::string> HttpRequestHandler::getIndexFiles(const Location* location, const Server* server) const
 {
-    std::string html = "<html><body><h1>Index of " + path + "</h1><ul>";
-    DIR*        dir = opendir(path.c_str());
-    if (!dir)
-        return "<h1>404 Not Found</h1>";
-
-    struct dirent* entry;
-    while ((entry = readdir(dir)) != NULL)
+    if (location)
     {
-        if (std::string(entry->d_name) == ".")
-            continue;
-        Logger::instance().debug("Entry found: " + std::string(entry->d_name) + " in path: " + path);
-
-        std::string       web_path = "";
-        const std::string prefix = "./var/www";
-
-        // Pasar de "./var/www/ruta" a "ruta"
-        if (path.length() >= prefix.length() && path.substr(0, prefix.length()) == prefix)
-            web_path = path.substr(prefix.length());
-
-        // web_path ha de terminar con '/'
-        if (!web_path.empty() && web_path[web_path.length() - 1] != '/')
-            web_path += "/";
-
-        // Unir el nombre del archivo al web_path
-        std::string href = web_path + std::string(entry->d_name);
-
-        // Asegurarse de que el href comience con '/'
-        if (href.empty() || href[0] != '/')
-            href = "/" + href;
-
-        // Agregar el enlace al HTML
-        html += "<li><a href=\"" + href + "\">" + std::string(entry->d_name) + "</a></li>";
+        std::vector<std::string> locationIndexFiles = location->getIndexFiles();
+        if (!locationIndexFiles.empty())
+            return locationIndexFiles;
     }
-    closedir(dir);
-    html += "</ul></body></html>";
-    return html;
+
+    std::vector<std::string> serverIndexFiles = server->getIndexFiles();
+    if (!serverIndexFiles.empty())
+        return serverIndexFiles;
+
+    std::vector<std::string> defaultIndexFiles;
+    defaultIndexFiles.push_back("index.html");
+    defaultIndexFiles.push_back("index.htm");
+    return defaultIndexFiles;
 }
 
-std::string HttpRequestHandler::getFileContent(const std::string& path) const
+std::string HttpRequestHandler::getErrorPage(int statusCode, const Location* location, const Server* server) const
 {
-    std::ifstream file(path.c_str());
-    if (!file.is_open())
+    if (location)
     {
-        Logger::instance().error("Failed to open file: " + path);
-        return "";
+        std::string locationErrorPage = location->getErrorPage(statusCode);
+        if (!locationErrorPage.empty())
+            return locationErrorPage;
     }
 
-    std::stringstream buffer;
-    buffer << file.rdbuf();
-    file.close();
-
-    return buffer.str();
-}
-
-HttpRequestHandler::ResourceType HttpRequestHandler::getResourceType(const std::string& path) const
-{
-    struct stat pathStat;
-    if (stat(path.c_str(), &pathStat) != 0)
-        return NOT_FOUND;
-
-    if (S_ISDIR(pathStat.st_mode))
-        return DIRECTORY;
-    else if (S_ISREG(pathStat.st_mode))
-        return FILE;
-
-    return NOT_FOUND;
-}
-
-std::string HttpRequestHandler::getContentType(const std::string& path) const
-{
-    size_t dotPos = path.find_last_of('.');
-    if (dotPos == std::string::npos)
-        return "text/plain";
-
-    std::string extension = path.substr(dotPos + 1);
-
-    std::map<std::string, std::string>::const_iterator it = _contentTypeMap.find(extension);
-    if (it != _contentTypeMap.end())
-        return it->second;
-
-    return "text/plain";
+    return server->getErrorPage(statusCode);
 }

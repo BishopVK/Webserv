@@ -102,8 +102,7 @@ void HttpServer::run()
         if (ready_count == 0)
             continue;
 
-        for (std::map<int, ServerConnection>::iterator server_it = _serverConnections.begin();
-             server_it != _serverConnections.end(); ++server_it)
+        for (std::map<int, ServerConnection>::iterator server_it = _serverConnections.begin(); server_it != _serverConnections.end(); ++server_it)
         {
             const ServerConnection& server_conn = server_it->second;
             int                     server_fd = server_conn.getFd();
@@ -132,8 +131,7 @@ void HttpServer::run()
             int  fd = *it;
             bool is_server_fd = false;
 
-            for (std::map<int, ServerConnection>::iterator server_it = _serverConnections.begin();
-                 server_it != _serverConnections.end(); ++server_it)
+            for (std::map<int, ServerConnection>::iterator server_it = _serverConnections.begin(); server_it != _serverConnections.end(); ++server_it)
             {
                 if (server_it->second.getFd() == fd)
                 {

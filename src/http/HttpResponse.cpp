@@ -1,8 +1,8 @@
 #include "HttpResponse.hpp"
-#include <cstring>
+#include <iostream>
 #include <sstream>
 
-HttpResponse::HttpResponse() : _statusCode(200), _reasonPhrase("OK"), _body(""), _headers("")
+HttpResponse::HttpResponse() : _statusCode(200), _reasonPhrase("OK"), _body(""), _headers()
 {
     setHeader("Content-Type", "text/plain");
     updateContentLength();
@@ -37,7 +37,7 @@ void HttpResponse::setStatus(int code, const std::string& reason)
 
 void HttpResponse::setHeader(const std::string& key, const std::string& value)
 {
-    _headers += key + ": " + value + "\r\n";
+    _headers[key] = value;
 }
 
 void HttpResponse::setBody(const std::string& body)
@@ -48,25 +48,21 @@ void HttpResponse::setBody(const std::string& body)
 
 void HttpResponse::updateContentLength()
 {
-    size_t pos = _headers.find("Content-Length:");
-    if (pos != std::string::npos)
-    {
-        size_t end = _headers.find("\r\n", pos);
-        if (end != std::string::npos)
-            _headers.erase(pos, end - pos + 2);
-        else
-            _headers.erase(pos);
-    }
     std::ostringstream oss;
-    oss << "Content-Length: " << _body.size() << "\r\n";
-    _headers += oss.str();
+    oss << _body.size();
+    _headers["Content-Length"] = oss.str();
 }
 
 std::string HttpResponse::toString() const
 {
     std::ostringstream oss;
     oss << "HTTP/1.1 " << _statusCode << " " << _reasonPhrase << "\r\n";
-    oss << _headers;
+
+    for (std::map<std::string, std::string>::const_iterator it = _headers.begin(); it != _headers.end(); ++it)
+    {
+        oss << it->first << ": " << it->second << "\r\n";
+    }
+
     oss << "\r\n";
     oss << _body;
     return oss.str();
@@ -123,5 +119,22 @@ HttpResponse HttpResponse::internalServerError(const std::string& body, const st
     response.setStatus(500, "Internal Server Error");
     response.setHeader("Content-Type", contentType);
     response.setBody(body);
+    return response;
+}
+
+HttpResponse HttpResponse::response(int code, const std::string& reason, const std::string& body, const std::string& contentType)
+{
+    HttpResponse response;
+    response.setStatus(code, reason);
+    response.setHeader("Content-Type", contentType);
+    response.setBody(body);
+    return response;
+}
+
+HttpResponse HttpResponse::redirect(const std::string& location, int code)
+{
+    HttpResponse response;
+    response.setStatus(code, "Redirect");
+    response.setHeader("Location", location);
     return response;
 }

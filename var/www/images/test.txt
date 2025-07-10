@@ -1,0 +1,12 @@
+Este es un archivo de prueba en el directorio de imágenes.
+
+El servidor Webserv puede servir cualquier tipo de archivo estático,
+incluyendo archivos de texto como este.
+
+Características del servidor:
+- Soporte para múltiples tipos de archivo
+- Autoindex configurable por location
+- Manejo de diferentes content-types
+- Configuración flexible mediante archivo de configuración
+
+¡Webserv funcionando correctamente!

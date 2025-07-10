@@ -7,13 +7,13 @@
 class HttpRequest
 {
   private:
-    std::string                        method;
-    std::string                        url;
-    std::string                        version;
-    std::map<std::string, std::string> headers;
-    std::string                        body;
-    std::string                        raw;
-    bool                               valid;
+    std::string                        _method;
+    std::string                        _url;
+    std::string                        _version;
+    std::map<std::string, std::string> _headers;
+    std::string                        _body;
+    std::string                        _raw;
+    bool                               _valid;
 
     void parse(const char* raw_request);
 
