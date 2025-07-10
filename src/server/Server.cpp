@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:09:45 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/06 20:59:01 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/10 11:07:14 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ Server::Server(const Server &other) : Config(other), _ip(other.getIp()), _is_run
 	_autoindex = other.getAutoindex();
 	_client_max_body_size = other.getClientMaxBodySize();
 	_error_pages = other.getErrorPages();
-	_cgi = other.getCgis();
+	//_cgi = other.getCgis();
 	_return_data = other.getReturnData();
 	_methods = other.getMethods();
 	_inherit_initizalized = other.getInheritInitialized();
@@ -48,7 +48,7 @@ Server &Server::operator=(const Server &other)
 		_autoindex = other.getAutoindex();
 		_client_max_body_size = other.getClientMaxBodySize();
 		_error_pages = other.getErrorPages();
-		_cgi = other.getCgis();
+		//_cgi = other.getCgis();
 		_return_data = other.getReturnData();
 		_methods = other.getMethods();
 		_inherit_initizalized = other.getInheritInitialized();

@@ -6,17 +6,17 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 00:15:57 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/06 09:58:01 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/10 12:21:54 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Location.hpp"
 
 //Location::Location() : Config(), _route(""), _alias(ALIAS_DEFAULT) {}
-Location::Location() : Config(), _route(""), _upload_enable(false), _upload_store("") {}
+Location::Location() : Config(), _route(""), _upload_enable(false), _upload_store(""), _cgi_extension(""), _cgi_path("") {}
 
 //Location::Location(const std::string &route) : Config(), _route(route), _alias(ALIAS_DEFAULT) {}
-Location::Location(const std::string &route) : Config(), _route(route), _upload_enable(false), _upload_store("") {}
+Location::Location(const std::string &route) : Config(), _route(route), _upload_enable(false), _upload_store(""), _cgi_extension(""), _cgi_path("") {}
 
 Location &Location::operator=(const Location &other)
 {
@@ -31,7 +31,8 @@ Location &Location::operator=(const Location &other)
 		_upload_store = other.getUploadStore();
 		_return_data = other.getReturnData();
 		_methods = other.getMethods();
-		_cgi = other.getCgis();
+		_cgi_extension = other.getCgiExtension();
+		_cgi_path = other.getCgiPath();
 	}
 	return (*this);
 }
@@ -48,10 +49,6 @@ void	Location::setRoute(const std::string &route)
 	_route = route;
 }
 
-// alias
-//std::string	Location::getAlias() const { return _alias; }
-//void	Location::setAlias(const std::string &alias) { _alias = alias; }
-
 // upload_enable
 bool	Location::getUploadEnable() const { return _upload_enable; }
 
@@ -65,6 +62,34 @@ void	Location::setUploadStore(const std::string &path)
 	if (path[0] != '/')
 		throw ErrorException(path + ": Invalidad upload store path format");
 	_upload_store = path;
+}
+
+// cgi_extension
+std::string		Location::getCgiExtension() const { return _cgi_extension; }
+
+void			Location::setCgiExtension(const std::string &extension)
+{
+	if (extension.empty())
+		throw ErrorException("Empty cgi extension not allowed");
+	if (extension[0] != '.')
+		throw ErrorException(extension + ": Cgi extension must begin whit '.'");
+	if (extension != ".php")
+		throw ErrorException(extension + ": Only '.php' extension allowed");
+	_cgi_extension = extension;
+}
+
+// cgi_path
+std::string		Location::getCgiPath() const { return _cgi_path; }
+
+void			Location::setCgiPath(const std::string &path)
+{
+	if (path.empty())
+		throw ErrorException("Empty cgi path not allowed");
+	if (path[0] != '/')
+		throw ErrorException(path + ": CGI path must begin whit '/'");
+	if (path != PATH_INFO)
+		throw ErrorException(path + ": Only correct php path allowed");
+	_cgi_path = path;
 }
 
 // FALTA POR DEFINIR
@@ -120,9 +145,6 @@ void	Location::print() const
 	// route
 	std::cout << "route = " << _route << std::endl;
 
-	// alias
-	//std::cout << "alias = " << _alias << std::endl;
-
 	// root
 	std::cout << "root = " << _root << std::endl;
 
@@ -150,14 +172,13 @@ void	Location::print() const
 			std::cout << "\t- " << it->first << " => " << it->second << std::endl;
 	}
 
-	// cgi
-	if (!_cgi.empty())
-	{
-		std::cout << "cgi:" << std::endl;
-		std::map<std::string, std::string>::const_iterator it;
-		for (it = _cgi.begin(); it != _cgi.end(); ++it)
-			std::cout << "\t- " << it->first << " => " << it->second << std::endl;
-	}
+	// cgi_extension
+	if (!_cgi_extension.empty())
+		std::cout << "cgi extension: " << _cgi_extension << std::endl;
+	
+	// cgi_path
+	if (!_cgi_path.empty())
+		std::cout << "cgi path: " << _cgi_path << std::endl;
 
 	// return_data
 	if (_return_data.code != -1)

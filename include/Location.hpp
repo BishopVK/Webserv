@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 17:23:27 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/02 02:44:15 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/10 12:21:31 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ class Location : public Config
 		std::string	_route;	/* Route of the location */
 		bool		_upload_enable;
 		std::string	_upload_store;
-		//std::string	_alias;	/* Alias of the route */ // NO OBLIGATORIO
+		std::string	_cgi_extension;
+		std::string	_cgi_path;
 
 	public:
 		Location();
@@ -33,10 +34,6 @@ class Location : public Config
 		std::string	getRoute() const;
 		void		setRoute(const std::string &route);
 
-		// alias
-		//std::string	getAlias() const;
-		//void		setAlias(const std::string &alias);
-
 		// upload_enable
 		bool	getUploadEnable() const;
 		void	setUploadEnable(bool value);
@@ -44,6 +41,14 @@ class Location : public Config
 		// upload_store
 		std::string	getUploadStore() const;
 		void		setUploadStore(const std::string &path);
+
+		// cgi_extension
+		std::string		getCgiExtension() const;
+		void			setCgiExtension(const std::string &extension);
+
+		// cgi_path
+		std::string		getCgiPath() const;
+		void			setCgiPath(const std::string &path);
 
 		// Será necesario heredar de la configuración inicial del server
 		void inherit(const Config &config);

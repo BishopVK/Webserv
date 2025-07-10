@@ -6,7 +6,7 @@
 #    By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/07 00:11:05 by danjimen,is       #+#    #+#              #
-#    Updated: 2025/07/08 13:02:42 by danjimen,is      ###   ########.fr        #
+#    Updated: 2025/07/10 09:07:53 by danjimen,is      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,7 @@ def send_requests(method, target, headers, data, validate_text, requests_per_thr
 
 def main():
 	parser = argparse.ArgumentParser(description="Multithreaded HTTP tester")
-	parser.add_argument("--url", default="http://localhost:8080/task", help="Target URL (default: http://localhost:8080/task)")
+	parser.add_argument("--url", default="http://localhost:8080/", help="Target URL (default: http://localhost:8080/)")
 	parser.add_argument("--method", choices=["GET", "POST", "DELETE"], default="GET", help="HTTP method")
 	parser.add_argument("--threads", type=int, default=100, help="Number of threads")
 	parser.add_argument("--requests", type=int, default=50, help="Requests per thread")

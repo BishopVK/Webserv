@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 18:08:18 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/06 09:50:20 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/10 12:18:17 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ Config::Config() : _root(ROOT_DEFAULT), _autoindex(AUTOINDEX_DEFAULT), _client_m
 	// Empty STLs
 	_index_files.clear();
 	_error_pages.clear();
-	_cgi.clear();
 	_methods.clear();
 
 	// Initialize inherit bools
@@ -116,37 +115,6 @@ void	Config::addErrorPage(int status_code, const std::string &path)
 	else
 		it->second = path;
 	_inherit_initizalized.at(_init_error_pages) = true;
-}
-
-// cgi
-std::map<std::string, std::string>	Config::getCgis() const { return _cgi; }
-
-std::string	Config::getCgi(const std::string &extension) const
-{
-	std::map<std::string, std::string>::const_iterator it = _cgi.find(extension);
-	if (it != _cgi.end())
-		return it->second;
-	return "";
-}
-
-void	Config::addCgi(const std::string &extension, const std::string &path)
-{
-	if (extension.size() < 2 || extension[0] != '.')
-		throw ErrorException(extension + ": Invalid CGI extension");
-		
-	if (path[0] != '/')
-		throw ErrorException(path + ": Invalid CGI path");
-
-	// CAPTURAR??
-	if (extension == ".php" && path != PATH_INFO)
-		throw ErrorException(path + ": Invalid CGI path for '" + extension + "' extension");
-
-	std::map<std::string, std::string>::iterator it = _cgi.find(extension);
-
-	if (it == _cgi.end())
-		_cgi.insert(std::pair<std::string, std::string>(extension, path));
-	else
-		it->second = path;
 }
 
 // return_data

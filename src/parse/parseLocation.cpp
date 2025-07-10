@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 02:06:57 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/04 13:10:59 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/10 11:21:34 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ Location	Parser::parseLocation(const std::vector<std::string> &tokens, size_t &i
 		throw ErrorException("Expected '{' after location path");
 
 	// CGIs values
-	std::string cgiExtension;
-	std::string cgiPath;
+	//std::string cgiExtension;
+	//std::string cgiPath;
 	while (tokens[i] != "}")
 	{
 		const std::string &key = tokens[i++];
@@ -102,23 +102,37 @@ Location	Parser::parseLocation(const std::vector<std::string> &tokens, size_t &i
 			}
 			else if (key == "cgi_extension" || key == "cgi_pass")
 			{
-				if (!cgiExtension.empty() && !cgiPath.empty())
+				
+				if (!location.getCgiExtension().empty() && !location.getCgiPath().empty())
 					throw ErrorException("Multiple cgis in a single location not allowed");
 				if (key == "cgi_extension")
-					cgiExtension = tokens[i++];
+				{
+					if (tokens[i] == ";")
+						throw ErrorException("cgi_extension: Expected extension before ';'");
+					if (!location.getCgiExtension().empty())
+						throw ErrorException("Multiple cgis extensions in a single location not allowed");
+					location.setCgiExtension(tokens[i++]);
+				}
 				else if (key == "cgi_pass")
-					cgiPath = tokens[i++];
-				if (!cgiExtension.empty() && !cgiPath.empty())
-					location.addCgi(cgiExtension, cgiPath);
+				{
+					if (tokens[i] == ";")
+						throw ErrorException("cgi_pass: Expected path before ';'");
+					if (!location.getCgiPath().empty())
+						throw ErrorException("Multiple cgis paths in a single location not allowed");
+					location.setCgiPath(tokens[i++]);
+				}
 			}
 			else
 				throw ErrorException("Unknown location directive: " + key);
 
 			if (tokens[i] != ";")
-				throw ErrorException("Expected ';' after directive");
+				throw ErrorException("Expected ';' after directive " + key);
 			++i;
 		}
 	}
+	if ((location.getCgiExtension().empty() && !location.getCgiPath().empty()) ||
+		(!location.getCgiExtension().empty() && location.getCgiPath().empty()))
+		throw ErrorException("CGI must have extension and path");
 
 	++i; // Skip '}' location close
 
