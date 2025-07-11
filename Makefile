@@ -15,9 +15,9 @@ NAME		=	webserv
 CXX			=	c++
 CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98 -g
 
-HEADERS		=	-I./include -I./include/valueObjects -I./include/utils -I./include/http -I./src/http -I./src/io -I./src/controllers
+HEADERS		=	-I./include -I./include/valueObjects -I./include/utils -I./include/http -I./src/http -I./src/io -I./src/controllers -I./src/cgis
 
-VPATH		=	src src/server src/controllers src/controllers/base src/http src/io src/valueObjects src/parse src/utils .
+VPATH		=	src src/server src/controllers src/controllers/base src/http src/io src/valueObjects src/parse src/utils src/cgis .
 
 SRC			=	main.cpp \
 				Config.cpp \
@@ -45,6 +45,7 @@ SRC			=	main.cpp \
 				AutoIndexGenerator.cpp \
 				LocationMatcher.cpp \
 				PathHandler.cpp \
+				Cgis.cpp
 
 # .o folder
 OBJDIR		=	obj

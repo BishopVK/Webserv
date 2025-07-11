@@ -12,8 +12,9 @@
 
 #pragma once
 
-#include "../include/definitions.hpp"
-#include "../include/webserv.hpp"
+#include "../../include/definitions.hpp"
+#include "../../include/webserv.hpp"
+#include "../http/HttpResponse.hpp"
 
 class Cgis
 {
@@ -25,13 +26,15 @@ class Cgis
 		std::string	boundary;
 		std::string	content_lenght; //en bytes
 		std::string	body;
-		int			chunked = false;
-		char	**create_command(std::string file_path, std::string file_name);
-		char	**create_env();
-		void	hardcode();   //  borrar
+		int			chunked;
 
-	public:
-		void	execute();
+		char			**create_command(std::string file_path, std::string file_name);
+		char			**create_env();
+		void			hardcode();   //  borrar
+		HttpResponse	build_the_response(int cgi_to_server_pipe);
+		
+		public:
+		HttpResponse	execute();
 		//std::string deschunk( std::string body );
 		Cgis( std::string method, std::string file_path, std::string file_name,
 			std::string content_type, std::string boundary, std::string content_lenght,
