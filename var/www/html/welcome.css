@@ -1,47 +1,249 @@
+/* Reset básico */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-body
-{
-	width: 100vw;
-	height: 100dvh;
+body {
+	font-family: 'Segoe UI', sans-serif;
+	line-height: 1.6;
+	background-color: #f4f4f4;
+	color: #333;
+}
+
+/* Header */
+.header {
 	display: flex;
-	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	background: #222;
+	padding: 1rem 2rem;
+	color: white;
+	position: sticky;
+	top: 0;
+	z-index: 10;
+}
+
+/* .logo {
+	font-size: 1.5rem;
+	font-weight: bold;
+} */
+
+.header img {
+	max-width: 200px;
+	height: auto;
+}
+
+.nav .hamburger {
+	display: none;
+	cursor: pointer;
+}
+
+.nav-links {
+	display: flex;
+	list-style: none;
+}
+
+.nav-links li {
+	margin-left: 20px;
+}
+
+.nav-links a {
+	color: white;
+	text-decoration: none;
+	transition: color 0.3s;
+}
+
+.nav-links hr {
+	visibility: hidden;
+}
+
+.nav-links a:hover {
+	color: rgb(197, 197, 197);
+}
+
+/* Hero Section */
+.hero {
+	background: url('imgs/banner.jpg') center/cover no-repeat;
+	height: 60vh;
+	display: flex;
 	justify-content: center;
 	align-items: center;
-	gap: 2rem;
+	position: relative;
+	overflow: hidden;
+	text-wrap: balance;
+	text-align: center;
 }
 
-header
-{
-	background-color: #131337;
-	min-width: 100%;
-	height: auto;
+.hero-title {
+	font-size: 3rem;
+	color: white;
+	text-shadow: 2px 2px 8px #000;
+	animation: slideIn 2s ease-out forwards;
+}
+
+@keyframes slideIn {
+	0% {
+		opacity: 0;
+		transform: translateY(-40px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Sections */
+.sections {
+	padding: 3rem 2rem;
+	background: #fff;
+	text-align: center;
+}
+
+.sections h2 {
+	margin-bottom: 2rem;
+	font-size: 2rem;
+	color: #05053a;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+	gap: 1.5rem;
+}
+
+.section-card {
+	position: relative;
+	overflow: hidden;
+	border-radius: 8px;
+	cursor: pointer;
+}
+
+.section-card img {
+	width: 100%;
+	display: block;
+	filter: grayscale(0%);
+	transition: filter 0.4s ease;
+}
+
+.section-card .overlay {
 	position: absolute;
 	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	/* background: rgba(0,0,0,0.4); */
+	color: white;
+	opacity: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.5rem;
+	transition: opacity 0.4s ease;
+}
+
+.overlay span {
+	font-size: 5rem;
+	text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.section-card:hover img {
+	filter: grayscale(100%);
+}
+
+.section-card:hover .overlay {
+	opacity: 1;
+}
+
+/* Footer */
+.footer {
+	background: #222;
+	color: white;
+	padding: 2rem 1rem;
+	text-align: center;
+}
+
+.footer p {
+	margin-top: 2rem;
+}
+
+.footer span {
+	margin-top: 0rem;
+}
+
+.contributors {
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+
+.column {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: center;
 }
 
-.header_container
-{
-	min-width: 1200px;
-	height: auto;
-	display: flex;
-	flex-direction: column;
-	justify-content: left;
-	align-content: start;
-	align-items: start;
+.column p {
+	font-size: 1.5rem;
+}
 
-	img
-	{
-		max-height: 100px;
-		width: auto;
-		margin: 2rem 0;
+.column span {
+	margin-bottom: 0.5rem;
+	color: rgb(197, 197, 197);
+}
+
+.column a {
+	color: white;
+	margin: 0 5px;
+	font-size: 1.2rem;
+	transition: color 0.3s ease;
+}
+
+.column a:hover {
+	color: rgb(197, 197, 197);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.nav-links {
+		display: none;
+		flex-direction: column;
+		background: #222;
+		position: absolute;
+		top: 70px;
+		right: 0;
+		width: 200px;
+	}
+
+	.nav-links li {
+		padding: 10px 0;
+	}
+
+	.nav-links hr {
+		visibility: visible;
+		display: block;
+		height: 1px;
+		border: 0;
+		border-top: 1px solid rgb(197, 197, 197);
+		margin: 0 1rem;
+		padding: 0;
+	}
+
+	.nav-links.show {
+		display: flex;
+	}
+
+	.nav .hamburger {
+		display: block;
+	}
+
+	.grid {
+		grid-template-columns: 1fr;
+	}
+
+	.overlay span {
+		font-size: 2rem;
 	}
 }

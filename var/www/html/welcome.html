@@ -2,44 +2,78 @@
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Welcome to our server</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Webserv 42 Madrid</title>
 	<link rel="stylesheet" href="welcome.css">
+	<script defer src="script.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-	<header>
-		<div class="header_container">
-			<a href="index.html">
-				<img src="imgs/logo_ws.png" alt="Webserv logo">
-			</a>
+
+<!-- Header -->
+<div id="header-placeholder"></div>
+
+<script>
+	fetch("header.html")
+		.then(response => response.text())
+		.then(data => {
+		document.getElementById("header-placeholder").innerHTML = data;
+		});
+</script>
+
+<!-- Hero -->
+<section class="hero">
+	<h1 class="hero-title">Welcome to our webserver</h1>
+</section>
+
+<!-- Secciones -->
+<section class="sections">
+	<h2>Project sections</h2>
+	<div class="grid">
+		<div class="section-card" id="imagenes">
+			<img src="imgs/images.jpg" alt="Imágenes">
+			<div class="overlay">
+				<span>Images</span>
+			</div>
 		</div>
-	</header>
-	<h1>WELCOME TO OUR SERVER</h1>
-	<main id="main_section">
-		<div class="container">
-			<h2>SECTIONS:</h2>
-			<div class="section">
-				<div class="section_image"></div>
-				<p>Images</p>
-			</div>
-			<div class="section">
-				<div class="section_image"></div>
-				<p>Upload</p>
-			</div>
-			<div class="section">
-				<div class="section_image"></div>
-				<p>CGI</p>
-			</div>
-			<div class="section">
-				<div class="section_image"></div>
-				<p>Redirection</p>
+		<div class="section-card" id="redirecciones">
+			<img src="imgs/redirect.jpg" alt="Redirecciones">
+			<div class="overlay">
+				<span>Redirections</span>
 			</div>
 		</div>
-	</main>
-	<footer>
-		<div class="container">
-			<p>&copy; 2025 - Proyecto Webserv | 42 Madrid</p>
+		<div class="section-card" id="upload">
+			<img src="imgs/upload.jpg" alt="Upload">
+			<div class="overlay">
+				<span>Upload</span>
+			</div>
 		</div>
-	</footer>
+		<div class="section-card" id="cgi">
+			<img src="imgs/cgi.jpg" alt="CGI">
+			<div class="overlay">
+				<span>CGI</span>
+			</div>
+		</div>
+		<div class="section-card" id="errores">
+			<img src="imgs/errors.jpg" alt="Errores">
+			<div class="overlay">
+				<span>Errors</span>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Footer -->
+
+<div id="footer-placeholder"></div>
+
+<script>
+	fetch("footer.html")
+		.then(response => response.text())
+		.then(data => {
+		document.getElementById("footer-placeholder").innerHTML = data;
+		});
+</script>
+
 </body>
 </html>

@@ -2,7 +2,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-size: 16;
+	font-size: 16px;
 	font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -20,7 +20,13 @@ body
 	align-items: center;
 	gap: 5rem;
 
-	.home_button
+	& img
+	{
+		max-width: 80vw;
+		height: auto;
+	}
+
+	& .home_button
 	{
 		width: auto;
 		height: auto;
@@ -31,13 +37,42 @@ body
 		font-weight: 800;
 		font-size: 2rem;
 		text-decoration: none;
+		text-align: center;
 		box-shadow: 0px 0px 0px 0px #53c7ff;
 		transition: 0.5s ease;
+
+		&:hover
+		{
+			box-shadow: 0px 0px 50px 0px #53c7ff;
+			transform: translateY(-5px);
+		}
+	}
+}
+
+@media (max-width: 768px)
+{
+	img
+	{
+		max-width: 90vw;
 	}
 
-	.home_button:hover
+	.home_button
 	{
-		box-shadow: 0px 0px 50px 0px #53c7ff;
-		transform: translateY(-5px);
+		font-size: 1.5rem;
+		padding: 15px;
+	}
+}
+
+@media (max-width: 480px)
+{
+	body
+	{
+		gap: 3rem;
+	}
+
+	.home_button
+	{
+		font-size: 1.2rem;
+		padding: 12px;
 	}
 }
