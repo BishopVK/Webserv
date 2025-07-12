@@ -1,4 +1,5 @@
 #include "HttpRequestHandler.hpp"
+#include "../utils/PathHandler.hpp"
 #include "AutoIndexGenerator.hpp"
 #include "ClientConnection.hpp"
 #include "ContentTypeManager.hpp"
@@ -8,7 +9,6 @@
 #include "Location.hpp"
 #include "LocationMatcher.hpp"
 #include "Logger.hpp"
-#include "../utils/PathHandler.hpp"
 #include "Server.hpp"
 #include <string>
 #include <vector>
@@ -51,11 +51,72 @@ HttpResponse HttpRequestHandler::handle(const HttpRequest& request, const Client
     std::vector<Location> locations = server->getLocations();
     const Location*       matchedLocation = LocationMatcher::findBestMatch(requestPath, locations);
 
-    if (matchedLocation)
-        return handleWithLocation(*matchedLocation, requestPath, server);
+    if (matchedLocation && !isMethodAllowed(request.getMethod(), *matchedLocation))
+        return createErrorResponse(405, matchedLocation, server);
+
+    if (request.getMethod() == "GET")
+        return handleGetRequest(requestPath, matchedLocation, server);
+    else if (request.getMethod() == "POST")
+        return handlePostRequest(request, requestPath, matchedLocation, server);
+    else if (request.getMethod() == "DELETE")
+        return handleDeleteRequest(requestPath, matchedLocation, server);
+    else
+        return createErrorResponse(405, matchedLocation, server);
+}
+
+bool HttpRequestHandler::isMethodAllowed(const std::string& method, const Location& location) const
+{
+    const std::vector<std::string>&          allowedMethods = location.getMethods();
+    std::vector<std::string>::const_iterator it = allowedMethods.begin();
+    for (; it != allowedMethods.end(); ++it)
+    {
+        if (*it == method)
+            return true;
+    }
+
+    return false;
+}
+
+bool HttpRequestHandler::isCgiRequest(const std::string& requestPath, const Location* location) const
+{
+    // TODO: Implementar
+    (void)requestPath;
+    (void)location;
+    return false;
+}
+
+HttpResponse HttpRequestHandler::handleGetRequest(const std::string& requestPath, const Location* location, const Server* server) const
+{
+    if (location)
+        return handleWithLocation(*location, requestPath, server);
     else
         return handleWithServerDefaults(requestPath, server);
 }
+
+HttpResponse HttpRequestHandler::handlePostRequest(const HttpRequest& request, const std::string& requestPath, const Location* location, const Server* server) const
+{
+    (void)request;
+    (void)requestPath;
+    (void)location;
+    (void)server;
+    throw std::runtime_error("POST method handling not implemented yet");
+}
+
+HttpResponse HttpRequestHandler::handleDeleteRequest(const std::string& requestPath, const Location* location, const Server* server) const
+{
+    if (!location || !server)
+        return HttpResponse::internalServerError();
+
+    if (!isMethodAllowed("DELETE", *location))
+        return createErrorResponse(405, location, server);
+
+    std::string documentRoot = location->getRoot();
+    std::string relativePath = PathHandler::getRelativePath(requestPath, location->getRoute());
+    std::string fullPath = PathHandler::joinFilePath(documentRoot, relativePath);
+
+    return HttpResponse::response(204, "No Content", "", "text/plain");
+}
+
 
 HttpResponse HttpRequestHandler::handleWithLocation(const Location& location, const std::string& requestPath, const Server* server) const
 {
@@ -90,15 +151,15 @@ HttpResponse HttpRequestHandler::handleResource(const std::string& fullPath, con
 
     switch (resourceType)
     {
-    case FileSystemHandler::DIRECTORY:
-        return handleDirectory(fullPath, requestPath, location, server);
+        case FileSystemHandler::DIRECTORY:
+            return handleDirectory(fullPath, requestPath, location, server);
 
-    case FileSystemHandler::FILE:
-        return handleFile(fullPath, requestPath, location, server);
+        case FileSystemHandler::FILE:
+            return handleFile(fullPath, requestPath, location, server);
 
-    case FileSystemHandler::NOT_FOUND:
-    default:
-        return createErrorResponse(404, location, server);
+        case FileSystemHandler::NOT_FOUND:
+        default:
+            return createErrorResponse(404, location, server);
     }
 }
 
@@ -156,13 +217,13 @@ HttpResponse HttpRequestHandler::createErrorResponse(int statusCode, const Locat
 
     switch (statusCode)
     {
-    case 403:
-        return HttpResponse::response(403, "403 Forbidden", "", "text/html");
-    case 404:
-        return HttpResponse::notFound();
-    case 500:
-    default:
-        return HttpResponse::internalServerError();
+        case 403:
+            return HttpResponse::response(403, "403 Forbidden", "", "text/html");
+        case 404:
+            return HttpResponse::notFound();
+        case 500:
+        default:
+            return HttpResponse::internalServerError();
     }
 }
 

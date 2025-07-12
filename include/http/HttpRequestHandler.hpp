@@ -13,12 +13,19 @@ class Location;
 class HttpRequestHandler
 {
   private:
+    HttpResponse handleGetRequest(const std::string& requestPath, const Location* location, const Server* server) const;
+    HttpResponse handlePostRequest(const HttpRequest& request, const std::string& requestPath, const Location* location, const Server* server) const;
+    HttpResponse handleDeleteRequest(const std::string& requestPath, const Location* location, const Server* server) const;
+
     HttpResponse handleWithLocation(const Location& location, const std::string& requestPath, const Server* server) const;
     HttpResponse handleWithServerDefaults(const std::string& requestPath, const Server* server) const;
     HttpResponse handleResource(const std::string& fullPath, const std::string& requestPath, const Location* location, const Server* server) const;
     HttpResponse handleDirectory(const std::string& fullPath, const std::string& requestPath, const Location* location, const Server* server) const;
     HttpResponse handleFile(const std::string& fullPath, const std::string& requestPath, const Location* location, const Server* server) const;
     HttpResponse createErrorResponse(int statusCode, const Location* location, const Server* server) const;
+
+    bool isMethodAllowed(const std::string& method, const Location& location) const;
+    bool isCgiRequest(const std::string& requestPath, const Location* location) const;
 
     std::vector<std::string> getIndexFiles(const Location* location, const Server* server) const;
     std::string              getErrorPage(int statusCode, const Location* location, const Server* server) const;
