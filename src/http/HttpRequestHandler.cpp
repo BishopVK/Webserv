@@ -121,7 +121,7 @@ HttpResponse HttpRequestHandler::handleDirectory(const std::string& fullPath, co
         return HttpResponse::ok(autoindexHtml, "text/html");
     }
     else
-        return createErrorResponse(403, location, server);
+        return createErrorResponse(404, location, server);
 }
 
 HttpResponse HttpRequestHandler::handleFile(const std::string& fullPath, const std::string& /* requestPath */, const Location* location, const Server* server) const
