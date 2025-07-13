@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Image gallery</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<script defer src="../script.js"></script>
+</head>
+<body>
+<!-- Header -->
+<div id="header-placeholder"></div>
+
+<script>
+	fetch("../header.html")
+		.then(response => response.text())
+		.then(data => {
+		document.getElementById("header-placeholder").innerHTML = data;
+		});
+</script>
+
+<!-- Gallery -->
+<section class="sections">
+	<h2>Webserv Project Gallery</h2>
+
+	<div class="container">
+	</div>
+</section>
+
+<script src="items.js"></script>
+<script src="app.js"></script>
+
+<!-- Footer -->
+<div id="footer-placeholder"></div>
+
+<script>
+	fetch("../footer.html")
+		.then(response => response.text())
+		.then(data => {
+		document.getElementById("footer-placeholder").innerHTML = data;
+		});
+</script>
+
+	<!-- <div class="gallery">
+		<img src="imgs/1.jpg" alt="Image 1">
+		<img src="imgs/2.jpg" alt="Image 2">
+		<img src="imgs/3.jpg" alt="Image 3">
+		<img src="imgs/4.jpg" alt="Image 4">
+		<img src="imgs/5.jpg" alt="Image 5">
+		<img src="imgs/6.jpg" alt="Image 6">
+		<img src="imgs/7.jpg" alt="Image 7">
+		<img src="imgs/8.jpg" alt="Image 8">
+		<img src="imgs/9.jpg" alt="Image 9">
+		<img src="imgs/10.jpg" alt="Image 10">
+		<img src="imgs/11.jpg" alt="Image 11">
+		<img src="imgs/12.jpg" alt="Image 12">
+		<img src="imgs/13.jpg" alt="Image 13">
+		<img src="imgs/14.jpg" alt="Image 14">
+		<img src="imgs/15.jpg" alt="Image 15">
+	</div> -->
+
+</body>
+</html>
