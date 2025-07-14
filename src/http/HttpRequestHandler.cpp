@@ -51,6 +51,8 @@ HttpResponse HttpRequestHandler::handle(const HttpRequest& request, const Client
     std::vector<Location> locations = server->getLocations();
     const Location*       matchedLocation = LocationMatcher::findBestMatch(requestPath, locations);
 
+    Logger::instance().info("Metodo: " + request.getMethod() + ", URL: " + requestPath);
+
     if (request.getMethod() == "GET")
         return _getHandler.handle(request, matchedLocation, server);
     else if (request.getMethod() == "POST")
