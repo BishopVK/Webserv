@@ -17,9 +17,13 @@ class FileSystemHandler
     static ResourceType             getResourceType(const std::string& path);
     static std::string              getFileContent(const std::string& path);
     static bool                     fileExists(const std::string& path);
+    static bool                     directoryExists(const std::string& path);
     static bool                     isDirectory(const std::string& path);
     static bool                     isFile(const std::string& path);
     static std::vector<std::string> getDirectoryEntries(const std::string& path);
+
+    static bool deleteFile(const std::string& path);
+    static bool deleteDirectory(const std::string& path);
 
     static size_t getFileSize(const std::string& path);
 };

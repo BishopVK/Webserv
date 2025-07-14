@@ -45,7 +45,11 @@ SRC			=	main.cpp \
 				AutoIndexGenerator.cpp \
 				LocationMatcher.cpp \
 				PathHandler.cpp \
-				Cgis.cpp
+				Cgis.cpp \
+				AbstractHttpMethodHandler.cpp \
+				HttpGetRequestHandler.cpp \
+				HttpPostRequestHandler.cpp \
+				HttpDeleteRequestHandler.cpp
 
 # .o folder
 OBJDIR		=	obj
