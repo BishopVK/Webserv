@@ -1,4 +1,4 @@
-const container = document.querySelector('.container');
+const container = document.querySelector('.gallery');
 
 function generateMasonryGrid(columns, posts) {
   container.innerHTML = '';
