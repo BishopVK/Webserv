@@ -9,21 +9,17 @@ Multiplexer::Multiplexer()
 
 Multiplexer::~Multiplexer()
 {
-    // Los file descriptors se cierran en el código que los creó
-    // Este destructor solo limpia las estructuras internas
 }
 
 Multiplexer::Multiplexer(const Multiplexer& other)
 {
     (void)other;
-    // Deliberadamente no implementado - no debe copiarse
 }
 
 Multiplexer& Multiplexer::operator=(const Multiplexer& other)
 {
     (void)other;
     return *this;
-    // Deliberadamente no implementado - no debe copiarse
 }
 
 bool Multiplexer::addFd(int fd, short events)
@@ -31,7 +27,6 @@ bool Multiplexer::addFd(int fd, short events)
     if (!isValidFd(fd))
         return false;
 
-    // Verificar si el fd ya existe
     if (_fd_to_index.find(fd) != _fd_to_index.end())
         return false;
 
@@ -54,11 +49,9 @@ bool Multiplexer::removeFd(int fd)
 
     std::size_t index = it->second;
 
-    // Mover el último elemento a la posición del elemento a eliminar
     if (index != _poll_fds.size() - 1)
     {
         _poll_fds[index] = _poll_fds.back();
-        // Actualizar el índice del elemento movido
         _fd_to_index[_poll_fds[index].fd] = index;
     }
 

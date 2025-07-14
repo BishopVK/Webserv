@@ -1,5 +1,6 @@
 #include "HttpRequest.hpp"
 #include <sstream>
+#include <string>
 
 HttpRequest::HttpRequest(const char* raw_request) : _method(), _url(), _version(), _raw(raw_request ? raw_request : ""), _valid(false)
 {
@@ -46,6 +47,26 @@ const std::string& HttpRequest::getVersion() const
 const std::string& HttpRequest::getRaw() const
 {
     return _raw;
+}
+
+const std::map<std::string, std::string>& HttpRequest::getHeaders() const
+{
+    return _headers;
+}
+
+const std::string& HttpRequest::getHeader(const std::string& key) const
+{
+    std::map<std::string, std::string>::const_iterator it = _headers.find(key);
+    if (it != _headers.end())
+        return it->second;
+
+    static const std::string emptyString("");
+    return emptyString;
+}
+
+const std::string& HttpRequest::getBody() const
+{
+    return _body;
 }
 
 bool HttpRequest::isValid() const

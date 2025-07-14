@@ -43,6 +43,15 @@ bool FileSystemHandler::fileExists(const std::string& path)
     return stat(path.c_str(), &pathStat) == 0;
 }
 
+bool FileSystemHandler::directoryExists(const std::string& path)
+{
+    struct stat pathStat;
+    if (stat(path.c_str(), &pathStat) != 0)
+        return false;
+
+    return S_ISDIR(pathStat.st_mode);
+}
+
 bool FileSystemHandler::isDirectory(const std::string& path)
 {
     return getResourceType(path) == DIRECTORY;
@@ -80,4 +89,33 @@ size_t FileSystemHandler::getFileSize(const std::string& path)
         return 0;
 
     return pathStat.st_size;
+}
+
+bool FileSystemHandler::deleteFile(const std::string& path)
+{
+    if (!fileExists(path))
+    {
+        Logger::instance().error("File does not exist: " + path);
+        return false;
+    }
+
+    if (isDirectory(path))
+    {
+        Logger::instance().error("Cannot delete a directory with deleteFile: " + path);
+        return false;
+    }
+
+    if (std::remove(path.c_str()) != 0)
+    {
+        Logger::instance().error("Failed to delete file: " + path);
+        return false;
+    }
+
+    return true;
+}
+
+bool FileSystemHandler::deleteDirectory(const std::string& path)
+{
+    (void)path;
+    return true;
 }
