@@ -72,8 +72,9 @@ HttpResponse Cgis::execute()
 	char			**env;
 	char			**command;
 	HttpResponse	response;
-	int				status;
+	int				status; // Unused
 
+	(void)status;
 	pipe(server_to_cgi_pipe);
 	pipe(cgi_to_server_pipe);
 	num_fork = fork();
