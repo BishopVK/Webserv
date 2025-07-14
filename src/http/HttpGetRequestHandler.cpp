@@ -2,7 +2,10 @@
 #include "AutoIndexGenerator.hpp"
 #include "ContentTypeManager.hpp"
 #include "FileSystemHandler.hpp"
+#include "HttpResponse.hpp"
 #include "PathHandler.hpp"
+#include <sstream>
+#include <string>
 
 HttpGetRequestHandler::HttpGetRequestHandler() : AbstractHttpMethodHandler()
 {
@@ -30,6 +33,9 @@ HttpResponse HttpGetRequestHandler::handleMethod(const HttpRequest& request, con
     std::string requestPath = request.getUrl();
     if (requestPath.empty())
         requestPath = "/";
+
+    if (isCgiRequest(requestPath, location))
+        return handleCgi(request, location, server);
 
     if (location)
         return handleWithLocation(*location, requestPath, server);
@@ -146,4 +152,24 @@ HttpResponse HttpGetRequestHandler::createErrorResponse(int statusCode, const Lo
         default:
             return HttpResponse::internalServerError();
     }
+}
+
+HttpResponse HttpGetRequestHandler::handleCgi(const HttpRequest& request, const Location* location, const Server* server) const
+{
+    (void)request;
+    (void)location;
+    (void)server;
+
+    std::string cgiPath = location->getCgiPath();
+    std::string cgiExtension = location->getCgiExtension();
+    std::string requestPath = request.getUrl();
+
+    std::stringstream message;
+
+    message << "CGI handling not implemented yet"
+            << "\nCGI Path: " << cgiPath
+            << "\nCGI Extension: " << cgiExtension
+            << "\nRequest Path: " << requestPath;
+
+    return HttpResponse::ok(message.str());
 }

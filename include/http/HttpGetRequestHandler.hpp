@@ -20,6 +20,8 @@ class HttpGetRequestHandler : public AbstractHttpMethodHandler
     HttpResponse handleFile(const std::string& fullPath, const std::string& requestPath, const Location* location, const Server* server) const;
     HttpResponse createErrorResponse(int statusCode, const Location* location, const Server* server) const;
 
+    HttpResponse handleCgi(const HttpRequest& request, const Location* location, const Server* server) const;
+
   public:
     HttpGetRequestHandler();
     HttpGetRequestHandler(const HttpGetRequestHandler& other);

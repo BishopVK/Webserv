@@ -12,6 +12,8 @@ class HttpPostRequestHandler : public AbstractHttpMethodHandler
   private:
     virtual HttpResponse handleMethod(const HttpRequest& request, const Location* location, const Server* server) const;
 
+    HttpResponse handleCgi(const HttpRequest& request, const Location* location, const Server* server) const;
+
   public:
     HttpPostRequestHandler();
     HttpPostRequestHandler(const HttpPostRequestHandler& other);
