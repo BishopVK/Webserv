@@ -66,18 +66,19 @@ HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 
 HttpResponse Cgis::execute()
 {
-	pid_t		num_fork;
-	int			server_to_cgi_pipe[2];
-	int			cgi_to_server_pipe[2];
-	char **env;
-	char **command;
-	HttpResponse response;
+	pid_t			num_fork;
+	int				server_to_cgi_pipe[2];
+	int				cgi_to_server_pipe[2];
+	char			**env;
+	char			**command;
+	HttpResponse	response;
+	int				status;
 
 	pipe(server_to_cgi_pipe);
 	pipe(cgi_to_server_pipe);
 	num_fork = fork();
 	if (num_fork == -1)
-		return response.internalServerError();
+		return (response.internalServerError());
 	if (num_fork == 0)
 	{
 		dup2(server_to_cgi_pipe[0], 0);
