@@ -21,6 +21,11 @@ if (in_array($filename, $protected_files)) {
     exit("You are not allowed to delete this file.");
 }
 
+/* if ($_SERVER['HTTP_X_REQUESTED_WITH'] !== 'XMLHttpRequest') { // Cabecera de JS
+    http_response_code(403);
+    exit("Forbidden");
+} */
+
 // Delete file
 unlink($filename);
 echo "File successfully deleted";

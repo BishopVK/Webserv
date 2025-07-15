@@ -49,7 +49,7 @@
 <!-- DELETE SCRIPT -->
 <script>
 	async function fetchFiles() {
-	const res = await fetch('list.php');
+	const res = await fetch('/upload/list.php');
 	const files = await res.json();
 	const tbody = document.querySelector("#fileTable tbody");
 	tbody.innerHTML = "";
@@ -68,7 +68,7 @@
 	const confirmed = confirm(`Are you sure you want to delete "${file}"?`);
 	if (!confirmed) return;
 
-	await fetch('delete.php', {
+	await fetch('/upload/delete.php', {
 		method: 'DELETE',
 		body: new URLSearchParams({ file })
 	});
