@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/welcome.css">
+	<link rel="stylesheet" href="style.css">
+	<script defer src="/script.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<title>Multimedia</title>
+</head>
+<body>
+	<div id="wrapper">
+	
+		<!-- Header -->
+		<div id="header-placeholder"></div>
+		
+		<script>
+			fetch("/header.html")
+				.then(response => response.text())
+				.then(data => {
+				document.getElementById("header-placeholder").innerHTML = data;
+				});
+		</script>
+		
+		<!-- Hero -->
+		<section class="hero">
+			<h1 class="hero-title">Try multimedia files</h1>
+		</section>
+
+		<!-- Secciones -->
+		<section class="sections">
+			<h2>Txt files:</h2>
+			<div class="grid">
+				<div class="section-card" id="json">
+					<div class="sectiond-card-content">
+						<h3>JSON</h3>
+						<iframe src="../docs/json.json" width="500" height="500"></iframe>
+					</div>
+				</div>
+				<div class="section-card" id="txt">
+					<div class="sectiond-card-content">
+						<h3>TXT</h3>
+						<iframe src="../docs/quijote.txt" width="500" height="500"></iframe>
+					</div>
+				</div>
+				<div class="section-card" id="xml">
+					<div class="sectiond-card-content">
+						<h3>XML</h3>
+						<iframe src="../docs/xml.xml" width="500" height="500"></iframe>
+					</div>
+				</div>
+				<div class="section-card" id="pdf">
+					<div class="sectiond-card-content">
+						<h3>PDF</h3>
+						<iframe src="../docs/en.subject.pdf" width="500" height="500"></iframe>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="sections">
+			<h2>Image files:</h2>
+			<div class="grid">
+				<div class="section-card" id="jpg">
+					<div class="sectiond-card-content">
+						<h3>JPG</h3>
+						<img src="../imgs/jpg.jpg" alt="JPG Image" width="500" height="auto">
+					</div>
+				</div>
+				<div class="section-card" id="png">
+					<div class="sectiond-card-content">
+						<h3>PNG</h3>
+						<img src="../imgs/png.png" alt="PNG Image" width="500" height="auto">
+					</div>
+				</div>
+				<div class="section-card" id="webp">
+					<div class="sectiond-card-content">
+						<h3>WEBP</h3>
+						<img src="../imgs/webp.webp" alt="WEBP Image" width="500" height="auto">
+					</div>
+				</div>
+				<div class="section-card" id="svg">
+					<div class="sectiond-card-content">
+						<h3>SVG</h3>
+						<img src="../imgs/svg.svg" alt="SVG Image" width="500" height="auto">
+					</div>
+				</div>
+
+			</div>
+		</section>
+		<section class="sections">
+			<h2>Audio and video:</h2>
+			<div class="grid">
+				<div class="section-card" id="mp3">
+					<div class="sectiond-card-content">
+						<h3>MP3</h3>
+						<audio controls>
+							<source src="/docs/mp3.mp3" type="audio/mpeg">
+							Tu navegador no soporta la reproducción de audio.
+						  </audio>
+					</div>
+				</div>
+				<div class="section-card" id="mp4">
+					<div class="sectiond-card-content">
+						<h3>MP4</h3>
+						<video width="600" controls>
+							<source src="/docs/mp4.mp4" type="video/mp4">
+							Tu navegador no soporta la reproducción de video.
+						</video>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<!-- Footer -->
+		
+		<div id="footer-placeholder"></div>
+
+		<script>
+			fetch("/footer.html")
+				.then(response => response.text())
+				.then(data => {
+				document.getElementById("footer-placeholder").innerHTML = data;
+				});
+		</script>
+	</div>
+</body>
+</html>

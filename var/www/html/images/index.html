@@ -5,9 +5,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Image gallery</title>
 	<link rel="stylesheet" href="style.css">
-	<link rel="stylesheet" href="../welcome.css">
+	<link rel="stylesheet" href="/welcome.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-	<script defer src="../script.js"></script>
+	<script defer src="/script.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -16,7 +16,7 @@
 	<div id="header-placeholder"></div>
 	
 	<script>
-		fetch("../header.html")
+		fetch("/header.html")
 			.then(response => response.text())
 			.then(data => {
 			document.getElementById("header-placeholder").innerHTML = data;
@@ -39,7 +39,7 @@
 </div>
 
 <script>
-	fetch("../footer.html")
+	fetch("/footer.html")
 		.then(response => response.text())
 		.then(data => {
 		document.getElementById("footer-placeholder").innerHTML = data;
