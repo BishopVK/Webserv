@@ -5,11 +5,18 @@
 	box-sizing: border-box;
 }
 
-body {
+html, body {
+	height: 100%;
 	font-family: 'Segoe UI', sans-serif;
 	line-height: 1.6;
 	background-color: #f4f4f4;
 	color: #333;
+}
+
+#wrapper {
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
 }
 
 /* Header */
@@ -152,6 +159,10 @@ body {
 }
 
 /* Footer */
+#footer-placeholder {
+	margin-top: auto;
+}
+
 .footer {
 	background: #222;
 	color: white;

@@ -10,30 +10,33 @@
 	<script defer src="../script.js"></script>
 </head>
 <body>
-<!-- Header -->
-<div id="header-placeholder"></div>
-
-<script>
-	fetch("../header.html")
-		.then(response => response.text())
-		.then(data => {
-		document.getElementById("header-placeholder").innerHTML = data;
-		});
-</script>
-
-<!-- Gallery -->
-<section class="sections">
-	<h2>Webserv Project Gallery</h2>
-
-	<div class="gallery">
-	</div>
-</section>
-
-<script src="items.js"></script>
-<script src="app.js"></script>
-
-<!-- Footer -->
-<div id="footer-placeholder"></div>
+<div id="wrapper">
+	
+	<!-- Header -->
+	<div id="header-placeholder"></div>
+	
+	<script>
+		fetch("../header.html")
+			.then(response => response.text())
+			.then(data => {
+			document.getElementById("header-placeholder").innerHTML = data;
+			});
+	</script>
+	
+	<!-- Gallery -->
+	<section class="sections">
+		<h2>Webserv Project Gallery</h2>
+	
+		<div class="gallery">
+		</div>
+	</section>
+	
+	<script src="items.js"></script>
+	<script src="app.js"></script>
+	
+	<!-- Footer -->
+	<div id="footer-placeholder"></div>
+</div>
 
 <script>
 	fetch("../footer.html")

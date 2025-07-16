@@ -9,73 +9,75 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-
-<!-- Header -->
-<div id="header-placeholder"></div>
-
-<script>
-	fetch("header.html")
-		.then(response => response.text())
-		.then(data => {
-		document.getElementById("header-placeholder").innerHTML = data;
-		});
-</script>
-
-<!-- Hero -->
-<section class="hero">
-	<h1 class="hero-title">Welcome to our webserv</h1>
-</section>
-
-<!-- Secciones -->
-<section class="sections">
-	<h2>Project sections</h2>
-	<div class="grid">
-		<a href="/images/">
-			<div class="section-card" id="imagenes">
-				<img src="imgs/images.jpg" alt="Imágenes">
-				<div class="overlay">
-					<span>Images</span>
+<div id="wrapper">
+	
+	<!-- Header -->
+	<div id="header-placeholder"></div>
+	
+	<script>
+		fetch("header.html")
+			.then(response => response.text())
+			.then(data => {
+			document.getElementById("header-placeholder").innerHTML = data;
+			});
+	</script>
+	
+	<!-- Hero -->
+	<section class="hero">
+		<h1 class="hero-title">Welcome to our webserv</h1>
+	</section>
+	
+	<!-- Secciones -->
+	<section class="sections">
+		<h2>Project sections</h2>
+		<div class="grid">
+			<a href="/images/">
+				<div class="section-card" id="imagenes">
+					<img src="imgs/images.jpg" alt="Imágenes">
+					<div class="overlay">
+						<span>Images</span>
+					</div>
 				</div>
-			</div>
-		</a>
-		<a href="/redirect/">
-			<div class="section-card" id="redirecciones">
-				<img src="imgs/redirect.jpg" alt="Redirecciones">
-				<div class="overlay">
-					<span>Redirections</span>
+			</a>
+			<a href="/redirect/">
+				<div class="section-card" id="redirecciones">
+					<img src="imgs/redirect.jpg" alt="Redirecciones">
+					<div class="overlay">
+						<span>Redirections</span>
+					</div>
 				</div>
-			</div>
-		</a>
-		<a href="/upload/">
-			<div class="section-card" id="upload">
-				<img src="imgs/upload.jpg" alt="Upload">
-				<div class="overlay">
-					<span>Upload</span>
+			</a>
+			<a href="/upload/">
+				<div class="section-card" id="upload">
+					<img src="imgs/upload.jpg" alt="Upload">
+					<div class="overlay">
+						<span>Upload</span>
+					</div>
 				</div>
-			</div>
-		</a>
-		<a href="/delete/">
-			<div class="section-card" id="delete">
-				<img src="imgs/delete.jpg" alt="Delete">
-				<div class="overlay">
-					<span>Delete</span>
+			</a>
+			<a href="/delete/">
+				<div class="section-card" id="delete">
+					<img src="imgs/delete.jpg" alt="Delete">
+					<div class="overlay">
+						<span>Delete</span>
+					</div>
 				</div>
-			</div>
-		</a>
-		<a href="/errors/">
-			<div class="section-card" id="errores">
-				<img src="imgs/errors.jpg" alt="Errores">
-				<div class="overlay">
-					<span>Errors</span>
+			</a>
+			<a href="/errors/">
+				<div class="section-card" id="errores">
+					<img src="imgs/errors.jpg" alt="Errores">
+					<div class="overlay">
+						<span>Errors</span>
+					</div>
 				</div>
-			</div>
-		</a>
-	</div>
-</section>
-
-<!-- Footer -->
-
-<div id="footer-placeholder"></div>
+			</a>
+		</div>
+	</section>
+	
+	<!-- Footer -->
+	
+	<div id="footer-placeholder"></div>
+</div>
 
 <script>
 	fetch("footer.html")
