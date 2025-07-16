@@ -2,7 +2,7 @@
 #include <sys/wait.h>
 #include <string.h>
 #include "Cgis.hpp"
-#include "../http/HttpResponse.hpp"
+#include "../../include/http/HttpResponse.hpp"
 
 char **Cgis::create_command(std::string file_path, std::string file_name)
 {
@@ -52,14 +52,40 @@ char	**Cgis::create_env()
 HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 {
 	HttpResponse response;
+	std::string whole_answer = "";
 	std::string body_answer = "";
+	std::string header_key_answer = "";
+	std::string header_value_answer = "";
 	char buffer[4096];
 	int n = 0;
 	while ((n = read(cgi_to_server_pipe, buffer, sizeof(buffer))) > 0)
 	{
-		body_answer += buffer;
+		whole_answer += buffer;
 	}
-	//std::cout << body_answer << std::endl;
+	//std::cout << "whole answer\n" << whole_answer << "\n\n" << std::endl;
+
+	std::istringstream ss(whole_answer);
+	std::string line;
+	while (std::getline(ss, line))
+	{
+		if (line == "\r")
+			break ;
+		size_t middle = line.find(':');
+		header_key_answer = line.substr(0, middle);
+		header_value_answer = line.substr(middle + 2, line.find(';') - (middle + 1));
+		//std::cout << "key=" << header_key_answer << std::endl;
+		//std::cout << "value=" << header_value_answer << std::endl;
+		response.setHeader(header_key_answer, header_value_answer);
+	}
+	while (std::getline(ss, line))
+	{
+		//std::cout << "line=" << line << std::endl;
+		body_answer += line;
+		if (!ss.eof())
+			body_answer += "\n";
+	}
+	//std::cout << header_key_answer << std::endl;
+	//std::cout << "body_answer=" << body_answer << std::endl;
 	close(cgi_to_server_pipe);
 	return (response.ok(body_answer));
 }
@@ -104,53 +130,53 @@ HttpResponse Cgis::execute()
 	return (response);
 }
 
-// void Cgis::hardcode()
-// {
-// 	this->method = "POST";
-// 	this->file_path = "/home/isainz-r/Webserv/cgis/";
-// 	this->file_name = "a_cgi.php";
-// 	//std::string	file_name = "file.php";
-// 	this->content_type = "application/x-www-form-urlencoded";
-// 	//std::string	content_type = "multipart/form-data";
-// 	this->content_lenght = "10";
-// 	this->body = "age=20";
-// 	//std::string	body = "--XYZ\r\n"
-// 	//					"Content-Disposition: form-data; name=\"file\"; filename=\"test.txt\"\r\n"
-// 	//					"Content-Type: text/plain\r\n"
-// 	//					"\r\n"
-// 	//					"Hello from the file!\r\n"
-// 	//					"--XYZ--\r\n";
-// 	this->boundary = "";
-// 	this->chunked = false;
-// }
+void Cgis::hardcode()
+{
+	this->method = "POST";
+	this->file_path = "/home/isainz-r/Webserv/src/cgis/";
+	this->file_name = "a_cgi.php";
+	//std::string	file_name = "file.php";
+	this->content_type = "application/x-www-form-urlencoded";
+	//std::string	content_type = "multipart/form-data";
+	this->content_lenght = "10";
+	this->body = "age=20";
+	//std::string	body = "--XYZ\r\n"
+	//					"Content-Disposition: form-data; name=\"file\"; filename=\"test.txt\"\r\n"
+	//					"Content-Type: text/plain\r\n"
+	//					"\r\n"
+	//					"Hello from the file!\r\n"
+	//					"--XYZ--\r\n";
+	this->boundary = "";
+	this->chunked = false;
+}
 
 Cgis::Cgis( std::string method, std::string file_path, std::string file_name,
 		std::string content_type, std::string boundary, std::string content_lenght,
 		std::string body, int chunked )
 {
-	//hardcode();
-	this->method = method;
-	this->file_path = file_path;
-	this->file_name = file_name;
-	this->content_type = content_type;
-	this->boundary = boundary;
-	this->content_lenght = content_lenght;
-	this->body = body;
-	// if (chunked == true)
-	// {
-	// 	this->body = deschunk(body);
-	// }
-	this->chunked = chunked;
+	hardcode();
+	// this->method = method;
+	// this->file_path = file_path;
+	// this->file_name = file_name;
+	// this->content_type = content_type;
+	// this->boundary = boundary;
+	// this->content_lenght = content_lenght;
+	// this->body = body;
+	// // if (chunked == true)
+	// // {
+	// // 	this->body = deschunk(body);
+	// // }
+	// this->chunked = chunked;
 }
 
 Cgis::~Cgis()
 {
 }
 
-// int main(void)
-// {
-// 	Cgis a_cgi("std::string method", "std::string file_path", "std::string file_name",
-// 		"std::string content_type", "std::string boundary", "std::string content_lenght",
-// 		"std::string body", false);
-// 	a_cgi.execute();
-// }
+int main(void)
+{
+	Cgis a_cgi("std::string method", "std::string file_path", "std::string file_name",
+		"std::string content_type", "std::string boundary", "std::string content_lenght",
+		"std::string body", false);
+	a_cgi.execute();
+}
