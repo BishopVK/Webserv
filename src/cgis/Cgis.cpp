@@ -130,53 +130,53 @@ HttpResponse Cgis::execute()
 	return (response);
 }
 
-void Cgis::hardcode()
-{
-	this->method = "POST";
-	this->file_path = "/home/isainz-r/Webserv/src/cgis/";
-	this->file_name = "a_cgi.php";
-	//std::string	file_name = "file.php";
-	this->content_type = "application/x-www-form-urlencoded";
-	//std::string	content_type = "multipart/form-data";
-	this->content_lenght = "10";
-	this->body = "age=20";
-	//std::string	body = "--XYZ\r\n"
-	//					"Content-Disposition: form-data; name=\"file\"; filename=\"test.txt\"\r\n"
-	//					"Content-Type: text/plain\r\n"
-	//					"\r\n"
-	//					"Hello from the file!\r\n"
-	//					"--XYZ--\r\n";
-	this->boundary = "";
-	this->chunked = false;
-}
+// void Cgis::hardcode()
+// {
+// 	this->method = "POST";
+// 	this->file_path = "/home/isainz-r/Webserv/src/cgis/";
+// 	this->file_name = "a_cgi.php";
+// 	//std::string	file_name = "file.php";
+// 	this->content_type = "application/x-www-form-urlencoded";
+// 	//std::string	content_type = "multipart/form-data";
+// 	this->content_lenght = "10";
+// 	this->body = "age=20";
+// 	//std::string	body = "--XYZ\r\n"
+// 	//					"Content-Disposition: form-data; name=\"file\"; filename=\"test.txt\"\r\n"
+// 	//					"Content-Type: text/plain\r\n"
+// 	//					"\r\n"
+// 	//					"Hello from the file!\r\n"
+// 	//					"--XYZ--\r\n";
+// 	this->boundary = "";
+// 	this->chunked = false;
+// }
 
 Cgis::Cgis( std::string method, std::string file_path, std::string file_name,
 		std::string content_type, std::string boundary, std::string content_lenght,
 		std::string body, int chunked )
 {
-	hardcode();
-	// this->method = method;
-	// this->file_path = file_path;
-	// this->file_name = file_name;
-	// this->content_type = content_type;
-	// this->boundary = boundary;
-	// this->content_lenght = content_lenght;
-	// this->body = body;
-	// // if (chunked == true)
-	// // {
-	// // 	this->body = deschunk(body);
-	// // }
-	// this->chunked = chunked;
+	//hardcode();
+	this->method = method;
+	this->file_path = file_path;
+	this->file_name = file_name;
+	this->content_type = content_type;
+	this->boundary = boundary;
+	this->content_lenght = content_lenght;
+	this->body = body;
+	// if (chunked == true)
+	// {
+	// 	this->body = deschunk(body);
+	// }
+	this->chunked = chunked;
 }
 
 Cgis::~Cgis()
 {
 }
 
-int main(void)
-{
-	Cgis a_cgi("std::string method", "std::string file_path", "std::string file_name",
-		"std::string content_type", "std::string boundary", "std::string content_lenght",
-		"std::string body", false);
-	a_cgi.execute();
-}
+// int main(void)
+// {
+// 	Cgis a_cgi("std::string method", "std::string file_path", "std::string file_name",
+// 		"std::string content_type", "std::string boundary", "std::string content_lenght",
+// 		"std::string body", false);
+// 	a_cgi.execute();
+// }
