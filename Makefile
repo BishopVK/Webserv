@@ -6,7 +6,7 @@
 #    By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/20 12:20:33 by danjimen,is       #+#    #+#              #
-#    Updated: 2025/07/04 13:15:56 by danjimen,is      ###   ########.fr        #
+#    Updated: 2025/07/14 13:04:06 by danjimen,is      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME		=	webserv
 CXX			=	c++
 CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98 -g
 
-HEADERS		=	-I./include -I./include/valueObjects -I./include/utils -I./include/http -I./src/http -I./src/io -I./src/controllers -I./src/cgis
+HEADERS		=	-I./include -I./include/valueObjects -I./include/utils -I./include/http -I./src/io
 
 VPATH		=	src src/server src/controllers src/controllers/base src/http src/io src/valueObjects src/parse src/utils src/cgis .
 

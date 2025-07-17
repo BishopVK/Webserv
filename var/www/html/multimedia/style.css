@@ -1,0 +1,39 @@
+.section-card {
+	position: relative;
+	overflow: hidden;
+	border-radius: 8px;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.section-card .sectiond-card-content {
+	width: 100%;
+	max-width: 500px;
+	display: block;
+	filter: grayscale(0%);
+	transition: filter 0.4s ease;
+}
+
+.section-card img {
+	width: 100%;
+	max-width: 500px;
+	display: block;
+	filter: grayscale(0%);
+	transition: filter 0.4s ease;
+}
+
+.section-card:hover img {
+	cursor: default;
+	filter: grayscale(100%);
+}
+
+.hero {
+	height: 200px;
+}
+
+.sections:nth-child(odd) {
+	background-color: rgb(197, 197, 197);
+}

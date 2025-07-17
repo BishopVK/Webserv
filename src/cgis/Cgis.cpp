@@ -2,7 +2,7 @@
 #include <sys/wait.h>
 #include <string.h>
 #include "Cgis.hpp"
-#include "../http/HttpResponse.hpp"
+#include "../../include/http/HttpResponse.hpp"
 
 char **Cgis::create_command(std::string file_path, std::string file_name)
 {
@@ -52,32 +52,60 @@ char	**Cgis::create_env()
 HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 {
 	HttpResponse response;
+	std::string whole_answer = "";
 	std::string body_answer = "";
+	std::string header_key_answer = "";
+	std::string header_value_answer = "";
 	char buffer[4096];
 	int n = 0;
 	while ((n = read(cgi_to_server_pipe, buffer, sizeof(buffer))) > 0)
 	{
 		body_answer.append(buffer, n);
 	}
-	//std::cout << body_answer << std::endl;
+	//std::cout << "whole answer\n" << whole_answer << "\n\n" << std::endl;
+
+	std::istringstream ss(whole_answer);
+	std::string line;
+	while (std::getline(ss, line))
+	{
+		if (line == "\r")
+			break ;
+		size_t middle = line.find(':');
+		header_key_answer = line.substr(0, middle);
+		header_value_answer = line.substr(middle + 2, line.find(';') - (middle + 1));
+		//std::cout << "key=" << header_key_answer << std::endl;
+		//std::cout << "value=" << header_value_answer << std::endl;
+		response.setHeader(header_key_answer, header_value_answer);
+	}
+	while (std::getline(ss, line))
+	{
+		//std::cout << "line=" << line << std::endl;
+		body_answer += line;
+		if (!ss.eof())
+			body_answer += "\n";
+	}
+	//std::cout << header_key_answer << std::endl;
+	//std::cout << "body_answer=" << body_answer << std::endl;
 	close(cgi_to_server_pipe);
 	return (response.ok(body_answer));
 }
 
 HttpResponse Cgis::execute()
 {
-	pid_t		num_fork;
-	int			server_to_cgi_pipe[2];
-	int			cgi_to_server_pipe[2];
-	char **env;
-	char **command;
-	HttpResponse response;
+	pid_t			num_fork;
+	int				server_to_cgi_pipe[2];
+	int				cgi_to_server_pipe[2];
+	char			**env;
+	char			**command;
+	HttpResponse	response;
+	int				status; // Unused
 
+	(void)status;
 	pipe(server_to_cgi_pipe);
 	pipe(cgi_to_server_pipe);
 	num_fork = fork();
 	if (num_fork == -1)
-		return response.internalServerError();
+		return (response.internalServerError());
 	if (num_fork == 0)
 	{
 		dup2(server_to_cgi_pipe[0], 0);
@@ -105,7 +133,7 @@ HttpResponse Cgis::execute()
 // void Cgis::hardcode()
 // {
 // 	this->method = "POST";
-// 	this->file_path = "/home/isainz-r/Webserv/cgis/";
+// 	this->file_path = "/home/isainz-r/Webserv/src/cgis/";
 // 	this->file_name = "a_cgi.php";
 // 	//std::string	file_name = "file.php";
 // 	this->content_type = "application/x-www-form-urlencoded";

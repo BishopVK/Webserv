@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="/welcome.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<script defer src="/script.js"></script>
+	<title>Delete files</title>
+</head>
+<body>
+<div id="wrapper">
+	<!-- Header -->
+	<div id="header-placeholder"></div>
+	
+	<script>
+		fetch("/header.html")
+			.then(response => response.text())
+			.then(data => {
+			document.getElementById("header-placeholder").innerHTML = data;
+			});
+	</script>
+	
+	<section class="sections">
+		<h2>Select a file to delete</h2>
+		<table id="fileTable">
+			<thead>
+			<tr>
+				<th>Filename</th>
+				<th>Delete</th>
+			</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	
+	</section>
+	
+	<!-- Footer -->
+	<div id="footer-placeholder"></div>
+</div>
+
+<script>
+	fetch("/footer.html")
+		.then(response => response.text())
+		.then(data => {
+		document.getElementById("footer-placeholder").innerHTML = data;
+		});
+</script>
+
+<!-- DELETE SCRIPT -->
+<script>
+	async function fetchFiles() {
+	const res = await fetch('/upload/list.php');
+	const files = await res.json();
+	const tbody = document.querySelector("#fileTable tbody");
+	tbody.innerHTML = "";
+
+	files.forEach(file => {
+		const row = document.createElement("tr");
+		row.innerHTML = `
+		<td>${file}</td>
+		<td><button onclick="deleteFile('${file}')">🗑️</button></td>
+		`;
+		tbody.appendChild(row);
+	});
+	}
+
+	async function deleteFile(file) {
+	const confirmed = confirm(`Are you sure you want to delete "${file}"?`);
+	if (!confirmed) return;
+
+	await fetch('/upload/delete.php', {
+		method: 'DELETE',
+		body: new URLSearchParams({ file })
+	});
+
+	fetchFiles();
+	}
+
+	fetchFiles();
+</script>
+
+</body>
+</html>
