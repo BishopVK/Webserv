@@ -26,7 +26,7 @@
 
 		<p>Click on the "Choose File" button to upload a file:</p>
 
-		<form id="uploadForm" action="upload/upload.php" method="POST" enctype="multipart/form-data">
+		<form id="uploadForm" action="upload.php" method="POST" enctype="multipart/form-data">
 			<input type="file" id="myFile" name="file" required>
 			<input type="submit" value="Upload">
 		</form>

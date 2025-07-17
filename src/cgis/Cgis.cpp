@@ -8,7 +8,8 @@
 char **Cgis::create_command(std::string file_path, std::string file_name)
 {
 	std::vector<std::string> command_vec;
-	command_vec.push_back(PATH_INFO);
+	//command_vec.push_back(PATH_INFO); // SEGURO QUE ES LA RUTA ENTERA DE PHP-CGI??
+	command_vec.push_back("php-cgi");
 	command_vec.push_back(file_path + file_name);
 
 	char	**command = new char*[command_vec.size() + 1];
@@ -50,6 +51,56 @@ char	**Cgis::create_env()
 	return (env);
 }
 
+// Versión corregida por CHATGPT
+/* HttpResponse Cgis::build_the_response(int cgi_to_server_pipe)
+{
+	HttpResponse response;
+	std::string whole_answer;
+	char buffer[4096];
+	int n;
+
+	// Leer toda la salida del CGI
+	while ((n = read(cgi_to_server_pipe, buffer, sizeof(buffer))) > 0)
+		whole_answer.append(buffer, n);
+
+	close(cgi_to_server_pipe);
+
+	// Separar headers del cuerpo usando "\r\n\r\n"
+	size_t header_end = whole_answer.find("\r\n\r\n");
+	if (header_end == std::string::npos)
+		return HttpResponse::internalServerError("CGI response malformed (no header-body delimiter)");
+
+	std::string header_part = whole_answer.substr(0, header_end);
+	std::string body_part = whole_answer.substr(header_end + 4); // saltar \r\n\r\n
+
+	// Parsear cabeceras línea por línea
+	std::istringstream header_stream(header_part);
+	std::string line;
+	while (std::getline(header_stream, line)) {
+		// Saltar líneas vacías
+		if (line.empty() || line == "\r")
+			continue;
+
+		size_t colon = line.find(':');
+		if (colon == std::string::npos)
+			continue;
+
+		std::string key = line.substr(0, colon);
+		std::string value = line.substr(colon + 1);
+
+		// Quitar espacios iniciales en value
+		while (!value.empty() && (value[0] == ' ' || value[0] == '\t'))
+			value.erase(0, 1);
+		// Quitar saltos finales
+		while (!value.empty() && (value[value.size() - 1] == '\r' || value[value.size() - 1] == '\n'))
+			value.erase(value.size() - 1, 1);
+
+		response.setHeader(key, value);
+	}
+
+	return response.ok(body_part);
+} */
+
 HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 {
 	HttpResponse response;
@@ -61,7 +112,8 @@ HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 	int n = 0;
 	while ((n = read(cgi_to_server_pipe, buffer, sizeof(buffer))) > 0)
 	{
-		body_answer.append(buffer, n);
+		//body_answer.append(buffer, n); // SEGURO QUE ES body_answer???
+		whole_answer.append(buffer, n); // no body_answer
 	}
 	//std::cout << "whole answer\n" << whole_answer << "\n\n" << std::endl;
 
