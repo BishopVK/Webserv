@@ -39,24 +39,6 @@ bool AbstractHttpMethodHandler::isMethodAllowed(const std::string& method, const
     return false;
 }
 
-bool AbstractHttpMethodHandler::isCgiRequest(const std::string& requestPath, const Location* location) const
-{
-    if (!location)
-        return false;
-
-    const std::string& cgiExtension = location->getCgiExtension();
-    if (cgiExtension.empty())
-        return false;
-
-    size_t extensionPos = requestPath.rfind(cgiExtension);
-    if (extensionPos == std::string::npos)
-        return false;
-    if (extensionPos + cgiExtension.length() != requestPath.length())
-        return false;
-
-    return true;
-}
-
 std::vector<std::string> AbstractHttpMethodHandler::getIndexFiles(const Location* location, const Server* server) const
 {
     if (location)

@@ -57,7 +57,7 @@ HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 	int n = 0;
 	while ((n = read(cgi_to_server_pipe, buffer, sizeof(buffer))) > 0)
 	{
-		body_answer += buffer;
+		body_answer.append(buffer, n);
 	}
 	//std::cout << body_answer << std::endl;
 	close(cgi_to_server_pipe);
