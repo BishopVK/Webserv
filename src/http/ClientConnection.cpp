@@ -5,8 +5,7 @@ ClientConnection::ClientConnection() : _request_complete(false), _response_sent(
 }
 
 ClientConnection::ClientConnection(const ClientConnection& other)
-    : _read_buffer(other._read_buffer), _write_buffer(other._write_buffer),
-      _request_complete(other._request_complete), _response_sent(other._response_sent),
+    : _read_buffer(other._read_buffer), _write_buffer(other._write_buffer), _request_complete(other._request_complete), _response_sent(other._response_sent),
       _server_connection(other._server_connection)
 {
 }

@@ -103,7 +103,9 @@ HttpResponse HttpGetRequestHandler::handleDirectory(const std::string& fullPath,
 
     if (autoindex)
     {
-        std::string autoindexHtml = AutoIndexGenerator::generateHtml(requestPath, fullPath);
+        AutoIndexGenerator autoIndexGenerator(requestPath, fullPath);
+        std::string autoindexHtml = autoIndexGenerator.generateHtml();
+
         return HttpResponse::ok(autoindexHtml, "text/html");
     }
     else

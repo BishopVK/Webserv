@@ -7,6 +7,12 @@
 
 class LocationMatcher
 {
+  private:
+    LocationMatcher();
+    LocationMatcher(const LocationMatcher& other);
+    LocationMatcher& operator=(const LocationMatcher& other);
+    ~LocationMatcher();
+
   public:
     static const Location* findBestMatch(const std::string& requestPath, const std::vector<Location>& locations);
     static const Location* findExactMatch(const std::string& requestPath, const std::vector<Location>& locations);

@@ -12,6 +12,11 @@ class ContentTypeManager
 
     static void initialize();
 
+    ContentTypeManager();
+    ContentTypeManager(const ContentTypeManager& other);
+    ContentTypeManager& operator=(const ContentTypeManager& other);
+    ~ContentTypeManager();
+
   public:
     static std::string getContentType(const std::string& filePath);
 };

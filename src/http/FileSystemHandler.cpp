@@ -7,6 +7,25 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+FileSystemHandler::FileSystemHandler()
+{
+}
+
+FileSystemHandler::FileSystemHandler(const FileSystemHandler& other)
+{
+    (void)other;
+}
+
+FileSystemHandler& FileSystemHandler::operator=(const FileSystemHandler& other)
+{
+    (void)other;
+    return *this;
+}
+
+FileSystemHandler::~FileSystemHandler()
+{
+}
+
 FileSystemHandler::ResourceType FileSystemHandler::getResourceType(const std::string& path)
 {
     struct stat pathStat;

@@ -1,6 +1,25 @@
 #include "LocationMatcher.hpp"
 #include "../utils/PathHandler.hpp"
 
+LocationMatcher::LocationMatcher()
+{
+}
+
+LocationMatcher::LocationMatcher(const LocationMatcher& other)
+{
+    (void)other;
+}
+
+LocationMatcher& LocationMatcher::operator=(const LocationMatcher& other)
+{
+    (void)other;
+    return *this;
+}
+
+LocationMatcher::~LocationMatcher()
+{
+}
+
 const Location* LocationMatcher::findBestMatch(const std::string& requestPath, const std::vector<Location>& locations)
 {
     if (locations.empty())

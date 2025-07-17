@@ -6,6 +6,12 @@
 
 class FileSystemHandler
 {
+  private:
+    FileSystemHandler();
+    FileSystemHandler(const FileSystemHandler& other);
+    FileSystemHandler& operator=(const FileSystemHandler& other);
+    ~FileSystemHandler();
+
   public:
     enum ResourceType
     {
