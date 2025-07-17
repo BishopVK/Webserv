@@ -3,6 +3,7 @@
 #include <string.h>
 #include "Cgis.hpp"
 #include "../../include/http/HttpResponse.hpp"
+#include "Logger.hpp"
 
 char **Cgis::create_command(std::string file_path, std::string file_name)
 {
@@ -121,7 +122,9 @@ HttpResponse Cgis::execute()
 		exit(127);
 	}
 	if (method == "POST")
+	{
 		write(server_to_cgi_pipe[1], body.c_str(), body.size());
+	}
 	close(server_to_cgi_pipe[0]);
 	close(server_to_cgi_pipe[1]);
 	close(cgi_to_server_pipe[1]);
@@ -167,6 +170,7 @@ Cgis::Cgis( std::string method, std::string file_path, std::string file_name,
 	// 	this->body = deschunk(body);
 	// }
 	this->chunked = chunked;
+	Logger::instance().debug(">> BODY: " + body);
 }
 
 Cgis::~Cgis()
