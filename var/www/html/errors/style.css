@@ -1,4 +1,12 @@
 .section-card {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: blue;
 	background-color: red;
 	min-height: 500px;
+	text-align: center;
+	font-size: 4rem;
+	font-weight: 800;
 }

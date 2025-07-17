@@ -27,45 +27,83 @@
 		<section class="sections">
 			<h2>Error pages</h2>
 			<div class="grid">
-				<div class="section-card" id="404">
+				<div class="section-card">
 					<h3>404</h3>
 				</div>
-				<div class="section-card" id="405">
+				<div class="section-card">
 					<h3>405</h3>
 				</div>
-				<div class="section-card" id="404">
+				<div class="section-card">
 					<h3>404</h3>
 				</div>
-				<div class="section-card" id="405">
+				<div class="section-card">
 					<h3>405</h3>
 				</div>
-				<div class="section-card" id="404">
+				<div class="section-card">
 					<h3>404</h3>
 				</div>
-				<div class="section-card" id="405">
+				<div class="section-card">
 					<h3>405</h3>
 				</div>
-				<div class="section-card" id="404">
+				<div class="section-card">
 					<h3>404</h3>
 				</div>
-				<div class="section-card" id="405">
+				<div class="section-card">
 					<h3>405</h3>
 				</div>
-				<div class="section-card" id="404">
+				<div class="section-card">
 					<h3>404</h3>
 				</div>
-				<div class="section-card" id="405">
+				<div class="section-card">
 					<h3>405</h3>
 				</div>
-				<div class="section-card" id="404">
+				<div class="section-card">
 					<h3>404</h3>
 				</div>
-				<div class="section-card" id="405">
+				<div class="section-card">
 					<h3>405</h3>
 				</div>
 				
 			</div>
 		</section>
+
+		<script>
+			// Genera un color hexadecimal aleatorio
+			function getRandomColor() {
+				const letters = '0123456789ABCDEF';
+				let color = '#';
+				for (let i = 0; i < 6; i++) {
+					color += letters[Math.floor(Math.random() * 16)];
+				}
+				return color;
+			}
+		  
+			// Calcula la luminancia relativa para decidir si usar texto claro u oscuro
+			function isDark(color) {
+				// Elimina el # si está presente
+				color = color.replace('#', '');
+		  
+				// Convierte R, G, B
+				const r = parseInt(color.substr(0, 2), 16);
+				const g = parseInt(color.substr(2, 2), 16);
+				const b = parseInt(color.substr(4, 2), 16);
+		  
+				// Fórmula de luminancia (según WCAG)
+				const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+			
+				return luminance < 0.5; // true si es oscuro
+			}
+		  
+			document.addEventListener('DOMContentLoaded', () => {
+				const cards = document.querySelectorAll('.section-card');
+			
+				cards.forEach(card => {
+					const bgColor = getRandomColor();
+					card.style.backgroundColor = bgColor;
+					card.style.color = isDark(bgColor) ? 'white' : 'black';
+				});
+			});
+		</script>
 		
 		<!-- Footer -->
 		
