@@ -14,7 +14,6 @@ class AbstractHttpMethodHandler
     virtual HttpResponse handleMethod(const HttpRequest& request, const Location* location, const Server* server) const = 0;
 
     bool isMethodAllowed(const std::string& method, const Location& location) const;
-    bool isCgiRequest(const std::string& requestPath, const Location* location) const;
 
     std::vector<std::string> getIndexFiles(const Location* location, const Server* server) const;
     std::string              getErrorPage(int statusCode, const Location* location, const Server* server) const;

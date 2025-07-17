@@ -1,4 +1,5 @@
 #include "HttpPostRequestHandler.hpp"
+#include "CgiHandler.hpp"
 #include "HttpResponse.hpp"
 
 HttpPostRequestHandler::HttpPostRequestHandler() : AbstractHttpMethodHandler()
@@ -28,22 +29,8 @@ HttpResponse HttpPostRequestHandler::handleMethod(const HttpRequest& request, co
     if (requestPath.empty())
         requestPath = "/";
 
-    if (isCgiRequest(requestPath, location))
-        return handleCgi(request, location, server);
-
-    // TODO: Implementar el manejo de solicitudes POST
-    (void)request;
-    (void)requestPath;
-    (void)location;
-    (void)server;
+    if (CgiHandler::isCgiRequest(requestPath, location))
+        return CgiHandler::execute(request, location, server);
 
     return HttpResponse::notImplemented("POST method handling not implemented yet");
-}
-
-HttpResponse HttpPostRequestHandler::handleCgi(const HttpRequest& request, const Location* location, const Server* server) const
-{
-    (void)request;
-    (void)location;
-    (void)server;
-    return HttpResponse::notImplemented("CGI handling not implemented yet");
 }

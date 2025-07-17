@@ -46,6 +46,7 @@ SRC			=	main.cpp \
 				LocationMatcher.cpp \
 				PathHandler.cpp \
 				Cgis.cpp \
+				CgiHandler.cpp \
 				AbstractHttpMethodHandler.cpp \
 				HttpGetRequestHandler.cpp \
 				HttpPostRequestHandler.cpp \
