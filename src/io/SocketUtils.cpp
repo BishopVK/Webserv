@@ -38,7 +38,6 @@ int SocketUtils::createServerSocket(const char* ip, const char* port)
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE;
 
-    //int rv = getaddrinfo(NULL, port, &hints, &res);
     int rv = getaddrinfo(ip, port, &hints, &res);
     if (rv != 0)
     {

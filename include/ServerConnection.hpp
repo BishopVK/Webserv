@@ -6,7 +6,7 @@
 class ServerConnection
 {
   private:
-    int _fd;
+    int     _fd;
     Server* _server;
 
   public:
@@ -17,14 +17,14 @@ class ServerConnection
     ~ServerConnection();
 
     // Getters
-    int getFd() const;
-    Server* getServer() const;
+    int           getFd() const;
+    Server*       getServer() const;
     const Server& getServerRef() const;
-    
+
     // Setters
     void setFd(int fd);
     void setServer(Server* server);
-    
+
     // Utility methods
     bool isValid() const;
     bool hasServer() const;

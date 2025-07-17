@@ -165,6 +165,7 @@ HttpResponse CgiHandler::execute(const HttpRequest& request, const Location* loc
                 if (semicolonPos != std::string::npos)
                     boundary = boundary.substr(0, semicolonPos);
             }
+            contentType = contentType.substr(0, contentType.find(';'));
         }
 
         if (contentLength.empty())

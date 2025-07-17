@@ -1,7 +1,5 @@
 #include "Multiplexer.hpp"
 #include <cstring>
-#include <errno.h>
-#include <iostream>
 
 Multiplexer::Multiplexer()
 {
@@ -80,10 +78,7 @@ int Multiplexer::poll(int timeout_ms)
     int result = ::poll(&_poll_fds[0], _poll_fds.size(), timeout_ms);
 
     if (result == -1)
-    {
-        std::cerr << "Poll error: " << strerror(errno) << std::endl;
         return -1;
-    }
 
     return result;
 }

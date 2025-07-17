@@ -4,6 +4,26 @@
 std::map<std::string, std::string> ContentTypeManager::_contentTypeMap;
 bool                               ContentTypeManager::_initialized = false;
 
+ContentTypeManager::ContentTypeManager()
+{
+    initialize();
+}
+
+ContentTypeManager::ContentTypeManager(const ContentTypeManager& other)
+{
+    (void)other;
+}
+
+ContentTypeManager& ContentTypeManager::operator=(const ContentTypeManager& other)
+{
+    (void)other;
+    return *this;
+}
+
+ContentTypeManager::~ContentTypeManager()
+{
+}
+
 void ContentTypeManager::initialize()
 {
     if (_initialized)
