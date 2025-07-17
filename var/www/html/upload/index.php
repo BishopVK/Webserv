@@ -10,40 +10,37 @@
 </head>
 <body>
 <div id="wrapper">
-	
-		<!-- Header -->
+
+	<!-- Header -->
 	<div id="header-placeholder"></div>
-	
 	<script>
 		fetch("/header.html")
 			.then(response => response.text())
 			.then(data => {
-			document.getElementById("header-placeholder").innerHTML = data;
+				document.getElementById("header-placeholder").innerHTML = data;
 			});
 	</script>
-	
+
 	<section class="sections">
 		<h2>Upload a file to our server</h2>
-	
+
 		<p>Click on the "Choose File" button to upload a file:</p>
-	
-		<form action="upload.php" method="POST" enctype="multipart/form-data">
-			<input type="file" id="myFile" name="file">
-			<input type="submit">
+
+		<form id="uploadForm" action="upload/upload.php" method="POST" enctype="multipart/form-data">
+			<input type="file" id="myFile" name="file" required>
+			<input type="submit" value="Upload">
 		</form>
 	</section>
-	
+
 	<!-- Footer -->
 	<div id="footer-placeholder"></div>
-	
 	<script>
 		fetch("/footer.html")
 			.then(response => response.text())
 			.then(data => {
-			document.getElementById("footer-placeholder").innerHTML = data;
+				document.getElementById("footer-placeholder").innerHTML = data;
 			});
 	</script>
 </div>
-
 </body>
 </html>
