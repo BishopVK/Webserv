@@ -1,10 +1,12 @@
 #include "HttpRequest.hpp"
 #include <sstream>
 #include <string>
+#include "Logger.hpp"
 
 HttpRequest::HttpRequest(const char* raw_request)
     : _method(), _url(), _rawUrl(), _version(), _raw(raw_request ? raw_request : ""), _parameters(), _valid(false)
 {
+    Logger::instance().debug("raw_requeset: " + std::string(raw_request));
     parse(raw_request);
 }
 
