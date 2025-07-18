@@ -7,6 +7,11 @@
 class ClientConnection
 {
   private:
+    // Petition related
+    mutable int  _requestSize;
+    mutable bool _headersRead;
+    mutable int  _contentLength;
+
     std::string       _read_buffer;
     std::string       _write_buffer;
     bool              _request_complete;
@@ -25,6 +30,9 @@ class ClientConnection
     bool               isRequestComplete() const;
     bool               isResponseSent() const;
     ServerConnection*  getServerConnection() const;
+    int                getRequestSize() const;
+    bool               areHeadersRead() const;
+    int                getContentLength() const;
 
     // Setters
     void setReadBuffer(const std::string& buffer);
