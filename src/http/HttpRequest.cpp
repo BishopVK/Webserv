@@ -1,12 +1,11 @@
 #include "HttpRequest.hpp"
+#include "Logger.hpp"
 #include <sstream>
 #include <string>
-#include "Logger.hpp"
 
 HttpRequest::HttpRequest(const char* raw_request)
     : _method(), _url(), _rawUrl(), _version(), _raw(raw_request ? raw_request : ""), _parameters(), _valid(false)
 {
-    Logger::instance().debug("raw_requeset: " + std::string(raw_request));
     parse(raw_request);
 }
 
@@ -203,4 +202,65 @@ const std::string HttpRequest::getRawParameters() const
         ss << param->first << "=" << param->second;
     }
     return ss.str();
+}
+
+const std::string HttpRequest::getBoundary() const
+{
+    // Try both case variations of Content-Type header
+    std::string contentType = getHeader("Content-Type");
+    if (contentType.empty())
+        contentType = getHeader("content-type");
+
+    if (contentType.empty())
+        return "";
+
+    // Check for multipart/form-data (case insensitive)
+    std::string contentTypeLower = contentType;
+    for (size_t i = 0; i < contentTypeLower.length(); ++i)
+    {
+        if (contentTypeLower[i] >= 'A' && contentTypeLower[i] <= 'Z')
+            contentTypeLower[i] = contentTypeLower[i] + 32; // Convert to lowercase
+    }
+
+    if (contentTypeLower.find("multipart/form-data") == std::string::npos)
+        return "";
+
+    // Find boundary parameter (case insensitive)
+    size_t boundaryPos = contentTypeLower.find("boundary=");
+    if (boundaryPos == std::string::npos)
+        return "";
+
+    // Extract boundary value from original (preserve case)
+    std::string boundary = contentType.substr(boundaryPos + 9);
+
+    // Remove semicolon and everything after if present
+    size_t semicolonPos = boundary.find(';');
+    if (semicolonPos != std::string::npos)
+        boundary = boundary.substr(0, semicolonPos);
+
+    // Trim whitespace
+    while (!boundary.empty() && (boundary[0] == ' ' || boundary[0] == '\t'))
+        boundary.erase(0, 1);
+    while (!boundary.empty() && (boundary[boundary.length() - 1] == ' ' || boundary[boundary.length() - 1] == '\t'))
+        boundary.erase(boundary.length() - 1, 1);
+
+    // Remove quotes if present
+    if (boundary.length() >= 2 && boundary[0] == '"' && boundary[boundary.length() - 1] == '"')
+    {
+        boundary = boundary.substr(1, boundary.length() - 2);
+    }
+
+    // Validate boundary (must not be empty after processing)
+    if (boundary.empty())
+    {
+        Logger::instance().debug("Empty boundary extracted from Content-Type header");
+        return "";
+    }
+
+    return boundary;
+}
+
+void HttpRequest::setBody(const std::string& body_content)
+{
+    _body = body_content;
 }

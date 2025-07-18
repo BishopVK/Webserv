@@ -9,6 +9,7 @@
 #include "Server.hpp"
 #include "SocketUtils.hpp"
 
+#include <cstddef>
 #include <errno.h>
 #include <exception>
 #include <iostream>
@@ -17,6 +18,10 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <vector>
+
+HttpRequest::HttpRequest() : _method(), _url(), _rawUrl(), _version(), _raw(), _parameters(), _valid(false)
+{
+}
 
 HttpServer::HttpServer(const std::vector<Server>& servers)
 {
@@ -170,60 +175,46 @@ void HttpServer::run()
 
 bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multiplexer& multiplexer)
 {
-    char    buffer[100000];
-    ssize_t bytes_read = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
-    if (bytes_read <= 0)
-        return true;
-
-    buffer[bytes_read] = '\0';
-    client.appendToReadBuffer(buffer);
+    ssize_t bytes_read = 0;
 
     while (!client.hasCompleteRequest())
     {
-        char    additionalBuffer[100000];
-        ssize_t additionalBytes = recv(client_fd, additionalBuffer, sizeof(additionalBuffer) - 1, 0);
+        char buffer[4096];
+        bytes_read = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
 
-        additionalBuffer[additionalBytes] = '\0';
-        client.appendToReadBuffer(additionalBuffer);
-        bytes_read += additionalBytes;
+        buffer[bytes_read] = '\0';
+        client.appendToReadBuffer(buffer);
     }
 
-    if (client.hasCompleteRequest())
+    try
     {
-        try
+        client.setRequestComplete(true);
+
+        HttpRequest request(client.getReadBuffer().c_str());
+        if (!request.isValid())
         {
-            client.setRequestComplete(true);
-
-            HttpRequest request(client.getReadBuffer().c_str());
-            if (!request.isValid())
-            {
-                Logger::instance().error("Invalid HTTP request from client " + IntValue(client_fd).toString());
-                client.setWriteBuffer(HttpResponse::badRequest("Invalid HTTP request").toString());
-                client.clearReadBuffer();
-                multiplexer.modifyFd(client_fd, Multiplexer::WRITE);
-                return true;
-            }
-
-            HttpRequestHandler handler;
-            HttpResponse       response = handler.handle(request, client);
-
-            client.setWriteBuffer(response.toString());
+            Logger::instance().error("Invalid HTTP request from client " + IntValue(client_fd).toString());
+            client.setWriteBuffer(HttpResponse::badRequest("Invalid HTTP request").toString());
             client.clearReadBuffer();
-
             multiplexer.modifyFd(client_fd, Multiplexer::WRITE);
+            return true;
         }
-        catch (const std::exception& e)
-        {
-            Logger::instance().error("Error processing request: " + std::string(e.what()));
-            client.setWriteBuffer(HttpResponse::internalServerError(e.what()).toString());
-            client.clearReadBuffer();
 
-            multiplexer.modifyFd(client_fd, Multiplexer::WRITE);
-        }
+        HttpRequestHandler handler;
+        HttpResponse       response = handler.handle(request, client);
+
+        client.setWriteBuffer(response.toString());
+        client.clearReadBuffer();
+
+        multiplexer.modifyFd(client_fd, Multiplexer::WRITE);
     }
-    else
+    catch (const std::exception& e)
     {
-        Logger::instance().debug("Incomplete request, waiting for more data from client " + IntValue(client_fd).toString());
+        Logger::instance().error("Error processing request: " + std::string(e.what()));
+        client.setWriteBuffer(HttpResponse::internalServerError(e.what()).toString());
+        client.clearReadBuffer();
+
+        multiplexer.modifyFd(client_fd, Multiplexer::WRITE);
     }
 
     return true;

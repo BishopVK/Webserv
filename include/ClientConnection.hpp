@@ -2,15 +2,20 @@
 #define CLIENTCONNECTION_HPP
 
 #include "ServerConnection.hpp"
+#include "http/HttpRequest.hpp"
 #include <string>
 
 class ClientConnection
 {
   private:
-    // Petition related
-    mutable long int     _requestSize;
-    mutable bool    _headersRead;
-    mutable long int  _contentLength;
+    size_t       _requestSize;
+    bool         _headersRead;
+    size_t       _contentLength;
+    size_t       _headSize;
+    bool         _requestParsed;
+    HttpRequest* _httpRequest;
+    bool         _isMultipart;
+    std::string  _boundary;
 
     std::string       _read_buffer;
     std::string       _write_buffer;
@@ -30,9 +35,11 @@ class ClientConnection
     bool               isRequestComplete() const;
     bool               isResponseSent() const;
     ServerConnection*  getServerConnection() const;
-    int                getRequestSize() const;
+    size_t             getRequestSize() const;
     bool               areHeadersRead() const;
-    long int                getContentLength() const;
+    size_t             getContentLength() const;
+    HttpRequest*       getHttpRequest() const;
+    bool               isRequestParsed() const;
 
     // Setters
     void setReadBuffer(const std::string& buffer);
@@ -49,7 +56,7 @@ class ClientConnection
     void eraseFromWriteBuffer(size_t pos, size_t len);
 
     // Utility methods
-    bool hasCompleteRequest() const;
+    bool hasCompleteRequest();
     bool hasServerConnection() const;
     void reset();
 };

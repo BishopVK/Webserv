@@ -1,17 +1,21 @@
 #include "ClientConnection.hpp"
+#include "Logger.hpp"
 #include <cstddef>
 #include <cstdlib>
 #include <string>
 
 ClientConnection::ClientConnection()
-    : _requestSize(0), _headersRead(false), _contentLength(-1), _request_complete(false), _response_sent(false), _server_connection(NULL)
+    : _requestSize(0), _headersRead(false), _contentLength(static_cast<size_t>(-1)), _requestParsed(false), _httpRequest(NULL), _request_complete(false), _response_sent(false), _server_connection(NULL)
 {
 }
 
 ClientConnection::ClientConnection(const ClientConnection& other)
-    : _requestSize(other._requestSize), _headersRead(other._headersRead), _contentLength(other._contentLength), _read_buffer(other._read_buffer),
-      _write_buffer(other._write_buffer), _request_complete(other._request_complete), _response_sent(other._response_sent), _server_connection(other._server_connection)
+    : _requestSize(other._requestSize), _headersRead(other._headersRead), _contentLength(other._contentLength), _requestParsed(other._requestParsed), _httpRequest(NULL),
+      _read_buffer(other._read_buffer), _write_buffer(other._write_buffer), _request_complete(other._request_complete), _response_sent(other._response_sent),
+      _server_connection(other._server_connection)
 {
+    if (other._httpRequest)
+        _httpRequest = new HttpRequest(*other._httpRequest);
 }
 
 ClientConnection& ClientConnection::operator=(const ClientConnection& other)
@@ -21,6 +25,11 @@ ClientConnection& ClientConnection::operator=(const ClientConnection& other)
         _requestSize = other._requestSize;
         _headersRead = other._headersRead;
         _contentLength = other._contentLength;
+        _requestParsed = other._requestParsed;
+        delete _httpRequest;
+        _httpRequest = NULL;
+        if (other._httpRequest)
+            _httpRequest = new HttpRequest(*other._httpRequest);
         _read_buffer = other._read_buffer;
         _write_buffer = other._write_buffer;
         _request_complete = other._request_complete;
@@ -32,6 +41,7 @@ ClientConnection& ClientConnection::operator=(const ClientConnection& other)
 
 ClientConnection::~ClientConnection()
 {
+    delete _httpRequest;
 }
 
 // Getters
@@ -60,7 +70,7 @@ ServerConnection* ClientConnection::getServerConnection() const
     return _server_connection;
 }
 
-int ClientConnection::getRequestSize() const
+size_t ClientConnection::getRequestSize() const
 {
     return _requestSize;
 }
@@ -70,9 +80,19 @@ bool ClientConnection::areHeadersRead() const
     return _headersRead;
 }
 
-long int ClientConnection::getContentLength() const
+size_t ClientConnection::getContentLength() const
 {
     return _contentLength;
+}
+
+HttpRequest* ClientConnection::getHttpRequest() const
+{
+    return _httpRequest;
+}
+
+bool ClientConnection::isRequestParsed() const
+{
+    return _requestParsed;
 }
 
 // Setters
@@ -129,44 +149,68 @@ void ClientConnection::eraseFromWriteBuffer(size_t pos, size_t len)
     _write_buffer.erase(pos, len);
 }
 
-bool ClientConnection::hasCompleteRequest() const
+bool ClientConnection::hasCompleteRequest()
 {
-    size_t endHeaders = _read_buffer.find("\r\n\r\n");
-    if (endHeaders == std::string::npos)
+    // 1. Check for end of headers
+    size_t endHeadersPos = _read_buffer.find("\r\n\r\n");
+    if (endHeadersPos == std::string::npos)
         return false;
 
-    if (!_headersRead)
+    // 2. Now that headers are complete check if we have alredy parsed the partial request
+    if (!_requestParsed)
     {
-        _headersRead = true;
-        _contentLength = -1;
-
-        size_t cl_pos = _read_buffer.find("Content-Length:");
-        if (cl_pos == std::string::npos)
-            cl_pos = _read_buffer.find("content-length:");
-
-        if (cl_pos != std::string::npos && cl_pos < endHeaders)
+        // 3. Parse the headers
+        std::string headerPortion = _read_buffer.substr(0, endHeadersPos + 4);
+        _httpRequest = new HttpRequest(headerPortion.c_str());
+        if (!_httpRequest->isValid())
         {
-            size_t start = _read_buffer.find(":", cl_pos) + 1;
-            size_t end = _read_buffer.find("\r\n", start);
+            Logger::instance().error("Invalid HTTP request received.");
+            delete _httpRequest;
+            _httpRequest = NULL;
+            return false; // Invalid request
+        }
+        _requestParsed = true;
+        _headSize = endHeadersPos + 4; // Store the size of the headers
 
-            if (start != std::string::npos && end != std::string::npos)
+        // 4. Now that we have parsed the headers, get the content length and if a boundary is present
+        std::string contentLengthStr = _httpRequest->getHeader("Content-Length");
+        if (!contentLengthStr.empty())
+        {
+            try
             {
-                std::string contentLength = _read_buffer.substr(start, end - start);
+                // _contentLength = std::stoul(contentLengthStr);
+                // c++ 98
+                _contentLength = static_cast<size_t>(std::strtoul(contentLengthStr.c_str(), NULL, 10));
+            }
+            catch (const std::exception& e)
+            {
+                Logger::instance().error("Invalid Content-Length header: " + contentLengthStr);
+                _contentLength = static_cast<size_t>(-1);
+            }
+        }
+        else
+            _contentLength = 0;
 
-                size_t first = contentLength.find_first_not_of(" \t");
-                if (first != std::string::npos)
-                    _contentLength = std::atol(contentLength.c_str() + first);
+        // 5. Check for multipart requests
+        std::string contentType = _httpRequest->getHeader("Content-Type");
+        if (contentType.find("multipart/form-data") != std::string::npos)
+        {
+            _isMultipart = true;
+            _boundary = _httpRequest->getBoundary();
+            if (_boundary.empty())
+            {
+                Logger::instance().error("Multipart request without boundary.");
+                delete _httpRequest;
+                _httpRequest = NULL;
+                return false;
             }
         }
     }
 
-    if (_contentLength == -1 || _contentLength == 0)
-        return true;
+    // 6. If we have a content length, check if we have read enough data
+    bool isContentLengthSurpassed = (_contentLength != static_cast<size_t>(-1) && _read_buffer.length() >= _headSize + _contentLength);
 
-    size_t start = endHeaders + 4;
-    size_t recived = _read_buffer.length() - start;
-
-    return recived >= static_cast<size_t>(_contentLength);
+    return isContentLengthSurpassed;
 }
 
 bool ClientConnection::hasServerConnection() const
@@ -178,7 +222,13 @@ void ClientConnection::reset()
 {
     _requestSize = 0;
     _headersRead = false;
-    _contentLength = -1;
+    _contentLength = static_cast<size_t>(-1);
+    _requestParsed = false;
+    if (_httpRequest)
+    {
+        delete _httpRequest;
+        _httpRequest = NULL;
+    }
     _read_buffer.clear();
     _write_buffer.clear();
     _request_complete = false;

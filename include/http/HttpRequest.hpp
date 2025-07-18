@@ -21,6 +21,7 @@ class HttpRequest
     void parseUrlParameters(const std::string& url);
 
   public:
+    HttpRequest();
     HttpRequest(const char* raw_request);
     HttpRequest(const HttpRequest& other);
     HttpRequest& operator=(const HttpRequest& other);
@@ -36,8 +37,13 @@ class HttpRequest
     const std::string&                        getRaw() const;
     const std::map<std::string, std::string>& getParameters() const;
     const std::string&                        getParameter(const std::string& key) const;
+    void                                      setBody(const std::string& body);
+    const std::string                         getRawParameters() const;
 
-    const std::string getRawParameters() const;
+    /**
+     * Returns the boundary for multipart/form-data requests.
+     */
+    const std::string getBoundary() const;
 
     bool isValid() const;
 };

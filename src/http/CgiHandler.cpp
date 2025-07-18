@@ -145,7 +145,7 @@ HttpResponse CgiHandler::execute(const HttpRequest& request, const Location* loc
     if (method == "GET")
     {
         body = request.getRawParameters();
-        int               contentLengthValue = body.size();
+        size_t contentLengthValue = body.size();
         std::stringstream contentLengthStream;
         contentLengthStream << contentLengthValue;
         contentLength = contentLengthStream.str();
