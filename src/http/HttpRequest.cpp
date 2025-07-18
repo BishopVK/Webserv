@@ -140,6 +140,7 @@ void HttpRequest::parse(const char* raw_request)
             std::string value = line.substr(pos + 1);
             while (!value.empty() && (value[0] == ' ' || value[0] == '\t'))
                 value.erase(0, 1);
+            value = value.substr(0, value.find("\r"));
             if (!key.empty() && !value.empty())
                 _headers[key] = value;
         }

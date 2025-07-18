@@ -70,7 +70,7 @@ bool ClientConnection::areHeadersRead() const
     return _headersRead;
 }
 
-int ClientConnection::getContentLength() const
+long int ClientConnection::getContentLength() const
 {
     return _contentLength;
 }
@@ -155,7 +155,7 @@ bool ClientConnection::hasCompleteRequest() const
 
                 size_t first = contentLength.find_first_not_of(" \t");
                 if (first != std::string::npos)
-                    _contentLength = std::atoi(contentLength.c_str() + first);
+                    _contentLength = std::atol(contentLength.c_str() + first);
             }
         }
     }

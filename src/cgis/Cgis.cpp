@@ -8,8 +8,8 @@
 char **Cgis::create_command(std::string file_path, std::string file_name)
 {
 	std::vector<std::string> command_vec;
-	//command_vec.push_back(PATH_INFO); // SEGURO QUE ES LA RUTA ENTERA DE PHP-CGI??
-	command_vec.push_back("php-cgi");
+	command_vec.push_back(PATH_INFO); // SEGURO QUE ES LA RUTA ENTERA DE PHP-CGI??
+	//command_vec.push_back("php-cgi");
 	command_vec.push_back(file_path + file_name);
 
 	char	**command = new char*[command_vec.size() + 1];
@@ -188,20 +188,21 @@ HttpResponse Cgis::execute()
 // void Cgis::hardcode()
 // {
 // 	this->method = "POST";
-// 	this->file_path = "/home/isainz-r/Webserv/src/cgis/";
-// 	this->file_name = "a_cgi.php";
+// 	this->file_path = "./var/www/html/upload/";
+// 	this->file_name = "upload.php";
 // 	//std::string	file_name = "file.php";
-// 	this->content_type = "application/x-www-form-urlencoded";
-// 	//std::string	content_type = "multipart/form-data";
-// 	this->content_lenght = "10";
-// 	this->body = "age=20";
-// 	//std::string	body = "--XYZ\r\n"
-// 	//					"Content-Disposition: form-data; name=\"file\"; filename=\"test.txt\"\r\n"
-// 	//					"Content-Type: text/plain\r\n"
-// 	//					"\r\n"
-// 	//					"Hello from the file!\r\n"
-// 	//					"--XYZ--\r\n";
-// 	this->boundary = "";
+// 	//this->content_type = "application/x-www-form-urlencoded";
+// 	this->content_type = "multipart/form-data";
+// 	this->content_lenght = "186";
+// 	//this->body = "age=20";
+// 	this->body =	"------WebKitFormBoundaryrFooryMJAX0YAoTO\n"
+// 					"Content-Disposition: form-data; name=\"file\"; filename=\"txt.txt\"\n"
+// 					"Content-Type: text/plain\n"
+// 					"\n"
+// 					"hola\n"
+// 					"\n"
+// 					"------WebKitFormBoundaryrFooryMJAX0YAoTO--\n";
+// 	this->boundary = "----WebKitFormBoundaryrFooryMJAX0YAoTO";
 // 	this->chunked = false;
 // }
 
@@ -222,14 +223,14 @@ Cgis::Cgis( std::string method, std::string file_path, std::string file_name,
 	// 	this->body = deschunk(body);
 	// }
 	this->chunked = chunked;
-	Logger::instance().debug("CONSTRUCTOR ==> method: " + method);
-	Logger::instance().debug("CONSTRUCTOR ==> file_path: " + file_path);
-	Logger::instance().debug("CONSTRUCTOR ==> file_name: " + file_name);
-	Logger::instance().debug("CONSTRUCTOR ==> content_type: " + content_type);
-	Logger::instance().debug("CONSTRUCTOR ==> boundary: " + boundary);
-	Logger::instance().debug("CONSTRUCTOR ==> content_lenght: " + content_lenght);
-	Logger::instance().debug("CONSTRUCTOR ==> body: " + body);
-	Logger::instance().debug("CONSTRUCTOR ==> chunked: " + chunked);
+	Logger::instance().debug("CONSTRUCTOR ==> method: |" + method + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> file_path: |" + file_path + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> file_name: |" + file_name + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> content_type: |" + content_type + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> boundary: |" + boundary + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> content_lenght: |" + content_lenght + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> body: |" + body + "|");
+	//Logger::instance().debug("CONSTRUCTOR ==> chunked: " + chunked);
 }
 
 Cgis::~Cgis()

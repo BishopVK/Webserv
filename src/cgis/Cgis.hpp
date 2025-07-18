@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 11:23:48 by danjimen          #+#    #+#             */
-/*   Updated: 2025/07/09 11:24:15 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/18 13:26:10 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "../../include/definitions.hpp"
 #include "../../include/webserv.hpp"
-#include "../http/HttpResponse.hpp"
+#include "../../include/http/HttpResponse.hpp"
 
 class Cgis
 {
