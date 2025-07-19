@@ -10,6 +10,8 @@ char **Cgis::create_command(std::string file_path, std::string file_name)
 	std::vector<std::string> command_vec;
 	command_vec.push_back(PATH_INFO); // SEGURO QUE ES LA RUTA ENTERA DE PHP-CGI??
 	//command_vec.push_back("php-cgi");
+	command_vec.push_back("-c");
+	command_vec.push_back("./config/php.ini");
 	command_vec.push_back(file_path + file_name);
 
 	char	**command = new char*[command_vec.size() + 1];
@@ -25,7 +27,7 @@ char	**Cgis::create_env()
 {
 	std::vector<std::string> env_vec;
 	env_vec.push_back("GATEWAY_INTERFACE=CGI/1.1");
-	env_vec.push_back("REQUEST_METHOD=" + this->method);	
+	env_vec.push_back("REQUEST_METHOD=" + this->method);
 	env_vec.push_back("PATH_INFO=" + this->file_path + this->file_name);
 	env_vec.push_back("SCRIPT_FILENAME=" + this->file_path + this->file_name);
 	env_vec.push_back("SCRIPT_NAME=" + this->file_name);
