@@ -58,7 +58,10 @@ class ClientConnection
     // Utility methods
     bool hasCompleteRequest();
     bool hasServerConnection() const;
-    void reset();
+
+    // Helper methods
+    bool isMultipartComplete();
+    bool isRegularRequestComplete();
 };
 
 #endif

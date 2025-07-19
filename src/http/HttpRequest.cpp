@@ -3,6 +3,10 @@
 #include <sstream>
 #include <string>
 
+HttpRequest::HttpRequest() : _method(), _url(), _rawUrl(), _version(), _raw(), _parameters(), _valid(false)
+{
+}
+
 HttpRequest::HttpRequest(const char* raw_request)
     : _method(), _url(), _rawUrl(), _version(), _raw(raw_request ? raw_request : ""), _parameters(), _valid(false)
 {

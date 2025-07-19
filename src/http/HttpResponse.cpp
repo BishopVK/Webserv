@@ -1,4 +1,5 @@
 #include "../../include/http/HttpResponse.hpp"
+#include "IntValue.hpp"
 #include <iostream>
 #include <sstream>
 
@@ -136,5 +137,19 @@ HttpResponse HttpResponse::redirect(const std::string& location, int code)
     HttpResponse response;
     response.setStatus(code, "Redirect");
     response.setHeader("Location", location);
+    return response;
+}
+
+HttpResponse HttpResponse::requestEntityTooLarge(const std::string& message)
+{
+    HttpResponse response;
+    response.setStatus(413, "Request Entity Too Large");
+    response.setHeader("Content-Type", "text/html");
+    response.setHeader("Connection", "close");
+
+    std::string body = "<html><body><h1>413 Request Entity Too Large</h1><p>" + message + "</p></body></html>";
+    response.setBody(body);
+    response.setHeader("Content-Length", IntValue(body.length()).toString());
+
     return response;
 }

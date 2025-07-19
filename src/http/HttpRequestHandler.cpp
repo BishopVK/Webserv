@@ -41,7 +41,14 @@ HttpResponse HttpRequestHandler::handle(const HttpRequest& request, const Client
     if (requestPath.empty())
         requestPath = "/";
 
-    const Server* server = client.getServerConnection()->getServer();
+    ServerConnection* serverConnection = client.getServerConnection();
+    if (!serverConnection)
+    {
+        Logger::instance().error("No hay conexión de servidor disponible");
+        return HttpResponse::internalServerError();
+    }
+
+    const Server* server = serverConnection->getServer();
     if (!server)
     {
         Logger::instance().error("No existen datos del servidor");

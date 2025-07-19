@@ -34,12 +34,14 @@ class HttpResponse
     static HttpResponse badRequest(const std::string& body = "", const std::string& contentType = "text/plain");
     // Http 404
     static HttpResponse notFound(const std::string& body = "", const std::string& contentType = "text/plain");
-    // Http 501
-    static HttpResponse notImplemented(const std::string& body = "", const std::string& contentType = "text/plain");
     // Http 405
     static HttpResponse methodNotAllowed(const std::string& body = "", const std::string& contentType = "text/plain");
+    // Http 413
+    static HttpResponse requestEntityTooLarge(const std::string& message);
     // Http 500
     static HttpResponse internalServerError(const std::string& body = "", const std::string& contentType = "text/plain");
+    // Http 501
+    static HttpResponse notImplemented(const std::string& body = "", const std::string& contentType = "text/plain");
 
     static HttpResponse redirect(const std::string& location, int code = 302);
 };

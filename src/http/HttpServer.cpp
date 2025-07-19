@@ -9,6 +9,7 @@
 #include "Server.hpp"
 #include "SocketUtils.hpp"
 
+#include <cerrno>
 #include <cstddef>
 #include <errno.h>
 #include <exception>
@@ -18,10 +19,6 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <vector>
-
-HttpRequest::HttpRequest() : _method(), _url(), _rawUrl(), _version(), _raw(), _parameters(), _valid(false)
-{
-}
 
 HttpServer::HttpServer(const std::vector<Server>& servers)
 {
@@ -175,23 +172,61 @@ void HttpServer::run()
 
 bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multiplexer& multiplexer)
 {
-    ssize_t bytes_read = 0;
+    // TODO: Sacar esto a constantes.
+    const size_t BUFFER_SIZE = 4096;                  // 4 KB
+    const size_t MAX_REQUEST_SIZE = 10 * 1024 * 1024; // 10 MB
+
+    char    buffer[BUFFER_SIZE];
+    ssize_t bytes_read;
 
     while (!client.hasCompleteRequest())
     {
-        char buffer[4096];
-        bytes_read = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
+        bytes_read = recv(client_fd, buffer, BUFFER_SIZE - 1, 0);
+
+        if (bytes_read == -1)
+        {
+            // EAGAIN indica que no hay datos disponibles para leer en este momento.
+            // EWOULDBLOCK indica que la operación no puede completarse sin bloquear.
+            if (errno == EAGAIN || errno == EWOULDBLOCK)
+                return true;
+
+            Logger::instance().error("Error reading from client: " + std::string(strerror(errno)));
+            multiplexer.removeFd(client_fd);
+            SocketUtils::closeSocket(client_fd);
+            return false;
+        }
+
+        if (bytes_read == 0)
+        {
+            Logger::instance().debug("Client " + IntValue(client_fd).toString() + " closed connection");
+            multiplexer.removeFd(client_fd);
+            SocketUtils::closeSocket(client_fd);
+            return false;
+        }
 
         buffer[bytes_read] = '\0';
-        client.appendToReadBuffer(buffer);
+
+        if (client.getRequestSize() + bytes_read > MAX_REQUEST_SIZE)
+        {
+            Logger::instance().error("Request too large from client " + IntValue(client_fd).toString());
+            client.setWriteBuffer(HttpResponse::requestEntityTooLarge("Request too large").toString());
+            client.clearReadBuffer();
+            multiplexer.modifyFd(client_fd, Multiplexer::WRITE);
+            return true;
+        }
+
+        client.appendToReadBuffer(std::string(buffer, bytes_read));
+
+        if (client.hasCompleteRequest())
+            break;
     }
 
     try
     {
         client.setRequestComplete(true);
 
-        HttpRequest request(client.getReadBuffer().c_str());
-        if (!request.isValid())
+        HttpRequest* request = client.getHttpRequest();
+        if (!request || !request->isValid())
         {
             Logger::instance().error("Invalid HTTP request from client " + IntValue(client_fd).toString());
             client.setWriteBuffer(HttpResponse::badRequest("Invalid HTTP request").toString());
@@ -200,8 +235,17 @@ bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multi
             return true;
         }
 
+        std::string full_request = client.getReadBuffer();
+        size_t      body_start = full_request.find("\r\n\r\n");
+        if (body_start != std::string::npos)
+        {
+            body_start += 4; // \r\n\r\n
+            std::string body = full_request.substr(body_start);
+            request->setBody(body);
+        }
+
         HttpRequestHandler handler;
-        HttpResponse       response = handler.handle(request, client);
+        HttpResponse       response = handler.handle(*request, client);
 
         client.setWriteBuffer(response.toString());
         client.clearReadBuffer();
@@ -213,7 +257,6 @@ bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multi
         Logger::instance().error("Error processing request: " + std::string(e.what()));
         client.setWriteBuffer(HttpResponse::internalServerError(e.what()).toString());
         client.clearReadBuffer();
-
         multiplexer.modifyFd(client_fd, Multiplexer::WRITE);
     }
 
@@ -229,13 +272,13 @@ bool HttpServer::handleClientWrite(int client_fd, ClientConnection& client, Mult
 
     if (bytes_sent == -1)
     {
-        if (errno != EAGAIN && errno != EWOULDBLOCK)
-        {
-            multiplexer.removeFd(client_fd);
-            SocketUtils::closeSocket(client_fd);
-            return false;
-        }
-        return true;
+        if (errno == EAGAIN || errno == EWOULDBLOCK)
+            return true;
+
+        Logger::instance().error("Error writing to client: " + std::string(strerror(errno)));
+        multiplexer.removeFd(client_fd);
+        SocketUtils::closeSocket(client_fd);
+        return false;
     }
 
     client.eraseFromWriteBuffer(0, bytes_sent);
