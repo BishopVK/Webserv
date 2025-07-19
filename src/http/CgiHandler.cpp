@@ -145,7 +145,7 @@ HttpResponse CgiHandler::execute(const HttpRequest& request, const Location* loc
     if (method == "GET")
     {
         body = request.getRawParameters();
-        size_t contentLengthValue = body.size();
+        size_t            contentLengthValue = body.size();
         std::stringstream contentLengthStream;
         contentLengthStream << contentLengthValue;
         contentLength = contentLengthStream.str();
@@ -184,9 +184,6 @@ HttpResponse CgiHandler::execute(const HttpRequest& request, const Location* loc
     {
         Cgis         cgiHandler(method, directoryPath + "/", fileName, contentType, boundary, contentLength, body, 0);
         HttpResponse response = cgiHandler.execute();
-
-        // TODO: Esto deberia de venir de la respuesta del CGI
-        response.setHeader("Content-Type", "text/html");
 
         return response;
     }
