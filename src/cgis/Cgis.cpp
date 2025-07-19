@@ -142,7 +142,8 @@ HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 	//std::cout << header_key_answer << std::endl;
 	//std::cout << "body_answer=" << body_answer << std::endl;
 	close(cgi_to_server_pipe);
-	return (response.ok(body_answer));
+	response.setBody(body_answer);
+	return (response);
 }
 
 HttpResponse Cgis::execute()
