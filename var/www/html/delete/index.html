@@ -56,14 +56,35 @@
 		const tbody = document.querySelector("#fileTable tbody");
 		tbody.innerHTML = "";
 
-		files.forEach(file => {
-			const row = document.createElement("tr");
-			row.innerHTML = `
-			<td>${file}</td>
-			<td><button onclick="deleteFile('${file}')">DELETE</button></td>
-			`;
-			tbody.appendChild(row);
-		});
+		// Ocultar la tabla si no hay archivos
+		const table = document.getElementById("fileTable");
+		
+		if (files.length === 0) {
+			table.style.display = "none";
+
+			// Mostrar un mensaje si no hay archivos
+			const noFilesMessage = document.createElement("p");
+			noFilesMessage.id = "no-files-msg";
+			noFilesMessage.textContent = "📂 Uploads folder currently empty.";
+
+			// Insertar el mensaje si no existe ya
+			if (!document.getElementById("no-files-msg")) {
+				table.parentNode.appendChild(noFilesMessage);
+			}
+		} else {
+			table.style.display = "table";
+			const existingMsg = document.getElementById("no-files-msg");
+			if (existingMsg) existingMsg.remove();
+
+			files.forEach(file => {
+				const row = document.createElement("tr");
+				row.innerHTML = `
+					<td>${file}</td>
+					<td><button onclick="deleteFile('${file}')">DELETE</button></td>
+				`;
+				tbody.appendChild(row);
+			});
+		}
 	}
 
 	async function deleteFile(file) {
