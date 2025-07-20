@@ -70,6 +70,7 @@ html, body {
 	background: url('imgs/banner.jpg') center/cover no-repeat;
 	height: 60vh;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	position: relative;
@@ -83,6 +84,14 @@ html, body {
 	color: white;
 	text-shadow: 2px 2px 8px #000;
 	animation: slideIn 2s ease-out forwards;
+}
+
+.hero-subtitle {
+	font-size: 5rem;
+	color: white;
+	text-shadow: 2px 2px 8px #000;
+	animation: slideIn 2s ease-out forwards;
+	font-weight: 100;
 }
 
 @keyframes slideIn {
@@ -253,5 +262,13 @@ html, body {
 
 	.overlay span {
 		font-size: 2rem;
+	}
+
+	.hero-title {
+	font-size: 4rem;
+}
+
+	.hero-subtitle {
+		font-size: 4rem;
 	}
 }

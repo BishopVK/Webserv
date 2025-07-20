@@ -23,8 +23,12 @@
         </script>
         
         <!-- Hero -->
-        <section class="hero">
+        <!-- <section class="hero">
             <h1 class="hero-title">404 not found</h1>
+        </section> -->
+         <section class="hero">
+            <h1 id="error-code" class="hero-title"></h1>
+            <h1 id="error-message" class="hero-subtitle"></h1>
         </section>
         
         <!-- Footer -->
@@ -38,6 +42,24 @@
             .then(data => {
             document.getElementById("footer-placeholder").innerHTML = data;
             });
+    </script>
+
+    <!-- Script para parámetros -->
+    <script>
+      function getQueryParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+          code: params.get('code') || 'Error',
+          message: params.get('message') || 'Ha ocurrido un error inesperado.'
+        };
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const { code, message } = getQueryParams();
+        document.getElementById('error-code').textContent = code;
+        document.getElementById('error-message').textContent = decodeURIComponent(message);
+        document.title = `${code} - Error`;
+      });
     </script>
 
     </body>
