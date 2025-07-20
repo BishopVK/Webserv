@@ -22,7 +22,7 @@ HttpDeleteRequestHandler::~HttpDeleteRequestHandler()
 }
 
 // ADDED BY DANI (original más abajo)
-HttpResponse HttpDeleteRequestHandler::handleMethod(const HttpRequest& request, const Location* location, const Server* server) const
+/* HttpResponse HttpDeleteRequestHandler::handleMethod(const HttpRequest& request, const Location* location, const Server* server) const
 {
     // 1) Comprobaciones de método permitido
     if (location && !isMethodAllowed("DELETE", *location))
@@ -82,9 +82,9 @@ HttpResponse HttpDeleteRequestHandler::handleMethod(const HttpRequest& request, 
     else {
         return HttpResponse::notFound();
     }
-}
+} */
 
-/* HttpResponse HttpDeleteRequestHandler::handleMethod(const HttpRequest& request, const Location* location, const Server* server) const
+HttpResponse HttpDeleteRequestHandler::handleMethod(const HttpRequest& request, const Location* location, const Server* server) const
 {
     if (location && !isMethodAllowed("DELETE", *location))
         return HttpResponse::methodNotAllowed();
@@ -114,7 +114,7 @@ HttpResponse HttpDeleteRequestHandler::handleMethod(const HttpRequest& request, 
     (void)fullPath;
 
     return HttpResponse::response(204, "No Content", "", "text/plain");
-} */
+}
 
 HttpResponse HttpDeleteRequestHandler::handleDirectory(const std::string& fullPath) const
 {

@@ -51,35 +51,36 @@
 <!-- DELETE SCRIPT -->
 <script>
 	async function fetchFiles() {
-	const res = await fetch('/upload/list.php');
-	const files = await res.json();
-	const tbody = document.querySelector("#fileTable tbody");
-	tbody.innerHTML = "";
+		const res = await fetch('/upload/list.php');
+		const files = await res.json();
+		const tbody = document.querySelector("#fileTable tbody");
+		tbody.innerHTML = "";
 
-	files.forEach(file => {
-		const row = document.createElement("tr");
-		row.innerHTML = `
-		<td>${file}</td>
-		<td><button onclick="deleteFile('${file}')">DELETE</button></td>
-		`;
-		tbody.appendChild(row);
-	});
+		files.forEach(file => {
+			const row = document.createElement("tr");
+			row.innerHTML = `
+			<td>${file}</td>
+			<td><button onclick="deleteFile('${file}')">DELETE</button></td>
+			`;
+			tbody.appendChild(row);
+		});
 	}
 
 	async function deleteFile(file) {
-	const confirmed = confirm(`Are you sure you want to delete "${file}"?`);
-	if (!confirmed) return;
+		const confirmed = confirm(`Are you sure you want to delete "${file}"?`);
+		if (!confirmed) return;
 
-	await fetch('/delete/delete.php', {
-		method: 'DELETE',
-		body: new URLSearchParams({ file })
-	});
+		const res = await fetch(`/upload/uploads/${encodeURIComponent(file)}`, {
+			method: 'DELETE'
+		});
 
-	/* await fetch(`/upload/uploads/${encodeURIComponent(file)}`, {
-		method: 'DELETE'
-	}); */
-
-	fetchFiles();
+		if (res.ok) {
+			alert(`✅ "${file}" deleted successfully`);
+		} else {
+			const text = await res.text();
+			alert(`❌ Error deleting "${file}": ${text || res.statusText}`);
+		}
+		fetchFiles();
 	}
 
 	fetchFiles();
