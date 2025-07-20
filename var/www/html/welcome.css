@@ -212,7 +212,7 @@ html, body {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
 	.nav-links {
 		display: none;
 		flex-direction: column;
@@ -244,7 +244,9 @@ html, body {
 	.nav .hamburger {
 		display: block;
 	}
+}
 
+@media (max-width: 768px) {
 	.grid {
 		grid-template-columns: 1fr;
 	}
