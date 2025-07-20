@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/welcome.css">
+	<link rel="stylesheet" href="post.css">
+	<script defer src="/script.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<title>POST</title>
+</head>
+<body>
+	<div id="wrapper">
+	
+		<!-- Header -->
+		<div id="header-placeholder"></div>
+		
+		<script>
+			fetch("/header.html")
+				.then(response => response.text())
+				.then(data => {
+				document.getElementById("header-placeholder").innerHTML = data;
+				});
+		</script>
+		
+		<!-- Secciones -->
+		<section class="sections">
+			<div class="form_container">
+				<h1>Formulario de contacto</h1>
+				<form id="userForm" method="POST" action="/submit">
+					<!-- <label for="nombre">Nombre:</label> -->
+					<input type="text" name="nombre" id="nombre" placeholder="Nombre:" required><br><br>
+					<!-- <label for="usuario">Usuario:</label> -->
+					<input type="text" name="usuario" id="usuario" placeholder="Usuario:" required><br><br>
+					<!-- <label for="edad">Edad:</label> -->
+					<input type="number" name="edad" id="edad" placeholder="Edad:" required><br><br>
+					<button type="submit">Enviar</button>
+				</form>
+			</div>
+
+			<div id="respuesta"></div>
+		</section>
+
+		<script>
+			const form = document.getElementById('userForm');
+			form.addEventListener('submit', async (e) => {
+			e.preventDefault();
+			
+			const formData = new FormData(form);
+			const response = await fetch(form.action, {
+				method: 'POST',
+				body: formData
+			});
+
+			const text = await response.text(); // Suponemos que el servidor responde con HTML/texto plano
+			document.getElementById('respuesta').innerHTML = text;
+			});
+		</script>
+
+		<!-- Footer -->
+		
+		<div id="footer-placeholder"></div>
+
+		<script>
+			fetch("/footer.html")
+				.then(response => response.text())
+				.then(data => {
+				document.getElementById("footer-placeholder").innerHTML = data;
+				});
+		</script>
+	</div>
+</body>
+</html>
