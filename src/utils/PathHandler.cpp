@@ -147,3 +147,67 @@ std::string PathHandler::getRelativePath(const std::string& requestPath, const s
 
     return relativePath;
 }
+
+// ADDED BY DANI
+static int hexValue(char c) {
+    if (c >= '0' && c <= '9') return c - '0';
+    if (c >= 'A' && c <= 'F') return c - 'A' + 10;
+    if (c >= 'a' && c <= 'f') return c - 'a' + 10;
+    return -1;
+}
+
+std::map<std::string,std::string>   PathHandler::parseUrlEncoded(const std::string& body) {
+    std::map<std::string, std::string> m;
+    std::string::size_type start = 0;
+    while (start < body.size()) {
+        std::string::size_type eq = body.find('=', start);
+        if (eq == std::string::npos) break;
+        std::string key = urlDecode(body.substr(start, eq - start));
+
+        std::string::size_type amp = body.find('&', eq + 1);
+        std::string valEnc;
+        if (amp == std::string::npos) {
+            valEnc = body.substr(eq + 1);
+            start = body.size();
+        } else {
+            valEnc = body.substr(eq + 1, amp - eq - 1);
+            start = amp + 1;
+        }
+
+        std::string value = urlDecode(valEnc);
+        m[key] = value;
+    }
+    return m;
+}
+
+std::string PathHandler::getBasename(const std::string& path) {
+    std::string::size_type pos = path.find_last_of("/\\");
+    if (pos == std::string::npos)
+        return path;
+    return path.substr(pos + 1);
+}
+
+std::string PathHandler::urlDecode(const std::string& str) {
+    std::string result;
+    result.reserve(str.size());
+    for (std::string::size_type i = 0; i < str.size(); ++i) {
+        char c = str[i];
+        if (c == '+') {
+            result += ' ';
+        }
+        else if (c == '%' && i + 2 < str.size()) {
+            int hi = hexValue(str[i + 1]);
+            int lo = hexValue(str[i + 2]);
+            if (hi >= 0 && lo >= 0) {
+                result += static_cast<char>((hi << 4) | lo);
+                i += 2;
+            } else {
+                result += '%';
+            }
+        }
+        else {
+            result += c;
+        }
+    }
+    return result;
+}

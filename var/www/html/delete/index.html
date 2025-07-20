@@ -70,10 +70,14 @@
 	const confirmed = confirm(`Are you sure you want to delete "${file}"?`);
 	if (!confirmed) return;
 
-	await fetch('/upload/delete.php', {
+	await fetch('/delete/delete.php', {
 		method: 'DELETE',
 		body: new URLSearchParams({ file })
 	});
+
+	/* await fetch(`/upload/uploads/${encodeURIComponent(file)}`, {
+		method: 'DELETE'
+	}); */
 
 	fetchFiles();
 	}
