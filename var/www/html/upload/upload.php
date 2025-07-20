@@ -1,23 +1,23 @@
 <?php
-echo "Content-type: text/html\n\n";
-echo "Files:\n";
-print_r($_FILES); 
-echo "END OF Files\n";
+header('Content-Type: application/json');
+
+$response = [];
+
 if (isset($_FILES['file'])) {
     $tmp = $_FILES['file']['tmp_name'];
     $name = basename($_FILES['file']['name']);
     $destination = "./uploads/" . $name;
     if (move_uploaded_file($tmp, $destination)) {
-        echo ":marca_de_verificación_blanca: File uploaded successfully to $destination";
+        $response['success'] = true;
+        $response['message'] = "Archivo $name subido correctamente!";
     } else {
-        echo ":x: Failed to move uploaded file.";
+        $response['success'] = false;
+        $response['message'] = "Error al mover el archivo.";
     }
 } else {
-    echo ":advertencia: No file received.";
+    $response['success'] = false;
+    $response['message'] = "No se recibió ningún archivo.";
 }
-?>
 
-
-<?php
-/* print_r($_FILES); // Imprime el contenido de $_FILES */
+echo json_encode($response);
 ?>
