@@ -4,10 +4,10 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="/welcome.css">
-	<link rel="stylesheet" href="post.css">
+	<link rel="stylesheet" href="style.css">
 	<script defer src="/script.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-	<title>POST</title>
+	<title>Contact us</title>
 </head>
 <body>
 	<div id="wrapper">
@@ -26,15 +26,16 @@
 		<!-- Secciones -->
 		<section class="sections">
 			<div class="form_container">
-				<h1>Formulario de contacto</h1>
+				<h1>Contact us:</h1>
 				<form id="userForm" method="POST" action="/submit">
 					<!-- <label for="nombre">Nombre:</label> -->
-					<input type="text" name="nombre" id="nombre" placeholder="Nombre:" required><br><br>
+					<input type="text" name="name" id="name" placeholder="Name:" required>
 					<!-- <label for="usuario">Usuario:</label> -->
-					<input type="text" name="usuario" id="usuario" placeholder="Usuario:" required><br><br>
+					<input type="text" name="user" id="user" placeholder="User:" required>
 					<!-- <label for="edad">Edad:</label> -->
-					<input type="number" name="edad" id="edad" placeholder="Edad:" required><br><br>
-					<button type="submit">Enviar</button>
+					<input type="number" name="age" id="age" placeholder="Age:" required>
+					<textarea id="message" name="message" rows="5" placeholder="Message:"></textarea>
+					<button type="submit">Contact <i class="fa-solid fa-paper-plane"></i></button>
 				</form>
 			</div>
 
