@@ -20,13 +20,21 @@ class FileSystemHandler
         NOT_FOUND
     };
 
-    static ResourceType             getResourceType(const std::string& path);
-    static std::string              getFileContent(const std::string& path);
-    static bool                     fileExists(const std::string& path);
-    static bool                     directoryExists(const std::string& path);
-    static bool                     isDirectory(const std::string& path);
-    static bool                     isFile(const std::string& path);
-    static std::vector<std::string> getDirectoryEntries(const std::string& path);
+    struct DirectoryEntry
+    {
+        std::string  name;
+        ResourceType type;
+        size_t       size;
+    };
+
+    static ResourceType                getResourceType(const std::string& path);
+    static std::string                 getFileContent(const std::string& path);
+    static bool                        fileExists(const std::string& path);
+    static bool                        directoryExists(const std::string& path);
+    static bool                        isDirectory(const std::string& path);
+    static bool                        isFile(const std::string& path);
+    static std::vector<std::string>    getDirectoryEntries(const std::string& path);
+    static std::vector<DirectoryEntry> getDirectoryEntriesWithInfo(const std::string& path);
 
     static bool deleteFile(const std::string& path);
     static bool deleteDirectory(const std::string& path);
