@@ -24,6 +24,9 @@ class HttpResponse
     void setHeader(const std::string& key, const std::string& value);
     void setBody(const std::string& body);
 
+    int                getStatusCode() const;
+    const std::string& getReasonPhrase() const;
+
     std::string toString() const;
 
     // custom

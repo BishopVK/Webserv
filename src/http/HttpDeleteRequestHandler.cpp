@@ -1,5 +1,6 @@
 #include "HttpDeleteRequestHandler.hpp"
 #include "../utils/PathHandler.hpp"
+#include "ErrorPageGenerator.hpp"
 #include "FileSystemHandler.hpp"
 #include "HttpResponse.hpp"
 
@@ -24,10 +25,10 @@ HttpDeleteRequestHandler::~HttpDeleteRequestHandler()
 HttpResponse HttpDeleteRequestHandler::handleMethod(const HttpRequest& request, const Location* location, const Server* server) const
 {
     if (location && !isMethodAllowed("DELETE", *location))
-        return HttpResponse::methodNotAllowed();
+        return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::methodNotAllowed());
 
     if (!location || !server)
-        return HttpResponse::internalServerError();
+        return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::internalServerError());
 
     std::string requestPath = request.getUrl();
     if (requestPath.empty())
@@ -45,7 +46,7 @@ HttpResponse HttpDeleteRequestHandler::handleMethod(const HttpRequest& request, 
     else if (FileSystemHandler::isFile(fullPath))
         return handleFile(fullPath);
     else
-        return HttpResponse::notFound();
+        return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::notFound());
 
     (void)request;
     (void)fullPath;
@@ -56,22 +57,22 @@ HttpResponse HttpDeleteRequestHandler::handleMethod(const HttpRequest& request, 
 HttpResponse HttpDeleteRequestHandler::handleDirectory(const std::string& fullPath) const
 {
     if (!FileSystemHandler::directoryExists(fullPath))
-        return HttpResponse::notFound();
+        return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::notFound());
 
     (void)fullPath;
     if (1 == 0) // TODO: false falta implementar el borrado
         return HttpResponse::response(204, "No Content", "", "text/plain");
     else
-        return HttpResponse::internalServerError();
+        return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::internalServerError());
 }
 
 HttpResponse HttpDeleteRequestHandler::handleFile(const std::string& fullPath) const
 {
     if (!FileSystemHandler::fileExists(fullPath))
-        return HttpResponse::notFound();
+        return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::notFound());
 
     if (FileSystemHandler::deleteFile(fullPath))
         return HttpResponse::response(204, "No Content", "", "text/plain");
     else
-        return HttpResponse::internalServerError();
+        return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::internalServerError());
 }
