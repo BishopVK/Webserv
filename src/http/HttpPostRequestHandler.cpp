@@ -1,5 +1,6 @@
 #include "HttpPostRequestHandler.hpp"
 #include "CgiHandler.hpp"
+#include "ErrorPageGenerator.hpp"
 #include "HttpResponse.hpp"
 
 HttpPostRequestHandler::HttpPostRequestHandler() : AbstractHttpMethodHandler()
@@ -23,7 +24,7 @@ HttpPostRequestHandler::~HttpPostRequestHandler()
 HttpResponse HttpPostRequestHandler::handleMethod(const HttpRequest& request, const Location* location, const Server* server) const
 {
     if (location && !isMethodAllowed("POST", *location))
-        return HttpResponse::methodNotAllowed();
+        return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::methodNotAllowed());
 
     std::string requestPath = request.getUrl();
     if (requestPath.empty())
@@ -32,5 +33,5 @@ HttpResponse HttpPostRequestHandler::handleMethod(const HttpRequest& request, co
     if (CgiHandler::isCgiRequest(requestPath, location))
         return CgiHandler::execute(request, location, server);
 
-    return HttpResponse::notImplemented("POST method handling not implemented yet");
+    return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::notImplemented());
 }

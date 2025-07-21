@@ -2,6 +2,7 @@
 #include "AutoIndexGenerator.hpp"
 #include "CgiHandler.hpp"
 #include "ContentTypeManager.hpp"
+#include "ErrorPageGenerator.hpp"
 #include "FileSystemHandler.hpp"
 #include "HttpResponse.hpp"
 #include "PathHandler.hpp"
@@ -147,11 +148,11 @@ HttpResponse HttpGetRequestHandler::createErrorResponse(int statusCode, const Lo
         case 403:
             return HttpResponse::response(403, "403 Forbidden", "", "text/html");
         case 404:
-            return HttpResponse::notFound();
+            return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::notFound());
         case 405:
-            return HttpResponse::methodNotAllowed();
+            return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::methodNotAllowed());
         case 500:
         default:
-            return HttpResponse::internalServerError();
+            return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::internalServerError());
     }
 }

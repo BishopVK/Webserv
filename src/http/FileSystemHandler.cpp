@@ -6,6 +6,7 @@
 #include <sstream>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <vector>
 
 FileSystemHandler::FileSystemHandler()
 {
@@ -98,6 +99,36 @@ std::vector<std::string> FileSystemHandler::getDirectoryEntries(const std::strin
     closedir(dir);
 
     std::sort(entries.begin(), entries.end());
+    return entries;
+}
+
+std::vector<FileSystemHandler::DirectoryEntry> FileSystemHandler::getDirectoryEntriesWithInfo(const std::string& path)
+{
+    std::vector<DirectoryEntry> entries;
+    DIR*                        dir = opendir(path.c_str());
+    if (!dir)
+        return entries;
+
+    struct dirent* entry;
+    while ((entry = readdir(dir)) != NULL)
+    {
+        std::string entryName = entry->d_name;
+        if (entryName == "." || entryName == "..")
+            continue;
+
+        DirectoryEntry dirEntry;
+        dirEntry.name = entryName;
+        std::string fullPath = path + "/" + entryName;
+        dirEntry.type = getResourceType(fullPath);
+        dirEntry.size = 0;
+
+        if (dirEntry.type == FILE)
+            dirEntry.size = getFileSize(fullPath);
+
+        entries.push_back(dirEntry);
+    }
+    closedir(dir);
+
     return entries;
 }
 

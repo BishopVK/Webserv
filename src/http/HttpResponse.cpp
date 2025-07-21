@@ -153,3 +153,13 @@ HttpResponse HttpResponse::requestEntityTooLarge(const std::string& message)
 
     return response;
 }
+
+int HttpResponse::getStatusCode() const
+{
+    return _statusCode;
+}
+
+const std::string& HttpResponse::getReasonPhrase() const
+{
+    return _reasonPhrase;
+}

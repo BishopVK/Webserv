@@ -1,4 +1,5 @@
 #include "HttpServer.hpp"
+#include "ErrorPageGenerator.hpp"
 #include "HttpRequest.hpp"
 #include "HttpRequestHandler.hpp"
 #include "HttpResponse.hpp"
@@ -32,6 +33,9 @@ HttpServer::~HttpServer()
 HttpServer::HttpServer(const HttpServer& other)
 {
     _servers = other._servers;
+    _serverConnections = other._serverConnections;
+    _clients = other._clients;
+    _multiplexer = other._multiplexer;
 }
 
 HttpServer& HttpServer::operator=(const HttpServer& other)
@@ -39,14 +43,15 @@ HttpServer& HttpServer::operator=(const HttpServer& other)
     if (this != &other)
     {
         _servers = other._servers;
+        _serverConnections = other._serverConnections;
+        _clients = other._clients;
+        _multiplexer = other._multiplexer;
     }
     return *this;
 }
 
 void HttpServer::run()
 {
-    Multiplexer                     multiplexer;
-    std::map<int, ClientConnection> clients;
     // std::vector<int>                server_fds;
 
     for (std::vector<Server>::iterator it = _servers.begin(); it != _servers.end(); ++it)
@@ -71,35 +76,37 @@ void HttpServer::run()
                 continue;
             }
 
-            std::cout << "Starting server on " << ip << ":" << port << std::endl;
+            Logger::instance().info("Starting server on " + ip + ":" + port);
 
             int server_fd = SocketUtils::createServerSocket(ip.c_str(), port.c_str());
             if (server_fd == -1)
             {
-                std::cerr << "Failed to create server socket on " << ip << ":" << port << std::endl;
+                Logger::instance().error("Failed to create server socket on " + ip + ":" + port);
                 continue;
             }
 
+            Logger::instance().info("Server socket created successfully on " + ip + ":" + port + " (fd: " + IntValue(server_fd).toString() + ")");
+
             SocketUtils::setNonBlocking(server_fd);
             SocketUtils::setReuseAddr(server_fd);
-            multiplexer.addFd(server_fd, Multiplexer::READ);
+            _multiplexer.addFd(server_fd, Multiplexer::READ);
             _serverConnections.insert(std::make_pair(server_fd, ServerConnection(server_fd, &(*it))));
         }
     }
 
     if (_serverConnections.empty())
     {
-        Logger::instance().error("No hay sockets de servidor disponibles.");
+        Logger::instance().error("No server sockets available.");
         return;
     }
 
     while (true)
     {
-        int ready_count = multiplexer.poll(1000);
+        int ready_count = _multiplexer.poll(1000);
 
         if (ready_count == -1)
         {
-            Logger::instance().error("Poll fallido: " + std::string(strerror(errno)));
+            Logger::instance().error("Poll failed: " + std::string(strerror(errno)));
             break;
         }
 
@@ -111,25 +118,25 @@ void HttpServer::run()
             const ServerConnection& server_conn = server_it->second;
             int                     server_fd = server_conn.getFd();
 
-            if (!multiplexer.isReadReady(server_fd))
+            if (!_multiplexer.isReadReady(server_fd))
                 continue;
 
             int client_fd = accept(server_fd, NULL, NULL);
 
             if (client_fd == -1)
             {
-                Logger::instance().error("Error al aceptar conexión: " + std::string(strerror(errno)));
+                Logger::instance().error("Error accepting connection: " + std::string(strerror(errno)));
                 continue;
             }
 
             SocketUtils::setNonBlocking(client_fd);
-            multiplexer.addFd(client_fd, Multiplexer::READ);
-            clients[client_fd] = ClientConnection();
-            clients[client_fd].setServerConnection(&server_it->second);
-            Logger::instance().info("Nuevo cliente conectado: " + IntValue(client_fd).toString() + ".");
+            _multiplexer.addFd(client_fd, Multiplexer::READ);
+            _clients[client_fd] = ClientConnection();
+            _clients[client_fd].setServerConnection(&server_it->second);
+            Logger::instance().info("New client connected: " + IntValue(client_fd).toString() + ".");
         }
 
-        std::vector<int> ready_fds = multiplexer.getReadyFds();
+        std::vector<int> ready_fds = _multiplexer.getReadyFds();
         for (std::vector<int>::iterator it = ready_fds.begin(); it != ready_fds.end(); ++it)
         {
             int  fd = *it;
@@ -146,23 +153,34 @@ void HttpServer::run()
             if (is_server_fd)
                 continue;
 
-            if (multiplexer.hasError(fd) || multiplexer.hasHangup(fd))
+            if (_multiplexer.hasError(fd) || _multiplexer.hasHangup(fd))
             {
-                Logger::instance().debug("Cliente desconectado o error en el socket: " + IntValue(fd).toString() + ".");
-                multiplexer.removeFd(fd);
-                clients.erase(fd);
+                Logger::instance().debug("Client disconnected or socket error: " + IntValue(fd).toString() + ".");
+                _multiplexer.removeFd(fd);
+                _clients.erase(fd);
                 SocketUtils::closeSocket(fd);
                 continue;
             }
 
-            if (multiplexer.isReadReady(fd))
-                handleClientRead(fd, clients[fd], multiplexer);
+            if (_multiplexer.isReadReady(fd))
+                handleClientRead(fd, _clients[fd], _multiplexer);
 
-            if (multiplexer.isWriteReady(fd))
-                handleClientWrite(fd, clients[fd], multiplexer);
+            if (_multiplexer.isWriteReady(fd))
+                handleClientWrite(fd, _clients[fd], _multiplexer);
         }
     }
 
+    Logger::instance().info("Server shutting down, closing " + IntValue(_serverConnections.size()).toString() + " server sockets");
+    
+    // Clean up all client connections
+    for (std::map<int, ClientConnection>::iterator it = _clients.begin(); it != _clients.end(); ++it)
+    {
+        Logger::instance().debug("Closing client connection: " + IntValue(it->first).toString());
+        SocketUtils::closeSocket(it->first);
+    }
+    _clients.clear();
+    
+    // Clean up server connections
     for (std::map<int, ServerConnection>::iterator it = _serverConnections.begin(); it != _serverConnections.end(); ++it)
     {
         SocketUtils::closeSocket(it->second.getFd());
@@ -185,12 +203,12 @@ bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multi
 
         if (bytes_read == -1)
         {
-            // EAGAIN indica que no hay datos disponibles para leer en este momento.
-            // EWOULDBLOCK indica que la operación no puede completarse sin bloquear.
+            // EAGAIN indicates that no data is available to read at this time.
+            // EWOULDBLOCK indicates that the operation cannot complete without blocking.
             if (errno == EAGAIN || errno == EWOULDBLOCK)
                 return true;
 
-            Logger::instance().error("Error reading from client: " + std::string(strerror(errno)));
+            Logger::instance().error("Error reading from client " + IntValue(client_fd).toString() + ": " + std::string(strerror(errno)));
             multiplexer.removeFd(client_fd);
             SocketUtils::closeSocket(client_fd);
             return false;
@@ -209,7 +227,7 @@ bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multi
         if (client.getRequestSize() + bytes_read > MAX_REQUEST_SIZE)
         {
             Logger::instance().error("Request too large from client " + IntValue(client_fd).toString());
-            client.setWriteBuffer(HttpResponse::requestEntityTooLarge("Request too large").toString());
+            client.setWriteBuffer(ErrorPageGenerator::GenerateErrorResponse(HttpResponse::requestEntityTooLarge("Request too large")).toString());
             client.clearReadBuffer();
             multiplexer.modifyFd(client_fd, Multiplexer::WRITE);
             return true;
@@ -229,7 +247,7 @@ bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multi
         if (!request || !request->isValid())
         {
             Logger::instance().error("Invalid HTTP request from client " + IntValue(client_fd).toString());
-            client.setWriteBuffer(HttpResponse::badRequest("Invalid HTTP request").toString());
+            client.setWriteBuffer(ErrorPageGenerator::GenerateErrorResponse(HttpResponse::badRequest()).toString());
             client.clearReadBuffer();
             multiplexer.modifyFd(client_fd, Multiplexer::WRITE);
             return true;
@@ -247,6 +265,9 @@ bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multi
         HttpRequestHandler handler;
         HttpResponse       response = handler.handle(*request, client);
 
+        Logger::instance().info("Request processed successfully for client " + IntValue(client_fd).toString() + " - " + request->getMethod() + " " +
+                                request->getUrl());
+
         client.setWriteBuffer(response.toString());
         client.clearReadBuffer();
 
@@ -255,7 +276,7 @@ bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multi
     catch (const std::exception& e)
     {
         Logger::instance().error("Error processing request: " + std::string(e.what()));
-        client.setWriteBuffer(HttpResponse::internalServerError(e.what()).toString());
+        client.setWriteBuffer(ErrorPageGenerator::GenerateErrorResponse(HttpResponse::internalServerError()).toString());
         client.clearReadBuffer();
         multiplexer.modifyFd(client_fd, Multiplexer::WRITE);
     }
@@ -285,6 +306,7 @@ bool HttpServer::handleClientWrite(int client_fd, ClientConnection& client, Mult
 
     if (client.getWriteBuffer().empty())
     {
+        Logger::instance().debug("Response sent completely to client " + IntValue(client_fd).toString());
         multiplexer.removeFd(client_fd);
         SocketUtils::closeSocket(client_fd);
         return false;

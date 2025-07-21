@@ -5,6 +5,7 @@
 #include "Multiplexer.hpp"
 #include "Server.hpp"
 #include "ServerConnection.hpp"
+#include <map>
 #include <netdb.h>
 #include <vector>
 
@@ -15,6 +16,8 @@ class HttpServer
   private:
     std::vector<Server>             _servers;
     std::map<int, ServerConnection> _serverConnections;
+    std::map<int, ClientConnection> _clients;
+    Multiplexer                     _multiplexer;
 
     bool handleClientRead(int client_fd, ClientConnection& client, Multiplexer& multiplexer);
     bool handleClientWrite(int client_fd, ClientConnection& client, Multiplexer& multiplexer);

@@ -92,6 +92,8 @@ std::string PathHandler::getFileName(const std::string& path)
     if (lastSlash == std::string::npos)
         return path;
 
+    // TODO: Decode special characters like %20, %2F, etc.
+
     return path.substr(lastSlash + 1);
 }
 

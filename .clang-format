@@ -29,3 +29,4 @@ SpacesInSquareBrackets: false
 TabWidth: 4
 UseTab: Never
 IndentCaseLabels: true
+BreakStringLiterals: false

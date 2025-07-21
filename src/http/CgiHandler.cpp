@@ -1,6 +1,7 @@
 #include "CgiHandler.hpp"
 #include "../cgis/Cgis.hpp"
 #include "../utils/PathHandler.hpp"
+#include "ErrorPageGenerator.hpp"
 #include "FileSystemHandler.hpp"
 #include "Logger.hpp"
 #include <sstream>
@@ -127,11 +128,11 @@ std::string CgiHandler::getDefaultCgiFile(const Location* location, const Server
 HttpResponse CgiHandler::execute(const HttpRequest& request, const Location* location, const Server* server)
 {
     if (!isCgiRequest(request.getUrl(), location))
-        return HttpResponse::internalServerError();
+        return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::internalServerError());
 
     std::string cgiFilePath = getCgiFilePath(request, location, server);
     if (cgiFilePath.empty())
-        return HttpResponse::notFound();
+        return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::notFound());
 
     std::string directoryPath = PathHandler::getDirectory(cgiFilePath);
     std::string fileName = PathHandler::getFileName(cgiFilePath);
@@ -177,7 +178,7 @@ HttpResponse CgiHandler::execute(const HttpRequest& request, const Location* loc
     }
     else
     {
-        return HttpResponse::methodNotAllowed();
+        return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::methodNotAllowed());
     }
 
     try
@@ -190,6 +191,6 @@ HttpResponse CgiHandler::execute(const HttpRequest& request, const Location* loc
     catch (const std::exception& e)
     {
         Logger::instance().error("Ejecucion de CGI fallida" + std::string(e.what()));
-        return HttpResponse::internalServerError();
+        return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::internalServerError());
     }
 }

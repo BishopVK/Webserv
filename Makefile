@@ -50,7 +50,8 @@ SRC			=	main.cpp \
 				AbstractHttpMethodHandler.cpp \
 				HttpGetRequestHandler.cpp \
 				HttpPostRequestHandler.cpp \
-				HttpDeleteRequestHandler.cpp
+				HttpDeleteRequestHandler.cpp \
+				ErrorPageGenerator.cpp \
 
 # .o folder
 OBJDIR		=	obj

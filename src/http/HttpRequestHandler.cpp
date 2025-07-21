@@ -1,4 +1,5 @@
 #include "HttpRequestHandler.hpp"
+#include "ErrorPageGenerator.hpp"
 #include "HttpRequest.hpp"
 #include "HttpResponse.hpp"
 #include "Location.hpp"
@@ -35,7 +36,7 @@ HttpRequestHandler::~HttpRequestHandler()
 HttpResponse HttpRequestHandler::handle(const HttpRequest& request, const ClientConnection& client) const
 {
     if (!request.isValid())
-        return HttpResponse::badRequest();
+        return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::badRequest());
 
     std::string requestPath = request.getUrl();
     if (requestPath.empty())
@@ -45,14 +46,14 @@ HttpResponse HttpRequestHandler::handle(const HttpRequest& request, const Client
     if (!serverConnection)
     {
         Logger::instance().error("No hay conexión de servidor disponible");
-        return HttpResponse::internalServerError();
+        return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::internalServerError());
     }
 
     const Server* server = serverConnection->getServer();
     if (!server)
     {
         Logger::instance().error("No existen datos del servidor");
-        return HttpResponse::internalServerError();
+        return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::internalServerError());
     }
 
     std::vector<Location> locations = server->getLocations();
@@ -67,5 +68,5 @@ HttpResponse HttpRequestHandler::handle(const HttpRequest& request, const Client
     else if (request.getMethod() == "DELETE")
         return _deleteHandler.handle(request, matchedLocation, server);
     else
-        return HttpResponse::methodNotAllowed();
+        return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::methodNotAllowed());
 }
