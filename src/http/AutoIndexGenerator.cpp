@@ -44,10 +44,11 @@ std::string AutoIndexGenerator::generateHtml() const
 
     std::stringstream html;
     html << "<!DOCTYPE html>\n<html>\n<head>\n"
-        //  << "<link rel=\"stylesheet\" href=\"/autoindex.css\">\n"
+         << "<link rel=\"stylesheet\" href=\"/autoindex.css\">\n"
          << "<title>Index of " << _requestPath << "</title>\n"
-         << css.str()
+        //  << css.str()
          << "</head>\n<body>\n"
+         << "<div class=\"container\">"
          << "<h1>Index of " << _requestPath << "</h1>\n"
          << "<ul>\n";
 
@@ -65,6 +66,6 @@ std::string AutoIndexGenerator::generateHtml() const
         html << "<li><a href=\"" << webPath << "\">" << *it << "</a></li>\n";
     }
 
-    html << "</ul>\n</body>\n</html>\n";
+    html << "</ul>\n</div>\n</body>\n</html>\n";
     return html.str();
 }
