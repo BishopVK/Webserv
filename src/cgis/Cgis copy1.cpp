@@ -6,11 +6,14 @@
 #include "Logger.hpp"
 #include "ErrorPageGenerator.hpp"
 
+pid_t	num_fork;
+
 char **Cgis::create_command(std::string file_path, std::string file_name)
 {
 	std::vector<std::string> command_vec;
+	command_vec.push_back("/usr/bin/timeout");
+	command_vec.push_back("20s");
 	command_vec.push_back(PATH_INFO); // SEGURO QUE ES LA RUTA ENTERA DE PHP-CGI??
-	//command_vec.push_back("php-cgi");
 	command_vec.push_back("-c");
 	command_vec.push_back("./config/php.ini");
 	//command_vec.push_back("-d");
@@ -127,6 +130,8 @@ HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 	std::string line;
 	while (std::getline(ss, line))
 	{
+		//if (line.empty())
+		//	break;
 		if (line == "\r")
 			break ;
 		size_t middle = line.find(':');
@@ -138,6 +143,8 @@ HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 	}
 	while (std::getline(ss, line))
 	{
+		//if (line.empty())
+		//	break;
 		//std::cout << "line=" << line << std::endl;
 		body_answer += line;
 		if (!ss.eof())
@@ -150,9 +157,17 @@ HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 	return (response);
 }
 
+void	timeout(int sig)
+{
+	(void)sig;
+	perror("php time out");
+	//std::cerr << "PHP has timed out" << sig << "...." << std::endl;
+	kill(num_fork, SIGKILL);
+	exit(127);
+}
+
 HttpResponse Cgis::execute()
 {
-	pid_t			num_fork;
 	int				server_to_cgi_pipe[2];
 	int				cgi_to_server_pipe[2];
 	char			**env;
@@ -167,6 +182,10 @@ HttpResponse Cgis::execute()
 		return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
 	if (num_fork == 0)
 	{
+		perror ("init problem");
+	//	signal(SIGALRM, timeout);
+	//	alarm(30);
+		perror ("set problem");
 		dup2(server_to_cgi_pipe[0], 0);
 		dup2(cgi_to_server_pipe[1], 1);
 		close(server_to_cgi_pipe[0]);
@@ -177,6 +196,7 @@ HttpResponse Cgis::execute()
 		command = create_command(this->file_path, this->file_name);
 		execve(PATH_INFO, command, env);
 		perror("execve cgi error");
+		perror ("out problem");
 		exit(127);
 	}
 	if (method == "POST")
@@ -187,9 +207,15 @@ HttpResponse Cgis::execute()
 	close(server_to_cgi_pipe[1]);
 	close(cgi_to_server_pipe[1]);
 	response = build_the_response(cgi_to_server_pipe[0]);
+	perror ("before problem");
+	signal(SIGALRM, timeout);
+	alarm(20);
 	waitpid(num_fork, &status, 0);
+	alarm(0);
+	perror ("after problem");
 	if (WIFSIGNALED(status))
 	{
+		perror ("huston we have a problem");
 		return (ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout()));
 	}
 	if (WIFEXITED(status))

@@ -150,6 +150,14 @@ HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 	return (response);
 }
 
+// void	timeout(int sig)
+// {
+// 	(void)sig;
+// 	perror("php time out");
+// 	//std::cerr << "PHP has timed out" << sig << "...." << std::endl;
+// 	exit(127);
+// }
+
 HttpResponse Cgis::execute()
 {
 	pid_t			num_fork;
@@ -167,6 +175,8 @@ HttpResponse Cgis::execute()
 		return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
 	if (num_fork == 0)
 	{
+		// signal(SIGALRM, timeout);
+		// alarm(30);
 		dup2(server_to_cgi_pipe[0], 0);
 		dup2(cgi_to_server_pipe[1], 1);
 		close(server_to_cgi_pipe[0]);
@@ -186,18 +196,54 @@ HttpResponse Cgis::execute()
 	close(server_to_cgi_pipe[0]);
 	close(server_to_cgi_pipe[1]);
 	close(cgi_to_server_pipe[1]);
-	response = build_the_response(cgi_to_server_pipe[0]);
-	waitpid(num_fork, &status, 0);
+	//response = build_the_response(cgi_to_server_pipe[0]);
+
+	int timeout = 10;
+	while (timeout > 0)
+	{
+		pid_t result = waitpid(num_fork, &status, WNOHANG);
+		if (result == num_fork)
+			break;
+		usleep(1);
+		timeout--;
+	}
+	if (timeout == 0)
+	{
+		kill(num_fork, SIGKILL);
+		waitpid(num_fork, &status, 0);
+		close(cgi_to_server_pipe[0]);
+		return (ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout()));
+	}
+
+	//waitpid(num_fork, &status, 0);
 	if (WIFSIGNALED(status))
 	{
+		close(cgi_to_server_pipe[0]);
 		return (ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout()));
 	}
 	if (WIFEXITED(status))
 	{
 		int exit_status = WEXITSTATUS(status);
 		if (exit_status != 0)
+		{
+			close(cgi_to_server_pipe[0]);
 			return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
+		}
 	}
+	std::string lines = "";
+	char buffer[1024];
+	size_t bytes_read;
+	while ((bytes_read = read(cgi_to_server_pipe[0], buffer, sizeof(buffer) - 1)) > 0)
+	{
+		buffer[bytes_read] = '\0';
+		lines+= buffer;
+	}
+	close(cgi_to_server_pipe[0]);
+	if (lines.empty())
+	{
+		return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
+	}
+	response.setBody(lines);
 	return (response);
 }
 

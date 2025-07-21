@@ -45,6 +45,8 @@ class HttpResponse
     static HttpResponse internalServerError(const std::string& body = "", const std::string& contentType = "text/plain");
     // Http 501
     static HttpResponse notImplemented(const std::string& body = "", const std::string& contentType = "text/plain");
+    // Http 504
+    static HttpResponse gatewayTimeout(const std::string& body = "", const std::string& contentType = "text/plain");
 
     static HttpResponse redirect(const std::string& location, int code = 302);
 };
