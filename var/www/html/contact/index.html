@@ -27,7 +27,7 @@
 		<section class="sections">
 			<div class="form_container">
 				<h1>Contact us:</h1>
-				<form id="userForm" method="POST" action="/submit">
+				<form id="userForm" method="POST" action="/contact/files/">
 					<!-- <label for="nombre">Nombre:</label> -->
 					<input type="text" name="name" id="name" placeholder="Name:" required>
 					<!-- <label for="usuario">Usuario:</label> -->
@@ -45,16 +45,27 @@
 		<script>
 			const form = document.getElementById('userForm');
 			form.addEventListener('submit', async (e) => {
-			e.preventDefault();
-			
-			const formData = new FormData(form);
-			const response = await fetch(form.action, {
+				e.preventDefault();
+
+				const name = document.getElementById('name').value;
+				const user = document.getElementById('user').value;
+				const age = document.getElementById('age').value;
+				const message = document.getElementById('message').value;
+
+				const content = `Name: ${name}\nUser: ${user}\nAge: ${age}\nMessage: ${message}`;
+
+				const blob = new Blob([content], { type: 'text/plain' });
+				const formData = new FormData();
+				formData.append(`${user}_${Date.now()}`, blob, 'message.txt');
+
+				const response = await fetch('/contact/files/', {
 				method: 'POST',
 				body: formData
-			});
+				});
 
-			const text = await response.text(); // Suponemos que el servidor responde con HTML/texto plano
-			document.getElementById('respuesta').innerHTML = text;
+				const result = await response.text();
+				alert(`Mensaje enviado:\n${content}`);
+				document.getElementById('respuesta').innerText = result;
 			});
 		</script>
 

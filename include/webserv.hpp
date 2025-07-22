@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 17:52:11 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/22 21:52:40 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/23 00:58:58 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,3 +28,4 @@
 #include <cctype> // std::isgigit()
 #include <iomanip>
 #include <csignal>
+#include <ctime>
