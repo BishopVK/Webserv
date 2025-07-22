@@ -59,9 +59,6 @@ class ClientConnection
     bool hasCompleteRequest();
     bool hasServerConnection() const;
 
-    std::string uriDecode(const std::string &src);
-    std::string uriEncode(const std::string &src);
-
     // Helper methods
     bool isMultipartComplete();
     bool isRegularRequestComplete();

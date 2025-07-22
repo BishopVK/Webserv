@@ -18,6 +18,10 @@ class PathHandler
 
     static bool        isPrefixMatch(const std::string& requestPath, const std::string& locationPath);
     static std::string getRelativePath(const std::string& requestPath, const std::string& locationPath);
+
+    static std::string uriDecode(const std::string &src);
+    static std::string uriEncode(const std::string &src);
+
 };
 
 #endif
