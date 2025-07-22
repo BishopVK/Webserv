@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:44:17 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/07 11:20:10 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/23 00:06:34 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,10 @@ int main(int argc, char** argv)
         // server.print();
         std::vector<Server> servers = parser.getParsedServers();
         if (servers.empty())
-            std::cout << "servers está vacio" << std::endl;
+            std::cout << "Servers is empty" << std::endl;
         std::vector<Server>::iterator it;
-        for (it = servers.begin(); it != servers.end(); ++it)
-            it->print();
+        // for (it = servers.begin(); it != servers.end(); ++it) // DB
+        //     it->print(); // DB
         HttpServer httpServer(servers);
         httpServer.run();
     }

@@ -6,7 +6,7 @@
 /*   By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:20:04 by danjimen,is       #+#    #+#             */
-/*   Updated: 2025/07/06 09:51:44 by danjimen,is      ###   ########.fr       */
+/*   Updated: 2025/07/23 00:07:47 by danjimen,is      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	Parser::tokenizeConfigFile()
 	std::ifstream configFile(_config_file.c_str());
 	if (!configFile.is_open())
 		throw FailOpenFileException(_config_file);
-	else
-		std::cout << GREEN << _config_file << " opened correctly!" << RESET << std::endl;
+	// else // DB
+	// 	std::cout << GREEN << _config_file << " opened correctly!" << RESET << std::endl; // DB
 
 	std::string	line;
 
