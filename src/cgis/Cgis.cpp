@@ -4,6 +4,7 @@
 #include "Cgis.hpp"
 #include "../../include/http/HttpResponse.hpp"
 #include "Logger.hpp"
+#include "ErrorPageGenerator.hpp"
 
 char **Cgis::create_command(std::string file_path, std::string file_name)
 {
@@ -12,6 +13,9 @@ char **Cgis::create_command(std::string file_path, std::string file_name)
 	//command_vec.push_back("php-cgi");
 	command_vec.push_back("-c");
 	command_vec.push_back("./config/php.ini");
+	//command_vec.push_back("-d");
+	//command_vec.push_back("upload_max_filesize=20M");
+	//command_vec.push_back("-f");
 	command_vec.push_back(file_path + file_name);
 
 	char	**command = new char*[command_vec.size() + 1];
@@ -154,14 +158,13 @@ HttpResponse Cgis::execute()
 	char			**env;
 	char			**command;
 	HttpResponse	response;
-	int				status; // Unused
+	int				status;
 
-	(void)status;
 	pipe(server_to_cgi_pipe);
 	pipe(cgi_to_server_pipe);
 	num_fork = fork();
 	if (num_fork == -1)
-		return (response.internalServerError());
+		return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
 	if (num_fork == 0)
 	{
 		dup2(server_to_cgi_pipe[0], 0);
@@ -184,7 +187,17 @@ HttpResponse Cgis::execute()
 	close(server_to_cgi_pipe[1]);
 	close(cgi_to_server_pipe[1]);
 	response = build_the_response(cgi_to_server_pipe[0]);
-	waitpid(num_fork, NULL, 0);
+	waitpid(num_fork, &status, 0);
+	if (WIFSIGNALED(status))
+	{
+		return (ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout()));
+	}
+	if (WIFEXITED(status))
+	{
+		int exit_status = WEXITSTATUS(status);
+		if (exit_status != 0)
+			return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
+	}
 	return (response);
 }
 
