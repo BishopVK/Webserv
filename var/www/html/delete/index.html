@@ -80,7 +80,10 @@
 				const row = document.createElement("tr");
 				row.innerHTML = `
 					<td>${file}</td>
-					<td><button onclick="deleteFile('${file}')">DELETE</button></td>
+					<a href="/upload/uploads/${encodeURIComponent(file)}" download>
+						<button>DOWNLOAD</button>
+					</a>
+					<td><button onclick="deleteFile('${encodeURIComponent(file)}')">DELETE</button></td>
 				`;
 				tbody.appendChild(row);
 			});
