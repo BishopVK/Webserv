@@ -239,13 +239,13 @@ Cgis::Cgis( std::string method, std::string file_path, std::string file_name,
 	// 	this->body = deschunk(body);
 	// }
 	this->chunked = chunked;
-	Logger::instance().debug("CONSTRUCTOR ==> method: |" + method + "|");
-	Logger::instance().debug("CONSTRUCTOR ==> file_path: |" + file_path + "|");
-	Logger::instance().debug("CONSTRUCTOR ==> file_name: |" + file_name + "|");
-	Logger::instance().debug("CONSTRUCTOR ==> content_type: |" + content_type + "|");
-	Logger::instance().debug("CONSTRUCTOR ==> boundary: |" + boundary + "|");
-	Logger::instance().debug("CONSTRUCTOR ==> content_lenght: |" + content_lenght + "|");
-	Logger::instance().debug("CONSTRUCTOR ==> body: |" + body + "|");
+	// Logger::instance().debug("CONSTRUCTOR ==> method: |" + method + "|");
+	// Logger::instance().debug("CONSTRUCTOR ==> file_path: |" + file_path + "|");
+	// Logger::instance().debug("CONSTRUCTOR ==> file_name: |" + file_name + "|");
+	// Logger::instance().debug("CONSTRUCTOR ==> content_type: |" + content_type + "|");
+	// Logger::instance().debug("CONSTRUCTOR ==> boundary: |" + boundary + "|");
+	// Logger::instance().debug("CONSTRUCTOR ==> content_lenght: |" + content_lenght + "|");
+	// Logger::instance().debug("CONSTRUCTOR ==> body: |" + body + "|");
 	//Logger::instance().debug("CONSTRUCTOR ==> chunked: " + chunked);
 }
 

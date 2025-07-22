@@ -55,7 +55,8 @@ HttpResponse HttpGetRequestHandler::handleWithLocation(const Location& location,
     if (documentRoot.empty())
         documentRoot = server->getRoot();
 
-    std::string fullPath = PathHandler::joinFilePath(documentRoot, relativePath);
+    std::string encodedPath = PathHandler::uriDecode(relativePath); // DB Uri Decoder
+    std::string fullPath = PathHandler::joinFilePath(documentRoot, encodedPath);
 
     return handleResource(fullPath, requestPath, &location, server);
 }
@@ -66,7 +67,8 @@ HttpResponse HttpGetRequestHandler::handleWithServerDefaults(const std::string& 
     if (documentRoot.empty())
         documentRoot = "./var/www";
 
-    std::string fullPath = PathHandler::joinFilePath(documentRoot, requestPath);
+    std::string encodedPath = PathHandler::uriDecode(requestPath); // DB Uri Decoder
+    std::string fullPath = PathHandler::joinFilePath(documentRoot, encodedPath);
 
     return handleResource(fullPath, requestPath, NULL, server);
 }
@@ -116,10 +118,12 @@ HttpResponse HttpGetRequestHandler::handleDirectory(const std::string& fullPath,
 HttpResponse HttpGetRequestHandler::handleFile(const std::string& fullPath, const std::string& /* requestPath */, const Location* location, const Server* server) const
 {
     std::string content = FileSystemHandler::getFileContent(fullPath);
+
     if (content.empty())
         return createErrorResponse(404, location, server);
 
     std::string contentType = ContentTypeManager::getContentType(fullPath);
+    std::cerr <<"Serving: " << fullPath << " with Content-Type: " << contentType << std::endl; // DB
 
     return HttpResponse::ok(content, contentType);
 }

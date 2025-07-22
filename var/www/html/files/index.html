@@ -80,10 +80,10 @@
 				const row = document.createElement("tr");
 				row.innerHTML = `
 					<td>${file}</td>
-					<a href="/upload/uploads/${encodeURIComponent(file)}" download>
-						<button>DOWNLOAD</button>
-					</a>
-					<td><button onclick="deleteFile('${encodeURIComponent(file)}')">DELETE</button></td>
+					<td>
+						<a href="/upload/uploads/${encodeURIComponent(file)}" download>DOWNLOAD</a>
+						<button onclick="deleteFile('${file}')">DELETE</button>
+					</td>
 				`;
 				tbody.appendChild(row);
 			});
@@ -94,7 +94,7 @@
 		const confirmed = confirm(`Are you sure you want to delete "${file}"?`);
 		if (!confirmed) return;
 
-		const res = await fetch(`/upload/uploads/${encodeURIComponent(file)}`, {
+		const res = await fetch(`/upload/uploads/${file}`, {
 			method: 'DELETE'
 		});
 
