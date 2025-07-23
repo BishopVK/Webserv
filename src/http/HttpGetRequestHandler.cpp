@@ -123,7 +123,7 @@ HttpResponse HttpGetRequestHandler::handleFile(const std::string& fullPath, cons
         return createErrorResponse(404, location, server);
 
     std::string contentType = ContentTypeManager::getContentType(fullPath);
-    std::cerr <<"Serving: " << fullPath << " with Content-Type: " << contentType << std::endl; // DB
+    //std::cerr <<"Serving: " << fullPath << " with Content-Type: " << contentType << std::endl; // DB
 
     return HttpResponse::ok(content, contentType);
 }

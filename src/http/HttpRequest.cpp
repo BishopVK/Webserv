@@ -325,7 +325,7 @@ std::vector<File> HttpRequest::getMultipartFiles() const
                 if (!name.empty() || !content.empty())
                 {
                     File file(name, content);
-                    std::cout << "File Content: " << file.getContent() << std::endl;
+                    //std::cout << "File Content: " << file.getContent() << std::endl; // DB??
                     files.push_back(file);
                 }
             }

@@ -55,8 +55,11 @@
 				const content = `Name: ${name}\nUser: ${user}\nAge: ${age}\nMessage: ${message}`;
 
 				const blob = new Blob([content], { type: 'text/plain' });
+				const timestamp = new Date().toISOString().replace(/[:.-]/g, '');
+				const filename = `${name}_${timestamp}.txt`;
+
 				const formData = new FormData();
-				formData.append(`${user}_${Date.now()}`, blob, 'message.txt');
+				formData.append(`${user}_${Date.now()}`, blob, filename);
 
 				const response = await fetch('/contact/files/', {
 				method: 'POST',
@@ -65,7 +68,18 @@
 
 				const result = await response.text();
 				alert(`Mensaje enviado:\n${content}`);
-				document.getElementById('respuesta').innerText = result;
+				// document.getElementById('respuesta').innerText = result;
+				showToast(result);
+
+				function showToast(message)
+				{
+					const toast = document.getElementById('respuesta');
+					toast.textContent = message;
+					toast.classList.add('show');
+					setTimeout(() => {
+						toast.classList.remove('show');
+					}, 3000);
+				}
 			});
 		</script>
 

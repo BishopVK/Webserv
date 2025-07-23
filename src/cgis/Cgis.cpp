@@ -256,7 +256,9 @@ HttpResponse Cgis::execute()
 	}
 	clock_t end = clock(); // DB
 	double elapsed_ms = 1000.0 * (end - start) / CLOCKS_PER_SEC; // DB
-    std::cout << "Aproximated time of timeout: " << elapsed_ms << " ms\n"; // DB
+	std::stringstream ss; // DB
+	ss << "[CGI] Approximate time of timeout: " << elapsed_ms << " ms"; // DB
+	Logger::instance().debug(ss.str()); // DB
 
 	// Signal recived or timeout cases
 	if (g_signal_received != 0 || waited_ms >= timeout_ms)
@@ -269,12 +271,19 @@ HttpResponse Cgis::execute()
 			g_cgi_to_server_read_fd = -1;
 		}
 
-		std::cerr << "[CGI] Forced termination ";
+		//std::cerr << "[CGI] Forced termination ";
+		std::stringstream ss;
+		ss << "[CGI] Forced termination ";
 		if (g_signal_received != 0)
-			std::cerr << "by signal (" << g_signal_received << ")";
+		{
+			ss << "by signal (" << g_signal_received << ")";
+			Logger::instance().error(ss.str());
+		}
 		else
-			std::cerr << "due to timeout (" << timeout_ms << "ms)";
-		std::cerr << std::endl;
+		{
+			ss << "due to timeout (" << timeout_ms << "ms)";
+			Logger::instance().error(ss.str());
+		}
 
 		g_child_pid = -1;
 		g_signal_received = 0;
@@ -284,8 +293,7 @@ HttpResponse Cgis::execute()
 	}
 	else if (WIFSIGNALED(status))
 	{
-		std::cerr << "[CGI] CGI process terminated by signal: "
-			<< WTERMSIG(status) << std::endl;
+		Logger::instance().error("[CGI] CGI process terminated by signal: " + WTERMSIG(status));
 
 		if (g_cgi_to_server_read_fd != -1)
 			close(g_cgi_to_server_read_fd);
@@ -297,8 +305,7 @@ HttpResponse Cgis::execute()
 	}
 	else if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 	{
-		std::cerr << "[CGI] CGI process terminated with error code: "
-			<< WEXITSTATUS(status) << std::endl;
+		Logger::instance().error("[CGI] CGI process terminated with error code: " + WEXITSTATUS(status));
 
 		if (g_cgi_to_server_read_fd != -1)
 			close(g_cgi_to_server_read_fd);
@@ -321,7 +328,7 @@ HttpResponse Cgis::execute()
 	g_child_pid = -1;
 	g_signal_received = 0;
 
-	std::cout << "[CGI] CGI executed successfully." << std::endl;
+	Logger::instance().info("[CGI] CGI executed successfully.");
 
 	return (response);
 }

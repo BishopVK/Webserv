@@ -223,7 +223,7 @@ void HttpServer::run()
         _serverConnections.erase(iterator_to_delete);
     }
 
-    std::cout << RED "Closing webserv..." RESET << std::endl;
+    std::cout << std::endl << RED "Closing webserv..." RESET << std::endl;
 }
 
 bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multiplexer& multiplexer)
