@@ -37,7 +37,8 @@ class FileSystemHandler
     static std::vector<DirectoryEntry> getDirectoryEntriesWithInfo(const std::string& path);
 
     static bool deleteFile(const std::string& path);
-    static bool deleteDirectory(const std::string& path);
+
+    static bool writeFile(const std::string& path, const std::string& content);
 
     static size_t getFileSize(const std::string& path);
 };

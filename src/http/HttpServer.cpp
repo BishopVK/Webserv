@@ -12,6 +12,7 @@
 
 #include <cerrno>
 #include <cstddef>
+#include <cstring>
 #include <errno.h>
 #include <exception>
 #include <iostream>
@@ -171,7 +172,7 @@ void HttpServer::run()
     }
 
     Logger::instance().info("Server shutting down, closing " + IntValue(_serverConnections.size()).toString() + " server sockets");
-    
+
     // Clean up all client connections
     for (std::map<int, ClientConnection>::iterator it = _clients.begin(); it != _clients.end(); ++it)
     {
@@ -179,7 +180,7 @@ void HttpServer::run()
         SocketUtils::closeSocket(it->first);
     }
     _clients.clear();
-    
+
     // Clean up server connections
     for (std::map<int, ServerConnection>::iterator it = _serverConnections.begin(); it != _serverConnections.end(); ++it)
     {
@@ -199,6 +200,7 @@ bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multi
 
     while (!client.hasCompleteRequest())
     {
+        std::memset(buffer, 0, BUFFER_SIZE);
         bytes_read = recv(client_fd, buffer, BUFFER_SIZE - 1, 0);
 
         if (bytes_read == -1)
@@ -216,7 +218,7 @@ bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multi
 
         if (bytes_read == 0)
         {
-            Logger::instance().debug("Client " + IntValue(client_fd).toString() + " closed connection");
+            Logger::instance().info("Client " + IntValue(client_fd).toString() + " closed connection");
             multiplexer.removeFd(client_fd);
             SocketUtils::closeSocket(client_fd);
             return false;
@@ -264,9 +266,6 @@ bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multi
 
         HttpRequestHandler handler;
         HttpResponse       response = handler.handle(*request, client);
-
-        Logger::instance().info("Request processed successfully for client " + IntValue(client_fd).toString() + " - " + request->getMethod() + " " +
-                                request->getUrl());
 
         client.setWriteBuffer(response.toString());
         client.clearReadBuffer();

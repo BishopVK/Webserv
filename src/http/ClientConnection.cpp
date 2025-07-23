@@ -221,12 +221,17 @@ bool ClientConnection::isMultipartComplete()
 
     std::string finalBoundary = "--" + _boundary + "--";
 
+    // If content is empty or equal to the final boundary, the request is complete
+    if (finalBoundary.length() + 2 >= _contentLength)
+        return true;
+
     size_t finalBoundaryPos = _read_buffer.find(finalBoundary);
     if (finalBoundaryPos == std::string::npos)
         return false;
 
     size_t afterBoundary = finalBoundaryPos + finalBoundary.length();
 
+    // Skip any trailing whitespace or tabs after the boundary
     while (afterBoundary < _read_buffer.length() && (_read_buffer[afterBoundary] == ' ' || _read_buffer[afterBoundary] == '\t'))
         afterBoundary++;
 

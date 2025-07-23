@@ -52,6 +52,8 @@ SRC			=	main.cpp \
 				HttpPostRequestHandler.cpp \
 				HttpDeleteRequestHandler.cpp \
 				ErrorPageGenerator.cpp \
+				FileUploadHandler.cpp \
+				File.cpp \
 
 # .o folder
 OBJDIR		=	obj

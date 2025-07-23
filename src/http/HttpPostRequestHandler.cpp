@@ -1,6 +1,7 @@
 #include "HttpPostRequestHandler.hpp"
 #include "CgiHandler.hpp"
 #include "ErrorPageGenerator.hpp"
+#include "FileUploadHandler.hpp"
 #include "HttpResponse.hpp"
 
 HttpPostRequestHandler::HttpPostRequestHandler() : AbstractHttpMethodHandler()
@@ -33,5 +34,9 @@ HttpResponse HttpPostRequestHandler::handleMethod(const HttpRequest& request, co
     if (CgiHandler::isCgiRequest(requestPath, location))
         return CgiHandler::execute(request, location, server);
 
-    return ErrorPageGenerator::GenerateErrorResponse(HttpResponse::notImplemented());
+    // Check if this is a file upload request
+    if (FileUploadHandler::isUploadRequest(request, location))
+        return FileUploadHandler::handleUpload(request, location, server);
+
+    return HttpResponse::ok("Data received successfully", "text/plain");
 }

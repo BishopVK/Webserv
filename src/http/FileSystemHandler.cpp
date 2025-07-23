@@ -1,11 +1,14 @@
 #include "FileSystemHandler.hpp"
 #include "Logger.hpp"
 #include <algorithm>
+#include <cstdlib>
+#include <cstring>
 #include <dirent.h>
 #include <fstream>
 #include <sstream>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <unistd.h>
 #include <vector>
 
 FileSystemHandler::FileSystemHandler()
@@ -164,8 +167,24 @@ bool FileSystemHandler::deleteFile(const std::string& path)
     return true;
 }
 
-bool FileSystemHandler::deleteDirectory(const std::string& path)
+bool FileSystemHandler::writeFile(const std::string& path, const std::string& content)
 {
-    (void)path;
+    std::ofstream file(path.c_str(), std::ios::binary);
+    if (!file.is_open())
+    {
+        Logger::instance().error("Failed to open file for writing: " + path);
+        return false;
+    }
+
+    file.write(content.data(), content.size());
+
+    if (file.fail())
+    {
+        Logger::instance().error("Failed to write file content: " + path);
+        file.close();
+        return false;
+    }
+
+    file.close();
     return true;
 }

@@ -1,7 +1,10 @@
 #include "HttpRequest.hpp"
+#include "File.hpp"
 #include "Logger.hpp"
+#include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 HttpRequest::HttpRequest() : _method(), _url(), _rawUrl(), _version(), _raw(), _parameters(), _valid(false)
 {
@@ -267,4 +270,152 @@ const std::string HttpRequest::getBoundary() const
 void HttpRequest::setBody(const std::string& body_content)
 {
     _body = body_content;
+}
+
+std::vector<File> HttpRequest::getMultipartFiles() const
+{
+    std::vector<File> files;
+    std::string       boundary = getBoundary();
+    if (boundary.empty())
+        return files;
+
+    std::string boundary_marker = "--" + boundary;
+    size_t      start_pos = _body.find(boundary_marker);
+
+    std::string end_boundary_marker = boundary_marker + "--";
+    if (start_pos != std::string::npos && _body.find(end_boundary_marker, start_pos) == start_pos)
+    {
+        Logger::instance().debug("Request body contains only end boundary, no files to process");
+        return files;
+    }
+
+    if (start_pos == std::string::npos)
+        return files;
+
+    while (start_pos != std::string::npos)
+    {
+        // Move past the current boundary
+        start_pos += boundary_marker.length();
+
+        // Skip any \r\n after boundary
+        while (start_pos < _body.length() && (_body[start_pos] == '\r' || _body[start_pos] == '\n'))
+            start_pos++;
+
+        // Find the next boundary
+        size_t end_pos = _body.find(boundary_marker, start_pos);
+        if (end_pos == std::string::npos)
+            break;
+
+        // Extract the multipart section (without the boundaries)
+        std::string section = _body.substr(start_pos, end_pos - start_pos);
+
+        // Only create file if section is not empty and not just whitespace
+        if (!section.empty())
+        {
+            // Trim trailing whitespace/newlines
+            while (!section.empty() && (section[section.length() - 1] == '\r' || section[section.length() - 1] == '\n'))
+                section.erase(section.length() - 1);
+
+            if (!section.empty())
+            {
+                std::string name;
+                std::string content;
+                parseMultipartSection(section, name, content);
+
+                if (!name.empty() || !content.empty())
+                {
+                    File file(name, content);
+                    std::cout << "File Content: " << file.getContent() << std::endl;
+                    files.push_back(file);
+                }
+            }
+        }
+
+        start_pos = end_pos;
+
+        size_t final_boundary_pos = start_pos + boundary_marker.length();
+        bool   has_remaining_content = final_boundary_pos + 2 < _body.length();
+        bool   is_final_boundary = has_remaining_content && _body.substr(final_boundary_pos, 2) == "--";
+
+        if (is_final_boundary)
+            break;
+    }
+
+    return files;
+}
+
+void HttpRequest::parseMultipartSection(const std::string& section, std::string& name, std::string& content) const
+{
+    if (section.empty())
+        return;
+
+    size_t header_end = section.find("\r\n\r\n");
+    if (header_end == std::string::npos)
+    {
+        header_end = section.find("\n\n");
+        if (header_end != std::string::npos)
+            header_end += 2;
+    }
+    else
+        header_end += 4;
+
+    if (header_end == std::string::npos)
+        header_end = section.length();
+
+    size_t delimiter_length = 0;
+    if (header_end != section.length())
+        delimiter_length = (section.find("\r\n\r\n") != std::string::npos) ? 4 : 2;
+
+    std::string headers_part = section.substr(0, header_end - delimiter_length);
+
+    std::istringstream header_stream(headers_part);
+    std::string        line;
+    while (std::getline(header_stream, line))
+    {
+        if (!line.empty() && line[line.length() - 1] == '\r')
+            line.erase(line.length() - 1);
+
+        if (line.empty())
+            continue;
+
+        if (line.find("Content-Disposition:") == 0)
+        {
+            std::string filename;
+            std::string form_name;
+            parseContentDisposition(line, filename, form_name);
+
+            if (!filename.empty())
+                name = filename;
+            else if (!form_name.empty())
+                name = form_name;
+        }
+    }
+
+    if (header_end < section.length())
+        content = section.substr(header_end);
+}
+
+void HttpRequest::parseContentDisposition(const std::string& header, std::string& filename, std::string& name) const
+{
+    size_t filename_pos = header.find("filename=\"");
+    if (filename_pos != std::string::npos)
+    {
+        filename_pos += 10;
+        size_t filename_end = header.find("\"", filename_pos);
+        if (filename_end != std::string::npos)
+        {
+            filename = header.substr(filename_pos, filename_end - filename_pos);
+        }
+    }
+
+    size_t name_pos = header.find("name=\"");
+    if (name_pos != std::string::npos)
+    {
+        name_pos += 6;
+        size_t name_end = header.find("\"", name_pos);
+        if (name_end != std::string::npos)
+        {
+            name = header.substr(name_pos, name_end - name_pos);
+        }
+    }
 }

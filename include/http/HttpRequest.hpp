@@ -1,8 +1,10 @@
 #ifndef HTTPREQUEST_HPP
 #define HTTPREQUEST_HPP
 
+#include "File.hpp"
 #include <map>
 #include <string>
+#include <vector>
 
 class HttpRequest
 {
@@ -19,6 +21,8 @@ class HttpRequest
 
     void parse(const char* raw_request);
     void parseUrlParameters(const std::string& url);
+    void parseMultipartSection(const std::string& section, std::string& name, std::string& content) const;
+    void parseContentDisposition(const std::string& header, std::string& filename, std::string& name) const;
 
   public:
     HttpRequest();
@@ -44,6 +48,12 @@ class HttpRequest
      * Returns the boundary for multipart/form-data requests.
      */
     const std::string getBoundary() const;
+
+    /**
+     * Returns the files included in the request, if any.
+     * This is typically used for file upload requests, on multipart/form-data.
+     */
+    std::vector<File> getMultipartFiles() const;
 
     bool isValid() const;
 };

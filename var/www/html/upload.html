@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .upload-form {
+            border: 2px dashed #ddd;
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .upload-form:hover {
+            border-color: #007bff;
+            background-color: #f8f9fa;
+        }
+        input[type="file"] {
+            margin: 20px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .info {
+            background-color: #e7f3ff;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .method-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .method-title {
+            color: #007bff;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Webserv File Upload Test</h1>
+
+        <div class="info">
+            <strong>Instructions:</strong><br>
+            This page allows you to test file upload functionality in the Webserv HTTP server.
+            Select a file and click upload to test the multipart form-data upload feature.
+        </div>
+
+        <div class="method-section">
+            <div class="method-title">Method 1: Multipart Form Upload</div>
+            <form class="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+                <p></p>📁 Drag and drop a file here or click to select</p>
+                <input type="file" name="uploadfile" id="uploadfile" required>
+                <br>
+                <input type="submit" value="Upload File">
+            </form>
+        </div>
+
+        <div class="method-section">
+            <div class="method-title">Method 2: Multiple File Upload</div>
+            <form class="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+                <p>📎 Select multiple files to upload</p>
+                <input type="file" name="uploadfiles" id="uploadfiles" multiple>
+                <br>
+                <input type="submit" value="Upload Multiple Files">
+            </form>
+        </div>
+
+        <div class="method-section">
+            <div class="method-title">Method 3: Text File Upload</div>
+            <form class="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+                <p>📝 Upload text files only</p>
+                <input type="file" name="textfile" accept=".txt,.md,.log" required>
+                <br>
+                <input type="submit" value="Upload Text File">
+            </form>
+        </div>
+
+        <div class="method-section">
+            <div class="method-title">Method 4: Image Upload</div>
+            <form class="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+                <p></p>🖼️ Upload image files</p>
+                <input type="file" name="imagefile" accept="image/*" required>
+                <br>
+                <input type="submit" value="Upload Image">
+            </form>
+        </div>
+
+        <div class="info">
+            <strong>Upload Configuration:</strong><br>
+            • Upload endpoint: <code>/upload</code><br>
+            • Method: POST<br>
+            • Encoding: multipart/form-data<br>
+            • Files will be saved to the configured upload directory<br>
+        </div>
+
+        <div class="info">
+            <strong>Server Response:</strong><br>
+            After successful upload, you should receive a "201 Created" response with the filename.
+            Check your server logs for detailed upload information.
+        </div>
+    </div>
+
+    <script>
+        // Add some interactivity
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.addEventListener('change', function(e) {
+                const files = e.target.files;
+                const form = e.target.closest('form');
+                const info = form.querySelector('p');
+
+                if (files.length > 0) {
+                    if (files.length === 1) {
+                        info.textContent = `📄 Selected: ${files[0].name} (${(files[0].size / 1024).toFixed(1)} KB)`;
+                    } else {
+                        info.textContent = `📄 Selected ${files.length} files`;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
