@@ -106,7 +106,6 @@ char	**Cgis::create_env()
 	return response.ok(body_part);
 } */
 
-// Inés version
 HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 {
 	HttpResponse response;
@@ -230,32 +229,10 @@ HttpResponse Cgis::execute()
 	return (response);
 }
 
-// void Cgis::hardcode()
-// {
-// 	this->method = "POST";
-// 	this->file_path = "./var/www/html/upload/";
-// 	this->file_name = "upload.php";
-// 	//std::string	file_name = "file.php";
-// 	//this->content_type = "application/x-www-form-urlencoded";
-// 	this->content_type = "multipart/form-data";
-// 	this->content_lenght = "186";
-// 	//this->body = "age=20";
-// 	this->body =	"------WebKitFormBoundaryrFooryMJAX0YAoTO\n"
-// 					"Content-Disposition: form-data; name=\"file\"; filename=\"txt.txt\"\n"
-// 					"Content-Type: text/plain\n"
-// 					"\n"
-// 					"hola\n"
-// 					"\n"
-// 					"------WebKitFormBoundaryrFooryMJAX0YAoTO--\n";
-// 	this->boundary = "----WebKitFormBoundaryrFooryMJAX0YAoTO";
-// 	this->chunked = false;
-// }
-
 Cgis::Cgis( std::string method, std::string file_path, std::string file_name,
 		std::string content_type, std::string boundary, std::string content_lenght,
 		std::string body)
 {
-	//hardcode();
 	this->method = method;
 	this->file_path = file_path;
 	this->file_name = file_name;
@@ -276,11 +253,3 @@ Cgis::Cgis( std::string method, std::string file_path, std::string file_name,
 Cgis::~Cgis()
 {
 }
-
-// int main(void)
-// {
-// 	Cgis a_cgi("std::string method", "std::string file_path", "std::string file_name",
-// 		"std::string content_type", "std::string boundary", "std::string content_lenght",
-// 		"std::string body", false);
-// 	a_cgi.execute();
-// }
