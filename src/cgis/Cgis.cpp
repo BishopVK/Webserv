@@ -9,8 +9,7 @@
 char **Cgis::create_command(std::string file_path, std::string file_name)
 {
 	std::vector<std::string> command_vec;
-	command_vec.push_back(PATH_INFO); // SEGURO QUE ES LA RUTA ENTERA DE PHP-CGI??
-	//command_vec.push_back("php-cgi");
+	command_vec.push_back(PATH_INFO);
 	command_vec.push_back("-c");
 	command_vec.push_back("./config/php.ini");
 	//command_vec.push_back("-d");
@@ -119,8 +118,7 @@ HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 	int n = 0;
 	while ((n = read(cgi_to_server_pipe, buffer, sizeof(buffer))) > 0)
 	{
-		//body_answer.append(buffer, n); // SEGURO QUE ES body_answer???
-		whole_answer.append(buffer, n); // no body_answer
+		whole_answer.append(buffer, n);
 	}
 	//std::cout << "whole answer\n" << whole_answer << "\n\n" << std::endl;
 
@@ -163,8 +161,6 @@ HttpResponse Cgis::execute()
 
 	if (pipe(server_to_cgi_pipe) == -1 || pipe(cgi_to_server_pipe) == -1)
 		return ErrorPageGenerator::GenerateErrorResponse(response.internalServerError());
-	// pipe(server_to_cgi_pipe);
-	// pipe(cgi_to_server_pipe);
 	num_fork = fork();
 	if (num_fork == -1)
 		return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
@@ -182,53 +178,55 @@ HttpResponse Cgis::execute()
 		perror("execve cgi error");
 		exit(127);
 	}
-	else
+	signal(SIGINT, SIG_IGN);
+	if (method == "POST")
 	{
-		// padre
-		if (method == "POST")
-		{
-			write(server_to_cgi_pipe[1], body.c_str(), body.size());
-		}
-		close(server_to_cgi_pipe[0]);
-		close(server_to_cgi_pipe[1]);
-		close(cgi_to_server_pipe[1]);
+		write(server_to_cgi_pipe[1], body.c_str(), body.size());
+	}
+	close(server_to_cgi_pipe[0]);
+	close(server_to_cgi_pipe[1]);
+	close(cgi_to_server_pipe[1]);
 
-		// TIMEOUT
-		int waited_ms = 0;
-		const int timeout_ms = 5000;
-		while (waited_ms < timeout_ms)
-		{
-			pid_t result = waitpid(num_fork, &status, WNOHANG);
-			if (result == 0) {
-				usleep(10000); // 10ms
-				waited_ms+= 10;
-			} else {
-				break;
-			}
-		}
-		if (waited_ms >= timeout_ms)
-		{
-			kill(num_fork, SIGKILL); // CGI colgado, lo matamos
-			waitpid(num_fork, &status, 0); // evitar zombie
-			close(cgi_to_server_pipe[0]); // cerrar pipe
-			return ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout());
-		}
-		
-		response = build_the_response(cgi_to_server_pipe[0]);
-
-		waitpid(num_fork, &status, 0);
-
-		if (WIFSIGNALED(status))
-		{
-			return (ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout()));
-		}
-		if (WIFEXITED(status))
-		{
-			int exit_status = WEXITSTATUS(status);
-			if (exit_status != 0)
-				return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
+	// TIMEOUT
+	int waited_ms = 0;
+	const int timeout_ms = 10000;
+	while (waited_ms < timeout_ms)
+	{
+		pid_t result = waitpid(num_fork, &status, WNOHANG);
+		if (result == 0) {
+			usleep(10000); // 10ms
+			waited_ms+= 10;
+		} else {
+			break;
 		}
 	}
+	if (waited_ms >= timeout_ms)
+	{
+		kill(num_fork, SIGKILL);
+		close(cgi_to_server_pipe[0]);
+		waitpid(num_fork, &status, 0);
+		signal(SIGINT, SIG_DFL);
+		return (ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout()));
+	}
+	
+	else if (WIFSIGNALED(status))
+	{
+		close(cgi_to_server_pipe[0]);
+		signal(SIGINT, SIG_DFL);
+		return (ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout()));
+	}
+	if (WIFEXITED(status))
+	{
+		if (WEXITSTATUS(status) != 0)
+		{
+			close(cgi_to_server_pipe[0]);
+			signal(SIGINT, SIG_DFL);
+			return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
+		}
+	}
+	response = build_the_response(cgi_to_server_pipe[0]);
+	waitpid(num_fork, &status, 0);
+	signal(SIGINT, SIG_DFL);
 	return (response);
 }
 
@@ -255,7 +253,7 @@ HttpResponse Cgis::execute()
 
 Cgis::Cgis( std::string method, std::string file_path, std::string file_name,
 		std::string content_type, std::string boundary, std::string content_lenght,
-		std::string body, int chunked )
+		std::string body)
 {
 	//hardcode();
 	this->method = method;
@@ -265,11 +263,6 @@ Cgis::Cgis( std::string method, std::string file_path, std::string file_name,
 	this->boundary = boundary;
 	this->content_lenght = content_lenght;
 	this->body = body;
-	// if (chunked == true)
-	// {
-	// 	this->body = deschunk(body);
-	// }
-	this->chunked = chunked;
 	// Logger::instance().debug("CONSTRUCTOR ==> method: |" + method + "|");
 	// Logger::instance().debug("CONSTRUCTOR ==> file_path: |" + file_path + "|");
 	// Logger::instance().debug("CONSTRUCTOR ==> file_name: |" + file_name + "|");

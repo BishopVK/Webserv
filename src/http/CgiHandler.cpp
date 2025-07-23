@@ -183,7 +183,7 @@ HttpResponse CgiHandler::execute(const HttpRequest& request, const Location* loc
 
     try
     {
-        Cgis         cgiHandler(method, directoryPath + "/", fileName, contentType, boundary, contentLength, body, 0);
+        Cgis         cgiHandler(method, directoryPath + "/", fileName, contentType, boundary, contentLength, body);
         HttpResponse response = cgiHandler.execute();
 
         return response;

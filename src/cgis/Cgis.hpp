@@ -26,7 +26,6 @@ class Cgis
 		std::string	boundary;
 		std::string	content_lenght; //en bytes
 		std::string	body;
-		int			chunked;
 
 		char			**create_command(std::string file_path, std::string file_name);
 		char			**create_env();
@@ -35,9 +34,8 @@ class Cgis
 		
 		public:
 		HttpResponse	execute();
-		//std::string deschunk( std::string body );
 		Cgis( std::string method, std::string file_path, std::string file_name,
 			std::string content_type, std::string boundary, std::string content_lenght,
-			std::string body, int chunked );
+			std::string body );
 		~Cgis();
 };
