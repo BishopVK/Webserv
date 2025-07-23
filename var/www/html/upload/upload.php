@@ -20,4 +20,10 @@ if (isset($_FILES['file'])) {
 }
 
 echo json_encode($response);
+
+// TESTING ONLY
+/* set_time_limit(0); // Evita que PHP mate el script por timeout (por si acaso)
+while (true) {
+    // No hace nada, solo se queda en bucle infinito
+} */
 ?>

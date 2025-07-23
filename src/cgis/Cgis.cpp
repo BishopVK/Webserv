@@ -107,6 +107,7 @@ char	**Cgis::create_env()
 	return response.ok(body_part);
 } */
 
+// Inés version
 HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 {
 	HttpResponse response;
@@ -160,8 +161,10 @@ HttpResponse Cgis::execute()
 	HttpResponse	response;
 	int				status;
 
-	pipe(server_to_cgi_pipe);
-	pipe(cgi_to_server_pipe);
+	if (pipe(server_to_cgi_pipe) == -1 || pipe(cgi_to_server_pipe) == -1)
+		return ErrorPageGenerator::GenerateErrorResponse(response.internalServerError());
+	// pipe(server_to_cgi_pipe);
+	// pipe(cgi_to_server_pipe);
 	num_fork = fork();
 	if (num_fork == -1)
 		return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
@@ -179,24 +182,52 @@ HttpResponse Cgis::execute()
 		perror("execve cgi error");
 		exit(127);
 	}
-	if (method == "POST")
+	else
 	{
-		write(server_to_cgi_pipe[1], body.c_str(), body.size());
-	}
-	close(server_to_cgi_pipe[0]);
-	close(server_to_cgi_pipe[1]);
-	close(cgi_to_server_pipe[1]);
-	response = build_the_response(cgi_to_server_pipe[0]);
-	waitpid(num_fork, &status, 0);
-	if (WIFSIGNALED(status))
-	{
-		return (ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout()));
-	}
-	if (WIFEXITED(status))
-	{
-		int exit_status = WEXITSTATUS(status);
-		if (exit_status != 0)
-			return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
+		// padre
+		if (method == "POST")
+		{
+			write(server_to_cgi_pipe[1], body.c_str(), body.size());
+		}
+		close(server_to_cgi_pipe[0]);
+		close(server_to_cgi_pipe[1]);
+		close(cgi_to_server_pipe[1]);
+
+		// TIMEOUT
+		int waited_ms = 0;
+		const int timeout_ms = 5000;
+		while (waited_ms < timeout_ms)
+		{
+			pid_t result = waitpid(num_fork, &status, WNOHANG);
+			if (result == 0) {
+				usleep(10000); // 10ms
+				waited_ms+= 10;
+			} else {
+				break;
+			}
+		}
+		if (waited_ms >= timeout_ms)
+		{
+			kill(num_fork, SIGKILL); // CGI colgado, lo matamos
+			waitpid(num_fork, &status, 0); // evitar zombie
+			close(cgi_to_server_pipe[0]); // cerrar pipe
+			return ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout());
+		}
+		
+		response = build_the_response(cgi_to_server_pipe[0]);
+
+		waitpid(num_fork, &status, 0);
+
+		if (WIFSIGNALED(status))
+		{
+			return (ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout()));
+		}
+		if (WIFEXITED(status))
+		{
+			int exit_status = WEXITSTATUS(status);
+			if (exit_status != 0)
+				return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
+		}
 	}
 	return (response);
 }
