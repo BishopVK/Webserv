@@ -62,8 +62,8 @@ void signalHandler(int signum)
 void HttpServer::run()
 {
     // std::vector<int>                server_fds;
-    std::signal(SIGINT, signalHandler);
-    std::signal(SIGTERM, signalHandler);
+    // std::signal(SIGINT, signalHandler);
+    // std::signal(SIGTERM, signalHandler);
 
     //std::cout << GREEN "Webserv initialized" RESET << std::endl;
     std::cout << GREEN
@@ -133,6 +133,8 @@ void HttpServer::run()
     //while (true)
     while (running)
     {
+        std::signal(SIGINT, signalHandler);
+        std::signal(SIGTERM, signalHandler);
         int ready_count = _multiplexer.poll(1000);
 
         if (ready_count == -1)

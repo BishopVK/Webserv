@@ -6,6 +6,40 @@
 #include "Logger.hpp"
 #include "ErrorPageGenerator.hpp"
 
+// Variables estáticas para limpieza desde el manejador de señal
+static int						g_server_to_cgi_write_fd = -1;
+static int						g_cgi_to_server_read_fd = -1;
+static pid_t					g_child_pid = -1;
+static volatile sig_atomic_t	g_signal_received = 0;
+
+static void handle_signal(int sig)
+{
+	g_signal_received = sig;
+	if (g_child_pid > 0)
+	{
+		kill(g_child_pid, SIGKILL); // matar al CGI si está colgado
+		waitpid(g_child_pid, NULL, 0); // evitar proceso zombie
+	}
+	if (g_server_to_cgi_write_fd != -1)
+	{
+		close(g_server_to_cgi_write_fd);
+		g_server_to_cgi_write_fd = -1;
+	}
+	if (g_cgi_to_server_read_fd != -1)
+	{
+		close(g_cgi_to_server_read_fd);
+		g_cgi_to_server_read_fd = -1;
+	}
+}
+
+void busy_wait_10ms()
+{
+	volatile int dummy = 0;
+	// Aprox 10ms?
+	for (int i = 0; i < 30000000; ++i)
+		dummy++;  // Avoid loop optimization
+}
+
 char **Cgis::create_command(std::string file_path, std::string file_name)
 {
 	std::vector<std::string> command_vec;
@@ -160,72 +194,135 @@ HttpResponse Cgis::execute()
 
 	if (pipe(server_to_cgi_pipe) == -1 || pipe(cgi_to_server_pipe) == -1)
 		return ErrorPageGenerator::GenerateErrorResponse(response.internalServerError());
+
+	// Registrar handlers
+	signal(SIGINT, handle_signal);
+	signal(SIGTERM, handle_signal);
+
 	num_fork = fork();
 	if (num_fork == -1)
 		return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
-	if (num_fork == 0)
+
+	if (num_fork == 0) // Child
 	{
 		dup2(server_to_cgi_pipe[0], 0);
 		dup2(cgi_to_server_pipe[1], 1);
+
 		close(server_to_cgi_pipe[0]);
 		close(server_to_cgi_pipe[1]);
 		close(cgi_to_server_pipe[0]);
 		close(cgi_to_server_pipe[1]);
+
 		env = create_env();
 		command = create_command(this->file_path, this->file_name);
 		execve(PATH_INFO, command, env);
+
 		perror("execve cgi error");
 		exit(127);
 	}
-	signal(SIGINT, SIG_IGN);
+
+	// Father
+	g_server_to_cgi_write_fd = server_to_cgi_pipe[1];
+	g_cgi_to_server_read_fd = cgi_to_server_pipe[0];
+	g_child_pid = num_fork;
+
 	if (method == "POST")
 	{
 		write(server_to_cgi_pipe[1], body.c_str(), body.size());
 	}
 	close(server_to_cgi_pipe[0]);
 	close(server_to_cgi_pipe[1]);
+	g_server_to_cgi_write_fd = -1;
 	close(cgi_to_server_pipe[1]);
 
 	// TIMEOUT
 	int waited_ms = 0;
-	const int timeout_ms = 10000;
+	const int timeout_ms = 5000;
+	clock_t start = clock(); // DB
 	while (waited_ms < timeout_ms)
 	{
-		pid_t result = waitpid(num_fork, &status, WNOHANG);
-		if (result == 0) {
-			usleep(10000); // 10ms
-			waited_ms+= 10;
-		} else {
+		if (g_signal_received != 0)
 			break;
+
+		pid_t result = waitpid(num_fork, &status, WNOHANG);
+		if (result == 0)
+		{
+			//usleep(10000); // 10ms
+			busy_wait_10ms();
+			waited_ms+= 10;
 		}
+		else
+			break;
 	}
-	if (waited_ms >= timeout_ms)
+	clock_t end = clock(); // DB
+	double elapsed_ms = 1000.0 * (end - start) / CLOCKS_PER_SEC; // DB
+    std::cout << "Aproximated time of timeout: " << elapsed_ms << " ms\n"; // DB
+
+	// Signal recived or timeout cases
+	if (g_signal_received != 0 || waited_ms >= timeout_ms)
 	{
 		kill(num_fork, SIGKILL);
-		close(cgi_to_server_pipe[0]);
 		waitpid(num_fork, &status, 0);
+		if (g_cgi_to_server_read_fd != -1)
+		{
+			close(g_cgi_to_server_read_fd);
+			g_cgi_to_server_read_fd = -1;
+		}
+
+		std::cerr << "[CGI] Forced termination ";
+		if (g_signal_received != 0)
+			std::cerr << "by signal (" << g_signal_received << ")";
+		else
+			std::cerr << "due to timeout (" << timeout_ms << "ms)";
+		std::cerr << std::endl;
+
+		g_child_pid = -1;
+		g_signal_received = 0;
 		signal(SIGINT, SIG_DFL);
+		signal(SIGTERM, SIG_DFL);
 		return (ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout()));
 	}
-	
 	else if (WIFSIGNALED(status))
 	{
-		close(cgi_to_server_pipe[0]);
+		std::cerr << "[CGI] CGI process terminated by signal: "
+			<< WTERMSIG(status) << std::endl;
+
+		if (g_cgi_to_server_read_fd != -1)
+			close(g_cgi_to_server_read_fd);
+		g_cgi_to_server_read_fd = -1;
+		g_child_pid = -1;
 		signal(SIGINT, SIG_DFL);
+		signal(SIGTERM, SIG_DFL);
 		return (ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout()));
 	}
-	if (WIFEXITED(status))
+	else if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 	{
-		if (WEXITSTATUS(status) != 0)
-		{
-			close(cgi_to_server_pipe[0]);
-			signal(SIGINT, SIG_DFL);
-			return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
-		}
+		std::cerr << "[CGI] CGI process terminated with error code: "
+			<< WEXITSTATUS(status) << std::endl;
+
+		if (g_cgi_to_server_read_fd != -1)
+			close(g_cgi_to_server_read_fd);
+		g_cgi_to_server_read_fd = -1;
+		g_child_pid = -1;
+		signal(SIGINT, SIG_DFL);
+		signal(SIGTERM, SIG_DFL);
+		return ErrorPageGenerator::GenerateErrorResponse(response.internalServerError());
 	}
-	response = build_the_response(cgi_to_server_pipe[0]);
+
+	response = build_the_response(g_cgi_to_server_read_fd);
+	close(g_cgi_to_server_read_fd);
+	g_cgi_to_server_read_fd = -1;
+
 	waitpid(num_fork, &status, 0);
+
+	// Restore signal handlers and clean
 	signal(SIGINT, SIG_DFL);
+	signal(SIGTERM, SIG_DFL);
+	g_child_pid = -1;
+	g_signal_received = 0;
+
+	std::cout << "[CGI] CGI executed successfully." << std::endl;
+
 	return (response);
 }
 
