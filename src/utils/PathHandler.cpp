@@ -149,3 +149,42 @@ std::string PathHandler::getRelativePath(const std::string& requestPath, const s
 
     return relativePath;
 }
+
+std::string PathHandler::uriDecode(const std::string &src)
+{
+    std::string dest;
+    for (size_t i = 0; i < src.length(); ++i) {
+        if (src[i] == '%') {
+            // Convert the next two characters from hex to decimal
+            if (i + 2 < src.length()) {
+                std::string hex = src.substr(i + 1, 2);
+                int value = 0;
+                std::istringstream(hex) >> std::hex >> value;
+                dest += static_cast<char>(value);
+                i += 2; // Skip the next two characters
+            }
+        } else if (src[i] == '+') {
+            // Convert '+' to space
+            dest += ' ';
+        } else {
+            dest += src[i];
+        }
+    }
+    return dest;
+}
+
+std::string PathHandler::uriEncode(const std::string &src)
+{
+    std::ostringstream encoded;
+    for (size_t i = 0; i < src.length(); ++i) {
+        unsigned char c = src[i];
+        // Si el carácter es alfanumérico o uno de los caracteres permitidos, lo agregamos directamente
+        if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
+            encoded << c;
+        } else {
+            // De lo contrario, lo convertimos a percent-encoding
+            encoded << '%' << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(c);
+        }
+    }
+    return encoded.str();
+}

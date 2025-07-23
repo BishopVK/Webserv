@@ -47,6 +47,7 @@ std::string AutoIndexGenerator::generateHtml() const
     std::stringstream html;
     html << "<!DOCTYPE html>\n<html>\n<head>\n"
          << "<title>Index of " << _requestPath << "</title>\n"
+         << "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css\">\n"
          << css.str() << "</head>\n<body>\n"
          << "<h1>Index of " << _requestPath << "</h1>\n"
          << "<table>\n"
@@ -76,7 +77,9 @@ std::string AutoIndexGenerator::generateHtml() const
             sizeText << "-";
 
         html << "<tr>"
-             << "<td><a href=\"" << webPath << "\">" << it->name << "</a></td>"
+             << "<td>"
+             << (it->type == FileSystemHandler::FILE ? "<i class=\"fa-solid fa-file\"></i>" : "<i class=\"fa-solid fa-folder\"></i>")
+             << "<a href=\"" << webPath << "\">" << " " << it->name << "</a></td>"
              << "<td>" << sizeText.str() << "</td>"
              << "</tr>\n";
     }

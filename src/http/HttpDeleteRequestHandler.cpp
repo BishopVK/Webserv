@@ -39,7 +39,8 @@ HttpResponse HttpDeleteRequestHandler::handleMethod(const HttpRequest& request, 
         documentRoot = server->getRoot();
 
     std::string relativePath = PathHandler::getRelativePath(requestPath, location->getRoute());
-    std::string fullPath = PathHandler::joinFilePath(documentRoot, relativePath);
+    std::string encodedPath = PathHandler::uriDecode(relativePath); // DB Uri Decoder
+    std::string fullPath = PathHandler::joinFilePath(documentRoot, encodedPath);
 
     if (FileSystemHandler::isDirectory(fullPath))
         return handleDirectory(fullPath);

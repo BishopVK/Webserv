@@ -6,11 +6,14 @@
 #include "Logger.hpp"
 #include "ErrorPageGenerator.hpp"
 
+pid_t	num_fork;
+
 char **Cgis::create_command(std::string file_path, std::string file_name)
 {
 	std::vector<std::string> command_vec;
+	command_vec.push_back("/usr/bin/timeout");
+	command_vec.push_back("20s");
 	command_vec.push_back(PATH_INFO); // SEGURO QUE ES LA RUTA ENTERA DE PHP-CGI??
-	//command_vec.push_back("php-cgi");
 	command_vec.push_back("-c");
 	command_vec.push_back("./config/php.ini");
 	//command_vec.push_back("-d");
@@ -107,7 +110,6 @@ char	**Cgis::create_env()
 	return response.ok(body_part);
 } */
 
-// Inés version
 HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 {
 	HttpResponse response;
@@ -128,6 +130,8 @@ HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 	std::string line;
 	while (std::getline(ss, line))
 	{
+		//if (line.empty())
+		//	break;
 		if (line == "\r")
 			break ;
 		size_t middle = line.find(':');
@@ -139,6 +143,8 @@ HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 	}
 	while (std::getline(ss, line))
 	{
+		//if (line.empty())
+		//	break;
 		//std::cout << "line=" << line << std::endl;
 		body_answer += line;
 		if (!ss.eof())
@@ -151,9 +157,17 @@ HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 	return (response);
 }
 
+void	timeout(int sig)
+{
+	(void)sig;
+	perror("php time out");
+	//std::cerr << "PHP has timed out" << sig << "...." << std::endl;
+	kill(num_fork, SIGKILL);
+	exit(127);
+}
+
 HttpResponse Cgis::execute()
 {
-	pid_t			num_fork;
 	int				server_to_cgi_pipe[2];
 	int				cgi_to_server_pipe[2];
 	char			**env;
@@ -161,15 +175,17 @@ HttpResponse Cgis::execute()
 	HttpResponse	response;
 	int				status;
 
-	if (pipe(server_to_cgi_pipe) == -1 || pipe(cgi_to_server_pipe) == -1)
-		return ErrorPageGenerator::GenerateErrorResponse(response.internalServerError());
-	// pipe(server_to_cgi_pipe);
-	// pipe(cgi_to_server_pipe);
+	pipe(server_to_cgi_pipe);
+	pipe(cgi_to_server_pipe);
 	num_fork = fork();
 	if (num_fork == -1)
 		return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
 	if (num_fork == 0)
 	{
+		perror ("init problem");
+	//	signal(SIGALRM, timeout);
+	//	alarm(30);
+		perror ("set problem");
 		dup2(server_to_cgi_pipe[0], 0);
 		dup2(cgi_to_server_pipe[1], 1);
 		close(server_to_cgi_pipe[0]);
@@ -180,54 +196,33 @@ HttpResponse Cgis::execute()
 		command = create_command(this->file_path, this->file_name);
 		execve(PATH_INFO, command, env);
 		perror("execve cgi error");
+		perror ("out problem");
 		exit(127);
 	}
-	else
+	if (method == "POST")
 	{
-		// padre
-		if (method == "POST")
-		{
-			write(server_to_cgi_pipe[1], body.c_str(), body.size());
-		}
-		close(server_to_cgi_pipe[0]);
-		close(server_to_cgi_pipe[1]);
-		close(cgi_to_server_pipe[1]);
-
-		// TIMEOUT
-		int waited_ms = 0;
-		const int timeout_ms = 5000;
-		while (waited_ms < timeout_ms)
-		{
-			pid_t result = waitpid(num_fork, &status, WNOHANG);
-			if (result == 0) {
-				usleep(10000); // 10ms
-				waited_ms+= 10;
-			} else {
-				break;
-			}
-		}
-		if (waited_ms >= timeout_ms)
-		{
-			kill(num_fork, SIGKILL); // CGI colgado, lo matamos
-			waitpid(num_fork, &status, 0); // evitar zombie
-			close(cgi_to_server_pipe[0]); // cerrar pipe
-			return ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout());
-		}
-		
-		response = build_the_response(cgi_to_server_pipe[0]);
-
-		waitpid(num_fork, &status, 0);
-
-		if (WIFSIGNALED(status))
-		{
-			return (ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout()));
-		}
-		if (WIFEXITED(status))
-		{
-			int exit_status = WEXITSTATUS(status);
-			if (exit_status != 0)
-				return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
-		}
+		write(server_to_cgi_pipe[1], body.c_str(), body.size());
+	}
+	close(server_to_cgi_pipe[0]);
+	close(server_to_cgi_pipe[1]);
+	close(cgi_to_server_pipe[1]);
+	response = build_the_response(cgi_to_server_pipe[0]);
+	perror ("before problem");
+	signal(SIGALRM, timeout);
+	alarm(20);
+	waitpid(num_fork, &status, 0);
+	alarm(0);
+	perror ("after problem");
+	if (WIFSIGNALED(status))
+	{
+		perror ("huston we have a problem");
+		return (ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout()));
+	}
+	if (WIFEXITED(status))
+	{
+		int exit_status = WEXITSTATUS(status);
+		if (exit_status != 0)
+			return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
 	}
 	return (response);
 }
@@ -270,13 +265,13 @@ Cgis::Cgis( std::string method, std::string file_path, std::string file_name,
 	// 	this->body = deschunk(body);
 	// }
 	this->chunked = chunked;
-	// Logger::instance().debug("CONSTRUCTOR ==> method: |" + method + "|");
-	// Logger::instance().debug("CONSTRUCTOR ==> file_path: |" + file_path + "|");
-	// Logger::instance().debug("CONSTRUCTOR ==> file_name: |" + file_name + "|");
-	// Logger::instance().debug("CONSTRUCTOR ==> content_type: |" + content_type + "|");
-	// Logger::instance().debug("CONSTRUCTOR ==> boundary: |" + boundary + "|");
-	// Logger::instance().debug("CONSTRUCTOR ==> content_lenght: |" + content_lenght + "|");
-	// Logger::instance().debug("CONSTRUCTOR ==> body: |" + body + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> method: |" + method + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> file_path: |" + file_path + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> file_name: |" + file_name + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> content_type: |" + content_type + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> boundary: |" + boundary + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> content_lenght: |" + content_lenght + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> body: |" + body + "|");
 	//Logger::instance().debug("CONSTRUCTOR ==> chunked: " + chunked);
 }
 

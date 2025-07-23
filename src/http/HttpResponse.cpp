@@ -123,6 +123,16 @@ HttpResponse HttpResponse::internalServerError(const std::string& body, const st
     return response;
 }
 
+
+HttpResponse HttpResponse::gatewayTimeout(const std::string& body, const std::string& contentType)
+{
+    HttpResponse response;
+    response.setStatus(504, "Gateway Timeout");
+    response.setHeader("Content-Type", contentType);
+    response.setBody(body);
+    return response;
+}
+
 HttpResponse HttpResponse::response(int code, const std::string& reason, const std::string& body, const std::string& contentType)
 {
     HttpResponse response;

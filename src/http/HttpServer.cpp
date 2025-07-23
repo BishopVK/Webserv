@@ -51,9 +51,38 @@ HttpServer& HttpServer::operator=(const HttpServer& other)
     return *this;
 }
 
+bool running = true;
+
+void signalHandler(int signum)
+{
+    (void)signum;
+    running = false; // Cambia el estado a falso para salir del bucle principal
+}
+
 void HttpServer::run()
 {
     // std::vector<int>                server_fds;
+    std::signal(SIGINT, signalHandler);
+    std::signal(SIGTERM, signalHandler);
+
+    //std::cout << GREEN "Webserv initialized" RESET << std::endl;
+    std::cout << GREEN
+    << " __      __   _                      _      _ _   _      _ _           _ " << std::endl
+    << " \\ \\    / /__| |__ ___ ___ _ ___ __ (_)_ _ (_) |_(_)__ _| (_)______ __| |" << std::endl
+    << "  \\ \\/\\/ / -_) '_ (_-</ -_) '_\\ V / | | ' \\| |  _| / _` | | |_ / -_) _` |" << std::endl
+    << "   \\_/\\_/\\___|_.__/__/\\___|_|  \\_/  |_|_||_|_|\\__|_\\__,_|_|_/__\\___\\__,_|" << std::endl
+    << "                                                                         "
+    << RESET
+    << std::endl;
+
+    for (std::vector<Server>::iterator servers_it = _servers.begin(); servers_it != _servers.end(); ++servers_it)
+    {
+        std::multimap<std::string, int> listenSet = servers_it->getListenSet();
+        for (std::multimap<std::string, int>::iterator listen_it = listenSet.begin(); listen_it != listenSet.end(); ++listen_it)
+        {
+            std::cout << "listen at: " << YELLOW << listen_it->first << ":" << listen_it->second << RESET << std::endl;
+        }
+    }
 
     for (std::vector<Server>::iterator it = _servers.begin(); it != _servers.end(); ++it)
     {
@@ -101,7 +130,8 @@ void HttpServer::run()
         return;
     }
 
-    while (true)
+    //while (true)
+    while (running)
     {
         int ready_count = _multiplexer.poll(1000);
 
@@ -177,16 +207,21 @@ void HttpServer::run()
     for (std::map<int, ClientConnection>::iterator it = _clients.begin(); it != _clients.end(); ++it)
     {
         Logger::instance().debug("Closing client connection: " + IntValue(it->first).toString());
+        std::cout << "Closing client connection: " << YELLOW << IntValue(it->first).toString() << RESET << std::endl;
         SocketUtils::closeSocket(it->first);
     }
     _clients.clear();
 
     // Clean up server connections
-    for (std::map<int, ServerConnection>::iterator it = _serverConnections.begin(); it != _serverConnections.end(); ++it)
+    for (std::map<int, ServerConnection>::iterator it = _serverConnections.begin(); it != _serverConnections.end();)
     {
         SocketUtils::closeSocket(it->second.getFd());
-        _serverConnections.erase(it);
+        std::map<int, ServerConnection>::iterator iterator_to_delete = it; // Prevent SegFault
+        ++it;
+        _serverConnections.erase(iterator_to_delete);
     }
+
+    std::cout << RED "Closing webserv..." RESET << std::endl;
 }
 
 bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multiplexer& multiplexer)

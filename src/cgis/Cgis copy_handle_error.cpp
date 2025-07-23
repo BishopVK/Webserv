@@ -107,7 +107,6 @@ char	**Cgis::create_env()
 	return response.ok(body_part);
 } */
 
-// Inés version
 HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 {
 	HttpResponse response;
@@ -151,6 +150,14 @@ HttpResponse	Cgis::build_the_response(int cgi_to_server_pipe)
 	return (response);
 }
 
+// void	timeout(int sig)
+// {
+// 	(void)sig;
+// 	perror("php time out");
+// 	//std::cerr << "PHP has timed out" << sig << "...." << std::endl;
+// 	exit(127);
+// }
+
 HttpResponse Cgis::execute()
 {
 	pid_t			num_fork;
@@ -161,15 +168,15 @@ HttpResponse Cgis::execute()
 	HttpResponse	response;
 	int				status;
 
-	if (pipe(server_to_cgi_pipe) == -1 || pipe(cgi_to_server_pipe) == -1)
-		return ErrorPageGenerator::GenerateErrorResponse(response.internalServerError());
-	// pipe(server_to_cgi_pipe);
-	// pipe(cgi_to_server_pipe);
+	pipe(server_to_cgi_pipe);
+	pipe(cgi_to_server_pipe);
 	num_fork = fork();
 	if (num_fork == -1)
 		return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
 	if (num_fork == 0)
 	{
+		// signal(SIGALRM, timeout);
+		// alarm(30);
 		dup2(server_to_cgi_pipe[0], 0);
 		dup2(cgi_to_server_pipe[1], 1);
 		close(server_to_cgi_pipe[0]);
@@ -182,53 +189,61 @@ HttpResponse Cgis::execute()
 		perror("execve cgi error");
 		exit(127);
 	}
-	else
+	if (method == "POST")
 	{
-		// padre
-		if (method == "POST")
-		{
-			write(server_to_cgi_pipe[1], body.c_str(), body.size());
-		}
-		close(server_to_cgi_pipe[0]);
-		close(server_to_cgi_pipe[1]);
-		close(cgi_to_server_pipe[1]);
+		write(server_to_cgi_pipe[1], body.c_str(), body.size());
+	}
+	close(server_to_cgi_pipe[0]);
+	close(server_to_cgi_pipe[1]);
+	close(cgi_to_server_pipe[1]);
+	//response = build_the_response(cgi_to_server_pipe[0]);
 
-		// TIMEOUT
-		int waited_ms = 0;
-		const int timeout_ms = 5000;
-		while (waited_ms < timeout_ms)
-		{
-			pid_t result = waitpid(num_fork, &status, WNOHANG);
-			if (result == 0) {
-				usleep(10000); // 10ms
-				waited_ms+= 10;
-			} else {
-				break;
-			}
-		}
-		if (waited_ms >= timeout_ms)
-		{
-			kill(num_fork, SIGKILL); // CGI colgado, lo matamos
-			waitpid(num_fork, &status, 0); // evitar zombie
-			close(cgi_to_server_pipe[0]); // cerrar pipe
-			return ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout());
-		}
-		
-		response = build_the_response(cgi_to_server_pipe[0]);
-
+	int timeout = 10;
+	while (timeout > 0)
+	{
+		pid_t result = waitpid(num_fork, &status, WNOHANG);
+		if (result == num_fork)
+			break;
+		usleep(1);
+		timeout--;
+	}
+	if (timeout == 0)
+	{
+		kill(num_fork, SIGKILL);
 		waitpid(num_fork, &status, 0);
+		close(cgi_to_server_pipe[0]);
+		return (ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout()));
+	}
 
-		if (WIFSIGNALED(status))
+	//waitpid(num_fork, &status, 0);
+	if (WIFSIGNALED(status))
+	{
+		close(cgi_to_server_pipe[0]);
+		return (ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout()));
+	}
+	if (WIFEXITED(status))
+	{
+		int exit_status = WEXITSTATUS(status);
+		if (exit_status != 0)
 		{
-			return (ErrorPageGenerator::GenerateErrorResponse(response.gatewayTimeout()));
-		}
-		if (WIFEXITED(status))
-		{
-			int exit_status = WEXITSTATUS(status);
-			if (exit_status != 0)
-				return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
+			close(cgi_to_server_pipe[0]);
+			return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
 		}
 	}
+	std::string lines = "";
+	char buffer[1024];
+	size_t bytes_read;
+	while ((bytes_read = read(cgi_to_server_pipe[0], buffer, sizeof(buffer) - 1)) > 0)
+	{
+		buffer[bytes_read] = '\0';
+		lines+= buffer;
+	}
+	close(cgi_to_server_pipe[0]);
+	if (lines.empty())
+	{
+		return (ErrorPageGenerator::GenerateErrorResponse(response.internalServerError()));
+	}
+	response.setBody(lines);
 	return (response);
 }
 
@@ -270,13 +285,13 @@ Cgis::Cgis( std::string method, std::string file_path, std::string file_name,
 	// 	this->body = deschunk(body);
 	// }
 	this->chunked = chunked;
-	// Logger::instance().debug("CONSTRUCTOR ==> method: |" + method + "|");
-	// Logger::instance().debug("CONSTRUCTOR ==> file_path: |" + file_path + "|");
-	// Logger::instance().debug("CONSTRUCTOR ==> file_name: |" + file_name + "|");
-	// Logger::instance().debug("CONSTRUCTOR ==> content_type: |" + content_type + "|");
-	// Logger::instance().debug("CONSTRUCTOR ==> boundary: |" + boundary + "|");
-	// Logger::instance().debug("CONSTRUCTOR ==> content_lenght: |" + content_lenght + "|");
-	// Logger::instance().debug("CONSTRUCTOR ==> body: |" + body + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> method: |" + method + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> file_path: |" + file_path + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> file_name: |" + file_name + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> content_type: |" + content_type + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> boundary: |" + boundary + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> content_lenght: |" + content_lenght + "|");
+	Logger::instance().debug("CONSTRUCTOR ==> body: |" + body + "|");
 	//Logger::instance().debug("CONSTRUCTOR ==> chunked: " + chunked);
 }
 
