@@ -88,3 +88,9 @@ std::string Logger::getTimestamp() const
         << std::setw(2) << tm->tm_hour << ":" << std::setw(2) << tm->tm_min << ":" << std::setw(2) << tm->tm_sec;
     return oss.str();
 }
+
+void    Logger::closeFd()
+{
+    if (_file.is_open())
+        _file.close();
+}

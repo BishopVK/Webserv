@@ -207,6 +207,7 @@ HttpResponse Cgis::execute()
 	{
 		dup2(server_to_cgi_pipe[0], 0);
 		dup2(cgi_to_server_pipe[1], 1);
+		Logger::instance().closeFd();
 
 		close(server_to_cgi_pipe[0]);
 		close(server_to_cgi_pipe[1]);

@@ -37,4 +37,5 @@ class Logger
     void debug(const std::string& message);
 
     void setLogFile(const std::string& filename);
+    void closeFd();
 };

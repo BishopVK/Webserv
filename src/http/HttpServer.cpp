@@ -241,17 +241,7 @@ bool HttpServer::handleClientRead(int client_fd, ClientConnection& client, Multi
         bytes_read = recv(client_fd, buffer, BUFFER_SIZE - 1, 0);
 
         if (bytes_read == -1)
-        {
-            // EAGAIN indicates that no data is available to read at this time.
-            // EWOULDBLOCK indicates that the operation cannot complete without blocking.
-            if (errno == EAGAIN || errno == EWOULDBLOCK)
-                return true;
-
-            Logger::instance().error("Error reading from client " + IntValue(client_fd).toString() + ": " + std::string(strerror(errno)));
-            multiplexer.removeFd(client_fd);
-            SocketUtils::closeSocket(client_fd);
-            return false;
-        }
+            return true;
 
         if (bytes_read == 0)
         {
