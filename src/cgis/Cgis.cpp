@@ -36,7 +36,7 @@ void busy_wait_10ms()
 {
 	volatile int dummy = 0;
 	// Aprox 10ms?
-	for (int i = 0; i < 30000000; ++i)
+	for (int i = 0; i < 6000000; ++i)
 		dummy++;  // Avoid loop optimization
 }
 
