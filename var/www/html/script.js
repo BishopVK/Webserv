@@ -2,26 +2,6 @@ function toggleMenu() {
   document.getElementById("navLinks").classList.toggle("show");
 }
 
-document.getElementById('uploadForm').addEventListener('submit', function(e) {
-	e.preventDefault(); // Evita que recargue la página
-
-	const form = e.target;
-	const formData = new FormData(form);
-
-	fetch('/upload/upload.php', {
-		method: 'POST',
-		body: formData
-	})
-	.then(response => response.json())
-  .then(data => {
-    showPopup(data.success ? '✅ ' + data.message : '❌ ' + data.message);
-  })
-	.catch(error => {
-		console.error('Error:', error);
-		showPopup('❌ Unexpected error');
-	});
-});
-
 function showPopup(message) {
 	const popup = document.getElementById('popup');
 	popup.textContent = message;

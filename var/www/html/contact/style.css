@@ -8,6 +8,7 @@ body, .sections {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	gap: 2rem;
 }
 
 .form_container {
@@ -89,4 +90,19 @@ body, .sections {
 #respuesta.show {
     visibility: visible;
     opacity: 1;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #28a745;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.custom-file-upload:hover {
+    background-color: #1e7e34;
 }

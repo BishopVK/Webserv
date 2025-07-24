@@ -23,7 +23,7 @@
 				});
 		</script>
 		
-		<!-- Secciones -->
+		<!-- Sections -->
 		<section class="sections">
 			<div class="form_container">
 				<h1>Contact us:</h1>
@@ -33,6 +33,17 @@
 					<input type="number" name="age" id="age" placeholder="Age:" required>
 					<textarea id="message" name="message" rows="5" placeholder="Message:"></textarea>
 					<button type="submit">Contact <i class="fa-solid fa-paper-plane"></i></button>
+				</form>
+			</div>
+
+			<!-- File upload -->
+			<div class="form_container">
+				<h1>Upload a file:</h1>
+				<form id="uploadForm" method="POST" action="/contact/files/" enctype="multipart/form-data">
+					<label for="myFile" class="custom-file-upload">Select file</label>
+					<input type="file" id="myFile" name="file" required style="display: none;">
+					<span id="file-name" class="file-name-display"></span> <!-- Aquí se muestra el nombre -->
+					<button type="submit">Upload <i class="fa-solid fa-upload"></i></button>
 				</form>
 			</div>
 
@@ -79,6 +90,58 @@
 				}
 			});
 		</script>
+
+<script>
+	const uploadForm = document.getElementById('uploadForm');
+	const fileInput = document.getElementById('myFile');
+	const fileNameDisplay = document.getElementById('file-name');
+
+	// Display the name of the selected file
+	fileInput.addEventListener('change', () => {
+		const file = fileInput.files[0];
+		fileNameDisplay.textContent = file ? file.name : '';
+	});
+
+	// Handling form submission
+	uploadForm.addEventListener('submit', async (e) => {
+		e.preventDefault();
+
+		const file = fileInput.files[0];
+		if (!file) return alert("Please select a file");
+
+		const formData = new FormData();
+		formData.append('upload', file, file.name);
+
+		try {
+			const response = await fetch('/contact/files/', {
+				method: 'POST',
+				body: formData
+			});
+
+			if (!response.ok) {
+				// Error HTTP (for example, 400, 500, etc.)
+				showToast(`❌ The file could not be uploaded`);
+				return;
+			}
+
+			const result = await response.text();
+			showToast(`✅ File uploaded: ${file.name}\n${result}`);
+		} catch (error) {
+			// Network or other error
+			showToast("❌ Upload failed: " + error.message);
+		}
+	});
+
+	// Mostrar mensaje tipo toast
+	function showToast(message) {
+		const toast = document.getElementById('respuesta');
+		toast.textContent = message;
+		toast.classList.add('show');
+		setTimeout(() => {
+			toast.classList.remove('show');
+		}, 3000);
+	}
+</script>
 
 		<!-- Footer -->
 		
