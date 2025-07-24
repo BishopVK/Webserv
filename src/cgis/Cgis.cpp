@@ -293,7 +293,9 @@ HttpResponse Cgis::execute()
 	}
 	else if (WIFSIGNALED(status))
 	{
-		Logger::instance().error("[CGI] CGI process terminated by signal: " + WTERMSIG(status));
+		std::stringstream ss; // DB
+		ss << "[CGI] CGI process terminated by signal: " << WTERMSIG(status); // DB
+		Logger::instance().error(ss.str());
 
 		if (g_cgi_to_server_read_fd != -1)
 			close(g_cgi_to_server_read_fd);
@@ -305,7 +307,9 @@ HttpResponse Cgis::execute()
 	}
 	else if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 	{
-		Logger::instance().error("[CGI] CGI process terminated with error code: " + WEXITSTATUS(status));
+		std::stringstream ss; // DB
+		ss << "[CGI] CGI process terminated with error code: " << WEXITSTATUS(status); // DB
+		Logger::instance().error(ss.str());
 
 		if (g_cgi_to_server_read_fd != -1)
 			close(g_cgi_to_server_read_fd);

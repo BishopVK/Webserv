@@ -28,7 +28,7 @@
 			<p>Click on the "Choose File" button to upload a file:</p>
 
 			<form id="uploadForm" action="upload.php" method="POST" enctype="multipart/form-data">
-				<label for="myFile" class="custom-file-upload">Seleccionar archivo</label>
+				<label for="myFile" class="custom-file-upload">Select file</label>
 				<input type="file" id="myFile" name="file" required>
 				<input type="submit" value="Upload">
 			</form>

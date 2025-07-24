@@ -18,7 +18,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(e) {
   })
 	.catch(error => {
 		console.error('Error:', error);
-		showPopup('❌ Error inesperado');
+		showPopup('❌ Unexpected error');
 	});
 });
 
@@ -36,7 +36,7 @@ document.getElementById('myFile').addEventListener('change', function() {
 	const fileNameDisplay = document.getElementById('file-name');
 
 	if (fileInput.files.length > 0) {
-		fileNameDisplay.innerHTML = `Archivo seleccionado: <strong>${fileInput.files[0].name}</strong>`;
+		fileNameDisplay.innerHTML = `Selected file: <strong>${fileInput.files[0].name}</strong>`;
 	} else {
 		fileNameDisplay.textContent = '';
 	}

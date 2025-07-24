@@ -92,7 +92,7 @@
 		</section>
 
 		<script>
-			// Genera un color hexadecimal aleatorio
+			// Generates a random hexadecimal color
 			function getRandomColor() {
 				const letters = '0123456789ABCDEF';
 				let color = '#';
@@ -102,20 +102,20 @@
 				return color;
 			}
 		  
-			// Calcula la luminancia relativa para decidir si usar texto claro u oscuro
+			// Calculates relative luminance to decide whether to use light or dark text
 			function isDark(color) {
-				// Elimina el # si está presente
+				// Remove the # if present
 				color = color.replace('#', '');
 		  
-				// Convierte R, G, B
+				// Converts R, G, B
 				const r = parseInt(color.substr(0, 2), 16);
 				const g = parseInt(color.substr(2, 2), 16);
 				const b = parseInt(color.substr(4, 2), 16);
 		  
-				// Fórmula de luminancia (según WCAG)
+				// Luminance formula (according to WCAG)
 				const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
 			
-				return luminance < 0.5; // true si es oscuro
+				return luminance < 0.5; // true if it is dark
 			}
 		  
 			document.addEventListener('DOMContentLoaded', () => {

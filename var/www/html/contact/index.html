@@ -28,11 +28,8 @@
 			<div class="form_container">
 				<h1>Contact us:</h1>
 				<form id="userForm" method="POST" action="/contact/files/">
-					<!-- <label for="nombre">Nombre:</label> -->
 					<input type="text" name="name" id="name" placeholder="Name:" required>
-					<!-- <label for="usuario">Usuario:</label> -->
 					<input type="text" name="user" id="user" placeholder="User:" required>
-					<!-- <label for="edad">Edad:</label> -->
 					<input type="number" name="age" id="age" placeholder="Age:" required>
 					<textarea id="message" name="message" rows="5" placeholder="Message:"></textarea>
 					<button type="submit">Contact <i class="fa-solid fa-paper-plane"></i></button>
@@ -67,7 +64,7 @@
 				});
 
 				const result = await response.text();
-				alert(`Mensaje enviado:\n${content}`);
+				alert(`Message sent:\n${content}`);
 				// document.getElementById('respuesta').innerText = result;
 				showToast(result);
 

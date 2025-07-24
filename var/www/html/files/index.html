@@ -56,18 +56,18 @@
 		const tbody = document.querySelector("#fileTable tbody");
 		tbody.innerHTML = "";
 
-		// Ocultar la tabla si no hay archivos
+		// Hide table if there are no files
 		const table = document.getElementById("fileTable");
 		
 		if (files.length === 0) {
 			table.style.display = "none";
 
-			// Mostrar un mensaje si no hay archivos
+			// Show a message if there are no files
 			const noFilesMessage = document.createElement("p");
 			noFilesMessage.id = "no-files-msg";
 			noFilesMessage.textContent = "📂 Uploads folder currently empty.";
 
-			// Insertar el mensaje si no existe ya
+			// Insert the message if it does not already exist
 			if (!document.getElementById("no-files-msg")) {
 				table.parentNode.appendChild(noFilesMessage);
 			}
