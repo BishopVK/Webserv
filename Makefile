@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danjimen,isainz-r,serferna <webserv@stu    +#+  +:+       +#+         #
+#    By: danjimen <danjimen@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/20 12:20:33 by danjimen,is       #+#    #+#              #
-#    Updated: 2025/07/14 13:04:06 by danjimen,is      ###   ########.fr        #
+#    Updated: 2025/07/24 10:29:05 by danjimen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,9 +88,9 @@ re:	fclean all
 rc:	re
 	rm -f $(OBJ)
 
-run:
+run: all
 #	./$(NAME) $(ARG)
-	./$(NAME) config2.conf
+	./$(NAME) config.conf
 
 valgrind:
 	valgrind --leak-check=full -s ./$(NAME) $(ARG)

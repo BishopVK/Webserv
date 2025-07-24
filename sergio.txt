@@ -1,0 +1,190 @@
+// Add these new member variables to ClientConnection.hpp
+class ClientConnection {
+private:
+    // ... existing members ...
+    bool _isChunked;
+    size_t _currentChunkSize;
+    bool _readingChunkSize;
+    std::string _chunkBuffer;
+    bool _chunkedComplete;
+
+public:
+    // ... existing methods ...
+    
+    // New methods for chunked transfer
+    bool isChunked() const { return _isChunked; }
+    bool isChunkedComplete() const { return _chunkedComplete; }
+    void setChunked(bool chunked) { _isChunked = chunked; }
+};
+
+// Enhanced hasCompleteRequest method in ClientConnection.cpp
+bool ClientConnection::hasCompleteRequest()
+{
+    size_t endHeadersPos = _read_buffer.find("\r\n\r\n");
+    if (endHeadersPos == std::string::npos)
+        return false;
+
+    if (!_requestParsed)
+    {
+        std::string headerPortion = _read_buffer.substr(0, endHeadersPos + 4);
+        delete _httpRequest;
+        _httpRequest = new HttpRequest(headerPortion.c_str());
+
+        if (!_httpRequest->isValid())
+        {
+            Logger::instance().error("Invalid HTTP request received.");
+            delete _httpRequest;
+            _httpRequest = NULL;
+            return false;
+        }
+
+        _requestParsed = true;
+        _headSize = endHeadersPos + 4;
+
+        // Check for chunked transfer encoding
+        std::string transferEncoding = _httpRequest->getHeader("Transfer-Encoding");
+        if (!transferEncoding.empty() && transferEncoding.find("chunked") != std::string::npos)
+        {
+            _isChunked = true;
+            _currentChunkSize = 0;
+            _readingChunkSize = true;
+            _chunkedComplete = false;
+            _contentLength = static_cast<size_t>(-1); // Unknown for chunked
+        }
+        else
+        {
+            _isChunked = false;
+            // Handle Content-Length as before
+            std::string contentLengthStr = _httpRequest->getHeader("Content-Length");
+            if (!contentLengthStr.empty())
+            {
+                try
+                {
+                    _contentLength = static_cast<size_t>(std::strtoul(contentLengthStr.c_str(), NULL, 10));
+                }
+                catch (const std::exception& e)
+                {
+                    Logger::instance().error("Invalid Content-Length header: " + contentLengthStr);
+                    _contentLength = 0;
+                }
+            }
+            else
+                _contentLength = 0;
+        }
+
+        // Handle multipart as before
+        std::string contentType = _httpRequest->getHeader("Content-Type");
+        if (contentType.find("multipart/form-data") != std::string::npos)
+        {
+            _isMultipart = true;
+            _boundary = _httpRequest->getBoundary();
+            if (_boundary.empty())
+            {
+                Logger::instance().error("Multipart request without boundary.");
+                delete _httpRequest;
+                _httpRequest = NULL;
+                _requestParsed = false;
+                return false;
+            }
+        }
+        else
+            _isMultipart = false;
+    }
+
+    // Route to appropriate completion check
+    if (_isChunked)
+        return isChunkedRequestComplete();
+    else if (_isMultipart)
+        return isMultipartComplete();
+    else
+        return isRegularRequestComplete();
+}
+
+// New method to handle chunked request completion
+bool ClientConnection::isChunkedRequestComplete()
+{
+    if (_chunkedComplete)
+        return true;
+
+    // Start parsing from after headers
+    size_t parsePos = _headSize;
+    std::string body = "";
+
+    while (parsePos < _read_buffer.length())
+    {
+        if (_readingChunkSize)
+        {
+            // Look for chunk size line ending
+            size_t crlfPos = _read_buffer.find("\r\n", parsePos);
+            if (crlfPos == std::string::npos)
+                return false; // Need more data
+
+            // Extract chunk size line
+            std::string chunkSizeLine = _read_buffer.substr(parsePos, crlfPos - parsePos);
+            
+            // Parse hex chunk size (ignore chunk extensions after semicolon)
+            size_t semicolonPos = chunkSizeLine.find(';');
+            if (semicolonPos != std::string::npos)
+                chunkSizeLine = chunkSizeLine.substr(0, semicolonPos);
+
+            // Convert hex to decimal
+            char* endPtr;
+            _currentChunkSize = std::strtoul(chunkSizeLine.c_str(), &endPtr, 16);
+            
+            if (endPtr == chunkSizeLine.c_str())
+            {
+                Logger::instance().error("Invalid chunk size: " + chunkSizeLine);
+                return false;
+            }
+
+            parsePos = crlfPos + 2; // Skip \r\n
+            _readingChunkSize = false;
+
+            // If chunk size is 0, this is the last chunk
+            if (_currentChunkSize == 0)
+            {
+                // Look for final \r\n (trailer headers are optional)
+                size_t finalCrlfPos = _read_buffer.find("\r\n", parsePos);
+                if (finalCrlfPos == std::string::npos)
+                    return false; // Need more data
+
+                _chunkedComplete = true;
+                // Set the complete body in the request
+                if (_httpRequest)
+                    _httpRequest->setBody(body);
+                return true;
+            }
+        }
+        else
+        {
+            // Reading chunk data
+            size_t remainingInBuffer = _read_buffer.length() - parsePos;
+            size_t dataNeeded = _currentChunkSize + 2; // +2 for trailing \r\n
+
+            if (remainingInBuffer < dataNeeded)
+                return false; // Need more data
+
+            // Extract chunk data (excluding trailing \r\n)
+            std::string chunkData = _read_buffer.substr(parsePos, _currentChunkSize);
+            body += chunkData;
+
+            // Move past chunk data and trailing \r\n
+            parsePos += _currentChunkSize + 2;
+            _readingChunkSize = true;
+        }
+    }
+
+    return false; // Still reading chunks
+}
+
+// Enhanced constructor
+ClientConnection::ClientConnection()
+    : _requestSize(0), _headersRead(false), _contentLength(static_cast<size_t>(-1)), 
+      _headSize(0), _requestParsed(false), _httpRequest(NULL), _isMultipart(false), 
+      _boundary(""), _read_buffer(""), _write_buffer(""), _request_complete(false), 
+      _response_sent(false), _server_connection(NULL), _isChunked(false), 
+      _currentChunkSize(0), _readingChunkSize(true), _chunkedComplete(false)
+{
+}
+
+// Update copy constructor and assignment operator accordingly...
