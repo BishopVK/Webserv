@@ -12,6 +12,12 @@ The project demonstrates core concepts of **network programming, event-driven ar
 
 ---
 
+## Preview of our website
+
+<p align="center">
+<img src="./img/our_web_V2.gif">
+</p>
+
 ## 📑 Table of Contents  
 - [✨ Features](#-features)  
 - [🛠️ Compilation](#%EF%B8%8F-compilation)  
