@@ -43,3 +43,6 @@ webserv
 
 # Log files
 *.log
+
+# Other files
+.psd
