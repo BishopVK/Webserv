@@ -45,4 +45,4 @@ webserv
 *.log
 
 # Other files
-.psd
+*.psd
