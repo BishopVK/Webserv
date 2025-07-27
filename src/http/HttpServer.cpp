@@ -318,15 +318,7 @@ bool HttpServer::handleClientWrite(int client_fd, ClientConnection& client, Mult
     ssize_t bytes_sent = send(client_fd, client.getWriteBuffer().c_str(), client.getWriteBuffer().size(), 0);
 
     if (bytes_sent == -1)
-    {
-        if (errno == EAGAIN || errno == EWOULDBLOCK)
-            return true;
-
-        Logger::instance().error("Error writing to client: " + std::string(strerror(errno)));
-        multiplexer.removeFd(client_fd);
-        SocketUtils::closeSocket(client_fd);
-        return false;
-    }
+        return true;
 
     client.eraseFromWriteBuffer(0, bytes_sent);
 
